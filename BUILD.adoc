@@ -1,0 +1,24 @@
+= Build
+
+== Prerequisites
+
+.To build *hf*, you will need the following dependencies
+* https://doc.rust-lang.org/stable/cargo/[Cargo] (v1.56.0 or later)
+
+.To build man pages, you will need the following additional dependencies
+* https://asciidoctor.org/[Asciidoctor]
+
+== Building from source
+
+.To clone the repository
+[source, shell]
+----
+git clone https://github.com/sorairolake/hf.git
+cd hf
+----
+
+.To build a package
+[source, shell]
+----
+just build
+----
