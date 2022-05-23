@@ -1,0 +1,25 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+use std::process::ExitCode;
+
+use anyhow::Result;
+use clap::Parser;
+
+use crate::cli::Opt;
+
+#[allow(clippy::unnecessary_wraps)]
+pub fn run() -> Result<ExitCode> {
+    let args = Opt::parse();
+
+    if let Some(shell) = args.generate_completion {
+        Opt::print_completion(shell);
+
+        return Ok(ExitCode::SUCCESS);
+    }
+
+    Ok(ExitCode::SUCCESS)
+}

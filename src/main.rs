@@ -11,6 +11,18 @@
 // Lint levels of Clippy.
 #![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
 
-fn main() {
-    println!("Hello, world!");
+mod cli;
+mod core;
+
+use std::process::ExitCode;
+
+fn main() -> ExitCode {
+    match core::run() {
+        Ok(exit_code) => exit_code,
+        Err(err) => {
+            eprintln!("{err}");
+
+            ExitCode::FAILURE
+        }
+    }
 }
