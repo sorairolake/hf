@@ -14,6 +14,10 @@ default: build
 @build:
     cargo build
 
+# Remove generated artifacts
+@clean:
+    cargo clean
+
 # Check a package
 @check:
     cargo check

@@ -1,0 +1,44 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+= unhf(1)
+// Specify in UTC.
+:docdate: 2022-05-24
+:doctype: manpage
+ifdef::revnumber[:mansource: hf {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+unhf - an utility for hidden file/directory
+
+== SYNOPSIS
+
+*{manname}* [_OPTION_]... _FILE_...
+
+== DESCRIPTION
+
+Alias for *hf --visible*.
+
+include::{includedir}/section-positional-arguments.adoc[]
+
+include::{includedir}/section-options.adoc[]
+
+include::{includedir}/section-exit-status.adoc[]
+
+== EXAMPLES
+
+Make the given hidden file visible:{blank}::
+  $ *{manname} .input.txt*
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]
+
+== SEE ALSO
+
+*hf*(1)

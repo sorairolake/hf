@@ -1,0 +1,45 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+== OPTIONS
+
+*-H*, *--hidden*::
+  Make files or directories invisible.
++
+This option cannot be used with *--visible*.
+
+*-v*, *--visible*::
+  Make hidden files or directories visible.
++
+This option cannot be used with *--hidden*.
+
+*-f*, *--force*::
+  Make actual changes to files or directories.
++
+This option cannot be used with *--dry-run*.
+
+*-n*, *--dry-run*::
+  Only show what would be done.
++
+This option cannot be used with *--force*.
+
+*-h*, *--help*::
+  Print help information.
+
+*-V*, *--version*::
+  Print version information.
+
+*--generate-completion* _SHELL_::
+  Generate shell completion.
+  The completion is output to stdout.
+
+  Possible values for this option are:{blank}:::
+
+    * *bash*
+    * *elvish*
+    * *fish*
+    * *powershell*
+    * *zsh*
