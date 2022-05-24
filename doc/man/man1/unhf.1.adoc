@@ -23,6 +23,7 @@ unhf - an utility for hidden file/directory
 == DESCRIPTION
 
 Alias for *hf --visible*.
+When *--hidden* is specified, this will be ignored.
 
 include::{includedir}/section-positional-arguments.adoc[]
 

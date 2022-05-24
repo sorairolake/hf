@@ -7,13 +7,12 @@
 use std::process::ExitCode;
 
 use anyhow::Result;
-use clap::Parser;
 
 use crate::cli::Opt;
 
 #[allow(clippy::unnecessary_wraps)]
 pub fn run() -> Result<ExitCode> {
-    let args = Opt::parse();
+    let args = Opt::default();
 
     if let Some(shell) = args.generate_completion {
         Opt::print_completion(shell);
