@@ -48,6 +48,7 @@ pub struct Opt {
 }
 
 impl Opt {
+    /// Generate shell completion and print it.
     pub fn print_completion(gen: impl Generator) {
         clap_complete::generate(
             gen,

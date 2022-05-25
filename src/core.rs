@@ -10,6 +10,7 @@ use anyhow::Result;
 
 use crate::cli::Opt;
 
+/// Runs the program and returns the exit status.
 #[allow(clippy::unnecessary_wraps)]
 pub fn run() -> Result<ExitCode> {
     let args = Opt::default();
