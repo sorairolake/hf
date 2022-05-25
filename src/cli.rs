@@ -9,12 +9,13 @@ use std::ffi::OsStr;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use clap::{CommandFactory, Parser};
+use clap::{AppSettings, CommandFactory, Parser};
 use clap_complete::{Generator, Shell};
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
 #[clap(version, about)]
+#[clap(setting = AppSettings::DeriveDisplayOrder)]
 pub struct Opt {
     /// Make files or directories invisible.
     ///
