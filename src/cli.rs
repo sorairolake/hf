@@ -69,20 +69,16 @@ impl Default for Opt {
             .and_then(|name| Path::file_stem(name))
             .and_then(OsStr::to_str)
             .map_or_else(|| "hf".to_string(), str::to_string);
-        if command_name == "unhf" {
-            args.visible = true;
-        }
-
-        if !args.visible {
-            args.hidden = true;
-        }
 
         if !args.force {
             args.dry_run = true;
         }
 
         if command_name == "unhf" {
-            args.hidden = false;
+            args.visible = true;
+            args.hidden = bool::default();
+        } else if !args.visible {
+            args.hidden = true;
         }
 
         args
