@@ -1,0 +1,47 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+= hf(1)
+// Specify in UTC.
+:docdate: 2022-05-24
+:doctype: manpage
+ifdef::revnumber[:mansource: hf {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+hf - an utility for hidden file/directory
+
+== SYNOPSIS
+
+*{manname}* [_OPTION_]... _FILE_...
+
+== DESCRIPTION
+
+*{manname}* is a command-line utility for hidden file/directory.
+By default, *{manname}* will show what would be done when you hide files or
+directories without make any changes (same as when both *--hide* and
+*--dry-run* are specified).
+
+include::{includedir}/section-positional-arguments.adoc[]
+
+include::{includedir}/section-options.adoc[]
+
+include::{includedir}/section-exit-status.adoc[]
+
+== EXAMPLES
+
+Hide the given file:{blank}::
+  $ *{manname} input.txt*
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]
+
+== SEE ALSO
+
+*unhf*(1)
