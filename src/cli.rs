@@ -20,12 +20,12 @@ pub struct Opt {
     /// Make files or directories invisible.
     ///
     /// This is the default behavior.
-    #[clap(short = 'H', long, conflicts_with = "visible")]
-    pub hidden: bool,
+    #[clap(short = 'H', long, conflicts_with = "show")]
+    pub hide: bool,
 
     /// Make hidden files or directories visible.
     #[clap(short, long)]
-    pub visible: bool,
+    pub show: bool,
 
     /// Make actual changes to files or directories.
     #[clap(short, long, conflicts_with = "dry-run")]
@@ -38,7 +38,7 @@ pub struct Opt {
     pub dry_run: bool,
 
     /// Files or directories to make changes.
-    #[clap(value_name = "FILE")]
+    #[clap(value_name = "FILE", required_unless_present = "generate-completion")]
     pub input: Vec<PathBuf>,
 
     /// Generate shell completion.
@@ -77,10 +77,10 @@ impl Default for Opt {
         }
 
         if command_name == "unhf" {
-            args.visible = true;
-            args.hidden = bool::default();
-        } else if !args.visible {
-            args.hidden = true;
+            args.show = true;
+            args.hide = bool::default();
+        } else if !args.show {
+            args.hide = true;
         }
 
         args

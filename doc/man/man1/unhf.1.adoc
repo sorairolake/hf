@@ -22,8 +22,8 @@ unhf - an utility for hidden file/directory
 
 == DESCRIPTION
 
-Alias for *hf --visible*.
-When *--hidden* is specified, this will be ignored.
+Alias for *hf --show*.
+When *--hide* is specified, this will be ignored.
 
 include::{includedir}/section-positional-arguments.adoc[]
 
@@ -33,7 +33,7 @@ include::{includedir}/section-exit-status.adoc[]
 
 == EXAMPLES
 
-Make the given hidden file visible:{blank}::
+Show the given file:{blank}::
   $ *{manname} .input.txt*
 
 include::{includedir}/section-reporting-bugs.adoc[]

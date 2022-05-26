@@ -14,13 +14,20 @@
 mod cli;
 mod core;
 
+#[cfg(unix)]
+#[path = "unix.rs"]
+mod os;
+#[cfg(windows)]
+#[path = "windows.rs"]
+mod os;
+
 use std::process::ExitCode;
 
 fn main() -> ExitCode {
     match core::run() {
-        Ok(exit_code) => exit_code,
+        Ok(()) => ExitCode::SUCCESS,
         Err(err) => {
-            eprintln!("{err}");
+            eprintln!("{:?}", err);
 
             ExitCode::FAILURE
         }

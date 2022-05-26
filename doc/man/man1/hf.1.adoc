@@ -24,7 +24,7 @@ hf - an utility for hidden file/directory
 
 *{manname}* is a command-line utility for hidden file/directory.
 By default, *{manname}* will show what would be done when you hide files or
-directories without make any changes (same as when both *--hidden* and
+directories without make any changes (same as when both *--hide* and
 *--dry-run* are specified).
 
 include::{includedir}/section-positional-arguments.adoc[]

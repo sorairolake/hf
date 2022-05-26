@@ -6,15 +6,15 @@
 
 == OPTIONS
 
-*-H*, *--hidden*::
+*-H*, *--hide*::
   Make files or directories invisible.
 +
-This option cannot be used with *--visible*.
+This option cannot be used with *--show*.
 
-*-v*, *--visible*::
+*-s*, *--show*::
   Make hidden files or directories visible.
 +
-This option cannot be used with *--hidden*.
+This option cannot be used with *--hide*.
 
 *-f*, *--force*::
   Make actual changes to files or directories.
@@ -23,6 +23,7 @@ This option cannot be used with *--dry-run*.
 
 *-n*, *--dry-run*::
   Only show what would be done.
+  This option prints a list of files to change.
 +
 This option cannot be used with *--force*.
 
