@@ -27,7 +27,7 @@ fn main() -> ExitCode {
     match core::run() {
         Ok(()) => ExitCode::SUCCESS,
         Err(err) => {
-            eprintln!("{:?}", err);
+            eprintln!("Error: {:?}", err);
 
             ExitCode::FAILURE
         }
