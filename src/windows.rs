@@ -8,33 +8,48 @@ use std::fs;
 use std::io;
 use std::os::windows::fs::MetadataExt;
 use std::path::Path;
-use std::process::{Command, ExitStatus};
+
+use windows::Win32::Storage::FileSystem::{
+    SetFileAttributesA, FILE_ATTRIBUTE_HIDDEN, FILE_FLAGS_AND_ATTRIBUTES,
+};
+
+fn get_file_attributes(path: impl AsRef<Path>) -> io::Result<FILE_FLAGS_AND_ATTRIBUTES> {
+    let attributes = fs::metadata(path.as_ref())?.file_attributes();
+
+    Ok(FILE_FLAGS_AND_ATTRIBUTES(attributes))
+}
 
 /// Returns `true` if the file is a hidden file.
 pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
-    let attributes = fs::metadata(path.as_ref())?.file_attributes();
+    let attributes = get_file_attributes(path)?;
 
-    Ok((attributes & 0x2) > 0)
+    Ok((attributes & FILE_ATTRIBUTE_HIDDEN).0 > 0)
 }
 
 /// Hide a file or directory.
 pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
-    let status = Command::new("attrib").arg("+h").arg(path).status()?;
+    let path = path
+        .as_ref()
+        .to_str()
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidData))?;
 
-    if status.success() {
-        Ok(())
-    } else {
-        Err(io::Error::from(io::ErrorKind::Other))
-    }
+    let attributes = get_file_attributes(path)? | FILE_ATTRIBUTE_HIDDEN;
+
+    unsafe { SetFileAttributesA(path, attributes) }
+        .ok()
+        .map_err(io::Error::from)
 }
 
 /// Show a hidden file or hidden directory.
 pub fn show(path: impl AsRef<Path>) -> io::Result<()> {
-    let status = Command::new("attrib").arg("-h").arg(path).status()?;
+    let path = path
+        .as_ref()
+        .to_str()
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidData))?;
 
-    if status.success() {
-        Ok(())
-    } else {
-        Err(io::Error::from(io::ErrorKind::Other))
-    }
+    let attributes = get_file_attributes(path)? & !FILE_ATTRIBUTE_HIDDEN;
+
+    unsafe { SetFileAttributesA(path, attributes) }
+        .ok()
+        .map_err(io::Error::from)
 }

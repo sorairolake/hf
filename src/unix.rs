@@ -32,7 +32,7 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
         .and_then(OsStr::to_str)
         .map(|name| '.'.to_string() + name)
         .map(PathBuf::from)
-        .ok_or_else(|| io::Error::from(io::ErrorKind::Other))?;
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
 
     fs::rename(path, path.with_file_name(dest_basename))
 }
@@ -47,7 +47,7 @@ pub fn show(path: impl AsRef<Path>) -> io::Result<()> {
         .and_then(|name| name.split_once('.'))
         .map(|(_, name)| name)
         .map(PathBuf::from)
-        .ok_or_else(|| io::Error::from(io::ErrorKind::Other))?;
+        .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidInput))?;
 
     fs::rename(path, path.with_file_name(dest_basename))
 }

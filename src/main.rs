@@ -7,7 +7,6 @@
 // Lint levels of rustc.
 #![warn(rust_2018_idioms)]
 #![deny(missing_debug_implementations)]
-#![forbid(unsafe_code)]
 // Lint levels of Clippy.
 #![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
 
