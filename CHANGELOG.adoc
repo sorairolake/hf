@@ -14,6 +14,10 @@ toc::[]
 
 == {compare-url}/v0.1.0\...HEAD[Unreleased]
 
+=== Added
+
+* Add exit codes as defined by `<sysexits.h>`
+
 === Changed
 
 * Use the Win32 API instead of `attrib` command

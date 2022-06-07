@@ -11,3 +11,9 @@
 
 *1*::
   An error occurred.
+
+*66*::
+  A file was not found.
+
+*77*::
+  The operation lacked the necessary privileges to complete.

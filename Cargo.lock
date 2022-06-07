@@ -107,6 +107,7 @@ dependencies = [
  "anyhow",
  "clap",
  "clap_complete",
+ "sysexits",
  "windows",
 ]
 
@@ -196,6 +197,12 @@ dependencies = [
  "quote",
  "unicode-ident",
 ]
+
+[[package]]
+name = "sysexits"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f2903f013d77e79e27487e2899fd72314259f7c5565f9cc880bf4fdd20d1c9c8"
 
 [[package]]
 name = "termcolor"

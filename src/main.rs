@@ -20,6 +20,7 @@ mod os;
 #[path = "windows.rs"]
 mod os;
 
+use std::io;
 use std::process::ExitCode;
 
 fn main() -> ExitCode {
@@ -27,6 +28,14 @@ fn main() -> ExitCode {
         Ok(()) => ExitCode::SUCCESS,
         Err(err) => {
             eprintln!("Error: {:?}", err);
+
+            if let Some(err) = err.downcast_ref::<io::Error>() {
+                match err.kind() {
+                    io::ErrorKind::NotFound => return sysexits::ExitCode::NoInput.into(),
+                    io::ErrorKind::PermissionDenied => return sysexits::ExitCode::NoPerm.into(),
+                    _ => (),
+                }
+            }
 
             ExitCode::FAILURE
         }
