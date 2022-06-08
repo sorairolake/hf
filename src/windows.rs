@@ -53,3 +53,88 @@ pub fn show(path: impl AsRef<Path>) -> io::Result<()> {
         .ok()
         .map_err(io::Error::from)
 }
+
+#[cfg(test)]
+mod tests {
+    use std::fs::File;
+    use std::process::Command;
+
+    use super::*;
+
+    #[test]
+    fn test_is_hidden() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join("file");
+        File::create(&file_path).unwrap();
+
+        Command::new("attrib")
+            .arg("+h")
+            .arg(&file_path)
+            .status()
+            .unwrap();
+
+        assert!(is_hidden(file_path).unwrap());
+    }
+
+    #[test]
+    fn test_is_not_hidden() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join("file");
+        File::create(&file_path).unwrap();
+
+        Command::new("attrib")
+            .arg("-h")
+            .arg(&file_path)
+            .status()
+            .unwrap();
+
+        assert!(!is_hidden(file_path).unwrap());
+    }
+
+    #[test]
+    fn test_is_hidden_when_file_does_not_exist() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join("file");
+
+        assert!(is_hidden(file_path).is_err());
+    }
+
+    #[test]
+    fn test_hide() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join("file");
+        File::create(&file_path).unwrap();
+
+        Command::new("attrib")
+            .arg("-h")
+            .arg(&file_path)
+            .status()
+            .unwrap();
+
+        hide(&file_path).unwrap();
+
+        assert!(is_hidden(file_path).unwrap());
+    }
+
+    #[test]
+    fn test_show() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join("file");
+        File::create(&file_path).unwrap();
+
+        Command::new("attrib")
+            .arg("+h")
+            .arg(&file_path)
+            .status()
+            .unwrap();
+
+        show(&file_path).unwrap();
+
+        assert!(!is_hidden(file_path).unwrap());
+    }
+}

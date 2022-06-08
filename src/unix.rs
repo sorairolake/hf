@@ -51,3 +51,65 @@ pub fn show(path: impl AsRef<Path>) -> io::Result<()> {
 
     fs::rename(path, path.with_file_name(dest_basename))
 }
+
+#[cfg(test)]
+mod tests {
+    use std::fs::File;
+
+    use super::*;
+
+    #[test]
+    fn test_is_hidden() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join(".file");
+        File::create(&file_path).unwrap();
+
+        assert!(is_hidden(file_path).unwrap());
+    }
+
+    #[test]
+    fn test_is_not_hidden() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join("file");
+        File::create(&file_path).unwrap();
+
+        assert!(!is_hidden(file_path).unwrap());
+    }
+
+    #[test]
+    fn test_is_hidden_when_file_does_not_exist() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join("file");
+
+        assert!(is_hidden(file_path).is_err());
+    }
+
+    #[test]
+    fn test_hide() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join("file");
+        File::create(&file_path).unwrap();
+
+        hide(&file_path).unwrap();
+
+        assert!(!file_path.exists());
+        assert!(tempdir.path().join(".file").exists());
+    }
+
+    #[test]
+    fn test_show() {
+        let tempdir = tempfile::tempdir().unwrap();
+
+        let file_path = tempdir.path().join(".file");
+        File::create(&file_path).unwrap();
+
+        show(&file_path).unwrap();
+
+        assert!(!file_path.exists());
+        assert!(tempdir.path().join("file").exists());
+    }
+}
