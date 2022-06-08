@@ -17,6 +17,8 @@ toc::[]
 === Added
 
 * Add exit codes as defined by `<sysexits.h>`
+* Add `--quiet` option
+* Add `--verbose` option
 
 === Changed
 

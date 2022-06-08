@@ -41,6 +41,16 @@ pub struct Opt {
     #[clap(value_name = "FILE", required_unless_present = "generate-completion")]
     pub input: Vec<PathBuf>,
 
+    /// Suppress log messages.
+    #[clap(short, long, conflicts_with = "verbose")]
+    pub quiet: bool,
+
+    /// Verbose mode.
+    ///
+    /// Can be specified multiple times to increase the log level.
+    #[clap(short, long, parse(from_occurrences))]
+    pub verbose: usize,
+
     /// Generate shell completion.
     ///
     /// The completion is output to stdout.
