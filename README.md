@@ -14,6 +14,11 @@
 cargo install hf
 ```
 
+### From binaries
+
+The [release page][release-page-url] contains pre-built binaries for Linux,
+macOS and Windows.
+
 ### How to build
 
 Please see [BUILD.adoc](BUILD.adoc).
@@ -45,3 +50,4 @@ See [COPYING](COPYING), [LICENSE-APACHE](LICENSE-APACHE) and
 [version-badge]: https://img.shields.io/crates/v/hf
 [version-url]: https://crates.io/crates/hf
 [license-badge]: https://img.shields.io/crates/l/hf
+[release-page-url]: https://github.com/sorairolake/hf/releases
