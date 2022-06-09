@@ -30,6 +30,10 @@ jobs:
         target: ${{ matrix.target }}
         override: true
         profile: minimal
+    - name: Cache build artifacts
+      uses: Swatinem/rust-cache@v1.3.0
+      with:
+        key: ${{ matrix.target }}
     - name: Build a package
       uses: actions-rs/cargo@v1.0.1
       with:
