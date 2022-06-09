@@ -27,6 +27,17 @@ This option cannot be used with *--dry-run*.
 +
 This option cannot be used with *--force*.
 
+*-q*, *--quiet*::
+  Suppress log messages.
++
+This option cannot be used with *--verbose*.
+
+*-v*, *--verbose*::
+  Verbose mode.
+  This option can be specified multiple times to increase the log level.
++
+This option cannot be used with *--quiet*.
+
 *-h*, *--help*::
   Print help information.
 

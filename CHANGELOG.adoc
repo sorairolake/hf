@@ -12,6 +12,18 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.1.0\...v0.2.0[0.2.0] - 2022-06-09
+
+=== Added
+
+* Add exit codes as defined by `<sysexits.h>`
+* Add `--quiet` option
+* Add `--verbose` option
+
+=== Changed
+
+* Use the Win32 API instead of `attrib` command
+
 == {project-url}/releases/tag/v0.1.0[0.1.0] - 2022-05-26
 
 === Added

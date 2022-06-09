@@ -17,12 +17,18 @@ jobs:
         target:
           - x86_64-unknown-linux-gnu
           - x86_64-unknown-linux-musl
+          - x86_64-apple-darwin
+          - x86_64-pc-windows-msvc
         include:
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-20.04
           - target: x86_64-unknown-linux-musl
             os: ubuntu-20.04
             use-cross: true
+          - target: x86_64-apple-darwin
+            os: macos-11
+          - target: x86_64-pc-windows-msvc
+            os: windows-2022
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
