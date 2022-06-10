@@ -12,6 +12,12 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.2.0\...HEAD[Unreleased]
+
+=== Changed
+
+* Enable the `lto` and `strip` settings in the release profile
+
 == {compare-url}/v0.1.0\...v0.2.0[0.2.0] - 2022-06-09
 
 === Added
