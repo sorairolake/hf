@@ -71,7 +71,7 @@ jobs:
         package="hf-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
 
         mkdir -p "${package}"/{doc,man}
-        cp README.md COPYING LICENSE-APACHE LICENSE-MIT "${bin}" "${package}"
+        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-MIT "${bin}" "${package}"
         cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
         cp build/* "${package}"/man
 
