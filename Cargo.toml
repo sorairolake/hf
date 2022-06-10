@@ -1,6 +1,6 @@
 [package]
 name = "hf"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.61.0"
@@ -26,3 +26,7 @@ windows = { version = "0.37.0", features = ["alloc", "Win32_Foundation", "Win32_
 
 [dev-dependencies]
 tempfile = "3.3.0"
+
+[profile.release]
+lto = true
+strip = true

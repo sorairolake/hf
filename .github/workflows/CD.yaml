@@ -1,6 +1,11 @@
 name: CD
 
-on: push
+on:
+  push:
+    branches:
+      - develop
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   build:
@@ -30,6 +35,10 @@ jobs:
         target: ${{ matrix.target }}
         override: true
         profile: minimal
+    - name: Cache build artifacts
+      uses: Swatinem/rust-cache@v1.3.0
+      with:
+        key: ${{ matrix.target }}
     - name: Build a package
       uses: actions-rs/cargo@v1.0.1
       with:
@@ -61,17 +70,15 @@ jobs:
         fi
         package="hf-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
 
-        mkdir -p "${package}"/doc
-        cp README.md COPYING LICENSE-APACHE LICENSE-MIT "${bin}" "${package}"
+        mkdir -p "${package}"/{doc,man}
+        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-MIT "${bin}" "${package}"
         cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
-        mkdir -p "${package}"/man
         cp build/* "${package}"/man
 
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-          7z a -bb "${package}.tar" ./"${package}"/*
-          gzip "${package}.tar"
+          tar czvf "${package}.tar.gz" "${package}"
         else
-          7z a -bb "${package}.zip" ./"${package}"/*
+          7z a -bb "${package}.zip" "${package}"
         fi
     - name: Release
       uses: softprops/action-gh-release@v0.1.14

@@ -42,7 +42,7 @@ Copyright (C) 2022 Shun Sakai (see [AUTHORS.adoc](AUTHORS.adoc))
 This program is distributed under the terms of either the _Apache License 2.0_
 or the _MIT License_.
 
-See [COPYING](COPYING), [LICENSE-APACHE](LICENSE-APACHE) and
+See [COPYRIGHT](COPYRIGHT), [LICENSE-APACHE](LICENSE-APACHE) and
 [LICENSE-MIT](LICENSE-MIT) for more details.
 
 [ci-badge]: https://github.com/sorairolake/hf/workflows/CI/badge.svg
