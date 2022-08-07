@@ -14,7 +14,7 @@ categories = ["command-line-utilities"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.58"
+anyhow = "1.0.60"
 clap = { version = "3.2.16", features = ["derive"] }
 clap_complete = "3.2.3"
 log = "0.4.17"
