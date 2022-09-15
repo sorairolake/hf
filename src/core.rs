@@ -5,6 +5,7 @@
 //
 
 use anyhow::{Context, Result};
+use clap::Parser;
 use log::{info, warn, SetLoggerError};
 use simplelog::LevelFilter;
 
@@ -25,7 +26,7 @@ fn logger_init(level: LevelFilter) -> Result<(), SetLoggerError> {
 
 /// Runs the program and returns the result.
 pub fn run() -> Result<()> {
-    let args = Opt::default();
+    let args = Opt::parse().process_relations();
 
     let log_level = if args.quiet {
         LevelFilter::Off
@@ -37,12 +38,10 @@ pub fn run() -> Result<()> {
             _ => LevelFilter::Trace,
         }
     };
-
     logger_init(log_level)?;
 
     if let Some(shell) = args.generate_completion {
         Opt::print_completion(shell);
-
         return Ok(());
     }
 
@@ -82,7 +81,6 @@ pub fn run() -> Result<()> {
                     os::hide(&file.0).with_context(|| {
                         format!("Failed to hide the file: {}", file.0.display())
                     })?;
-
                     info!("The file has been hidden: {}", file.0.display());
                 } else {
                     warn!("The file is already hidden: {}", file.0.display());
@@ -94,7 +92,6 @@ pub fn run() -> Result<()> {
                     os::show(&file.0).with_context(|| {
                         format!("Failed to show the file: {}", file.0.display())
                     })?;
-
                     info!("The file has been shown: {}", file.0.display());
                 } else {
                     warn!("The file is already shown: {}", file.0.display());
@@ -102,6 +99,5 @@ pub fn run() -> Result<()> {
             }
         }
     }
-
     Ok(())
 }

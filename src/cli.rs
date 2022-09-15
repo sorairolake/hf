@@ -15,12 +15,12 @@ use clap_complete::{Generator, Shell};
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
 #[clap(version, about)]
-#[clap(setting = AppSettings::DeriveDisplayOrder)]
+#[clap(setting(AppSettings::DeriveDisplayOrder))]
 pub struct Opt {
     /// Make files or directories invisible.
     ///
     /// This is the default behavior.
-    #[clap(short = 'H', long, conflicts_with = "show")]
+    #[clap(short('H'), long, conflicts_with("show"))]
     pub hide: bool,
 
     /// Make hidden files or directories visible.
@@ -28,21 +28,21 @@ pub struct Opt {
     pub show: bool,
 
     /// Make actual changes to files or directories.
-    #[clap(short, long, conflicts_with = "dry-run")]
+    #[clap(short, long, conflicts_with("dry-run"))]
     pub force: bool,
 
     /// Only show what would be done.
     ///
     /// This is the default behavior.
-    #[clap(short = 'n', long)]
+    #[clap(short('n'), long)]
     pub dry_run: bool,
 
     /// Files or directories to make changes.
-    #[clap(value_name = "FILE", required_unless_present = "generate-completion")]
+    #[clap(value_name("FILE"), required_unless_present("generate-completion"))]
     pub input: Vec<PathBuf>,
 
     /// Suppress log messages.
-    #[clap(short, long, conflicts_with = "verbose")]
+    #[clap(short, long, conflicts_with("verbose"))]
     pub quiet: bool,
 
     /// Verbose mode.
@@ -54,7 +54,7 @@ pub struct Opt {
     /// Generate shell completion.
     ///
     /// The completion is output to stdout.
-    #[clap(long, value_name = "SHELL", arg_enum)]
+    #[clap(long, value_enum, value_name("SHELL"))]
     pub generate_completion: Option<Shell>,
 }
 
@@ -68,12 +68,9 @@ impl Opt {
             &mut io::stdout(),
         );
     }
-}
 
-impl Default for Opt {
-    fn default() -> Self {
-        let mut args = Self::parse();
-
+    /// Processes relations between arguments.
+    pub fn process_relations(mut self) -> Self {
         let command_name = env::args()
             .next()
             .map(PathBuf::from)
@@ -82,17 +79,16 @@ impl Default for Opt {
             .and_then(OsStr::to_str)
             .map_or_else(|| "hf".to_string(), str::to_string);
 
-        if !args.force {
-            args.dry_run = true;
+        if !self.force {
+            self.dry_run = true;
         }
 
         if command_name == "unhf" {
-            args.show = true;
-            args.hide = bool::default();
-        } else if !args.show {
-            args.hide = true;
+            self.show = true;
+            self.hide = bool::default();
+        } else if !self.show {
+            self.hide = true;
         }
-
-        args
+        self
     }
 }

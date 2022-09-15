@@ -5,9 +5,9 @@
 //
 
 // Lint levels of rustc.
-#![warn(rust_2018_idioms)]
-#![deny(missing_debug_implementations)]
 #![forbid(unsafe_code)]
+#![deny(missing_debug_implementations)]
+#![warn(rust_2018_idioms)]
 // Lint levels of Clippy.
 #![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
 
@@ -18,7 +18,6 @@ use std::process::{Command, ExitStatus};
 
 fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
     let man_dir = env::current_dir()?.join("doc/man/man1");
-
     Command::new("asciidoctor")
         .args(["-b", "manpage"])
         .args(["-a", concat!("revnumber=", env!("CARGO_PKG_VERSION"))])
