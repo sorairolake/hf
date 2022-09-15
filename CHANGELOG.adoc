@@ -17,6 +17,7 @@ toc::[]
 === Changed
 
 * Allow non-UTF-8 paths as arguments
+* Update dependencies
 
 == {compare-url}/v0.2.0\...v0.2.1[0.2.1] - 2022-06-10
 
