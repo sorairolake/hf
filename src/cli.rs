@@ -9,7 +9,7 @@ use std::ffi::OsStr;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use clap::{AppSettings, CommandFactory, Parser};
+use clap::{AppSettings, CommandFactory, Parser, ValueHint};
 use clap_complete::{Generator, Shell};
 
 #[allow(clippy::struct_excessive_bools)]
@@ -38,7 +38,12 @@ pub struct Opt {
     pub dry_run: bool,
 
     /// Files or directories to make changes.
-    #[clap(value_name("FILE"), required_unless_present("generate-completion"))]
+    #[clap(
+        value_parser,
+        value_name("FILE"),
+        value_hint(ValueHint::FilePath),
+        required_unless_present("generate-completion")
+    )]
     pub input: Vec<PathBuf>,
 
     /// Suppress log messages.
