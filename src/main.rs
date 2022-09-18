@@ -5,14 +5,13 @@
 //
 
 // Lint levels of rustc.
-#![warn(rust_2018_idioms)]
 #![deny(missing_debug_implementations)]
+#![warn(rust_2018_idioms)]
 // Lint levels of Clippy.
 #![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
 
 mod cli;
 mod core;
-
 #[cfg(unix)]
 #[path = "unix.rs"]
 mod os;
@@ -28,7 +27,6 @@ fn main() -> ExitCode {
         Ok(()) => ExitCode::SUCCESS,
         Err(err) => {
             eprintln!("Error: {:?}", err);
-
             if let Some(err) = err.downcast_ref::<io::Error>() {
                 match err.kind() {
                     io::ErrorKind::NotFound => return sysexits::ExitCode::NoInput.into(),
@@ -36,7 +34,6 @@ fn main() -> ExitCode {
                     _ => (),
                 }
             }
-
             ExitCode::FAILURE
         }
     }
