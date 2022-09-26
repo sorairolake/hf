@@ -12,14 +12,11 @@ use std::path::{Path, PathBuf};
 /// Returns `true` if the file is a hidden file.
 pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
     let path = path.as_ref();
-    if let Err(err) = fs::metadata(path) {
-        Err(err)
-    } else {
-        Ok(path
-            .file_name()
+    fs::metadata(path).map(|_| {
+        path.file_name()
             .and_then(OsStr::to_str)
-            .map_or(bool::default(), |name| name.starts_with('.')))
-    }
+            .map_or(bool::default(), |name| name.starts_with('.'))
+    })
 }
 
 /// Hide a file or directory.
