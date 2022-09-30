@@ -9,57 +9,55 @@ use std::ffi::OsStr;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use clap::{AppSettings, CommandFactory, Parser, ValueHint};
+use clap::{ArgAction, CommandFactory, Parser, ValueHint};
 use clap_complete::{Generator, Shell};
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
-#[clap(version, about)]
-#[clap(setting(AppSettings::DeriveDisplayOrder))]
+#[command(version, about, max_term_width(100))]
 pub struct Opt {
     /// Make files or directories invisible.
     ///
     /// This is the default behavior.
-    #[clap(short('H'), long, conflicts_with("show"))]
+    #[arg(short('H'), long, conflicts_with("show"))]
     pub hide: bool,
 
     /// Make hidden files or directories visible.
-    #[clap(short, long)]
+    #[arg(short, long)]
     pub show: bool,
 
     /// Make actual changes to files or directories.
-    #[clap(short, long, conflicts_with("dry-run"))]
+    #[arg(short, long, conflicts_with("dry_run"))]
     pub force: bool,
 
     /// Only show what would be done.
     ///
     /// This is the default behavior.
-    #[clap(short('n'), long)]
+    #[arg(short('n'), long)]
     pub dry_run: bool,
 
     /// Files or directories to make changes.
-    #[clap(
-        value_parser,
+    #[arg(
         value_name("FILE"),
         value_hint(ValueHint::FilePath),
-        required_unless_present("generate-completion")
+        required_unless_present("generate_completion")
     )]
     pub input: Vec<PathBuf>,
 
     /// Suppress log messages.
-    #[clap(short, long, conflicts_with("verbose"))]
+    #[arg(short, long, conflicts_with("verbose"))]
     pub quiet: bool,
 
     /// Verbose mode.
     ///
     /// Can be specified multiple times to increase the log level.
-    #[clap(short, long, parse(from_occurrences))]
-    pub verbose: usize,
+    #[arg(action(ArgAction::Count), short, long)]
+    pub verbose: u8,
 
     /// Generate shell completion.
     ///
     /// The completion is output to stdout.
-    #[clap(long, value_enum, value_name("SHELL"))]
+    #[arg(long, value_enum, value_name("SHELL"))]
     pub generate_completion: Option<Shell>,
 }
 
@@ -95,5 +93,15 @@ impl Opt {
             self.hide = true;
         }
         self
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn verify_app() {
+        Opt::command().debug_assert();
     }
 }

@@ -9,6 +9,7 @@
 #![warn(rust_2018_idioms)]
 // Lint levels of Clippy.
 #![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
+#![allow(clippy::multiple_crate_versions)]
 
 mod cli;
 mod core;
