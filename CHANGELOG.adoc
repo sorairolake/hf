@@ -17,6 +17,7 @@ toc::[]
 === Changed
 
 * Bump clap to v4.0
+* Bump MSRV to 1.64.0
 
 == {compare-url}/v0.2.1\...v0.2.2[0.2.2] - 2022-09-18
 
