@@ -16,7 +16,7 @@ categories = ["command-line-utilities"]
 [dependencies]
 anyhow = "1.0.66"
 clap = { version = "4.0.19", features = ["derive", "wrap_help"] }
-clap_complete = "4.0.3"
+clap_complete = "4.0.5"
 log = "0.4.17"
 simplelog = "0.12.0"
 sysexits = "0.3.3"
