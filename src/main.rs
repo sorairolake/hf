@@ -27,7 +27,7 @@ fn main() -> ExitCode {
     match core::run() {
         Ok(()) => ExitCode::SUCCESS,
         Err(err) => {
-            eprintln!("Error: {:?}", err);
+            eprintln!("Error: {err:?}");
             if let Some(err) = err.downcast_ref::<io::Error>() {
                 match err.kind() {
                     io::ErrorKind::NotFound => return sysexits::ExitCode::NoInput.into(),
