@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2024 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+[tool.bumpversion]
+current_version = "0.2.2"
+
+[[tool.bumpversion.files]]
+filename = "docs/book/modules/ROOT/pages/use-as-a-library.adoc"
+
+[[tool.bumpversion.files]]
+filename = "README.md"
+
+[[tool.bumpversion.files]]
+filename = "src/lib.rs"

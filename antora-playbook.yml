@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2024 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+site:
+  title: hf Documentation
+  url: https://sorairolake.github.io/hf/
+  start_page: book::index.adoc
+
+content:
+  sources:
+    - url: .
+      start_path: docs/book
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: docs/book/supplemental-ui
+
+runtime:
+  log:
+    failure_level: warn
+
+antora:
+  extensions:
+    - "@antora/lunr-extension"

@@ -1,0 +1,71 @@
+// SPDX-FileCopyrightText: 2024 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= hf-hide(1)
+// Specify in UTC.
+:docdate: 2024-03-27
+:doctype: manpage
+ifdef::revnumber[:mansource: hf {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+hf-hide - make files or directories invisible
+
+== SYNOPSIS
+
+*hf hide* [_OPTION_]... [_FILE_]...
+
+== DESCRIPTION
+
+This command makes files or directories invisible.
+
+== POSITIONAL ARGUMENTS
+
+_FILE_::
+
+  Files or directories to hide.
+
+== OPTIONS
+
+*--log-level* _LEVEL_::
+
+  The minimum log level to print. Default is "INFO".
+
+*-f*, *--force*::
+
+  Actually hide files or directories.
+
+*-n*, *--dry-run*::
+
+  Don't actually hide anything, just show what would be done.
+
+*-h*, *--help*::
+
+  Print help message. The short flag (*-h*) will print a condensed help message
+  while the long flag (*--help*) will print a detailed help message.
+
+*-V*, *--version*::
+
+  Print version number. The long flag (*--version*) will also print the
+  copyright notice, the license notice and where to report bugs.
+
+include::{includedir}/section-exit-status.adoc[]
+
+include::{includedir}/section-notes.adoc[]
+
+== EXAMPLES
+
+Make the given file invisible:{blank}::
+
+  $ *hf hide -f data.txt*
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]
+
+== SEE ALSO
+
+*hf*(1), *hf-show*(1), *hf-help*(1)

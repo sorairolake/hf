@@ -1,0 +1,34 @@
+// SPDX-FileCopyrightText: 2024 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= License
+:reuse-spec-url: https://reuse.software/spec/
+
+Copyright (C) 2022&ndash;2024 Shun Sakai
+
+. This program is distributed under the terms of either the _Apache License
+  2.0_ or the _MIT License_.
+. Some documentations are distributed under the terms of the _Creative Commons
+  Attribution 4.0 International Public License_.
+
+This project is compliant with version 3.0 of the
+{reuse-spec-url}[_REUSE Specification_].
+
+== Apache License 2.0
+
+....
+include::example$LICENSES/Apache-2.0.txt[]
+....
+
+== MIT License
+
+....
+include::example$LICENSES/MIT.txt[]
+....
+
+== Creative Commons Attribution 4.0 International Public License
+
+....
+include::example$LICENSES/CC-BY-4.0.txt[]
+....

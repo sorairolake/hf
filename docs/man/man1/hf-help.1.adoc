@@ -1,0 +1,45 @@
+// SPDX-FileCopyrightText: 2024 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= hf-help(1)
+// Specify in UTC.
+:docdate: 2024-03-27
+:doctype: manpage
+ifdef::revnumber[:mansource: hf {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+hf-help - print the help for a command
+
+== SYNOPSIS
+
+*hf help* [_COMMAND_]
+
+== DESCRIPTION
+
+This command prints the help for a command.
+
+This command is identical to any of the following:{blank}::
+
+  $ *hf* [_COMMAND_] *-h*|*--help*
+
+== POSITIONAL ARGUMENTS
+
+_COMMAND_::
+
+  Subcommand to print the help.
+
+include::{includedir}/section-exit-status.adoc[]
+
+include::{includedir}/section-notes.adoc[]
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]
+
+== SEE ALSO
+
+*hf*(1), *hf-hide*(1), *hf-show*(1)

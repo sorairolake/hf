@@ -1,0 +1,19 @@
+// SPDX-FileCopyrightText: 2024 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= Installation
+:github-url: https://github.com
+:release-page-url: {github-url}/sorairolake/hf/releases
+
+== From source
+
+[source,sh]
+----
+cargo install hf
+----
+
+== From binaries
+
+The {release-page-url}[release page] contains pre-built binaries for Linux,
+macOS and Windows.
