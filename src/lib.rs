@@ -54,7 +54,7 @@
 //! # }
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/hf/0.2.2/")]
+#![doc(html_root_url = "https://docs.rs/hf/0.3.0/")]
 #![cfg_attr(doc_cfg, feature(doc_auto_cfg, doc_cfg))]
 // Lint levels of rustc.
 #![deny(missing_debug_implementations, missing_docs)]

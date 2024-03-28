@@ -14,12 +14,16 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
-== {compare-url}/v0.2.2\...HEAD[Unreleased]
+== {compare-url}/v0.2.2\...v0.3.0[0.3.0] - 2024-03-28
+
+=== Added
+
+* Add `hf` as a library ({pull-request-url}/86[#86])
 
 === Changed
 
-* Bump clap to v4.0
-* Bump MSRV to 1.64.0
+* Change to use subcommands ({pull-request-url}/86[#86])
+* Bump MSRV to 1.74.0 ({pull-request-url}/86[#86])
 
 == {compare-url}/v0.2.1\...v0.2.2[0.2.2] - 2022-09-18
 
