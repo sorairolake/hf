@@ -1,0 +1,91 @@
+// SPDX-FileCopyrightText: 2022 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= hf(1)
+// Specify in UTC.
+:docdate: 2024-03-27
+:doctype: manpage
+ifdef::revnumber[:mansource: hf {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+hf - an utility for hidden file/directory
+
+== SYNOPSIS
+
+*{manname}* [_OPTION_]... _COMMAND_
+
+== DESCRIPTION
+
+*{manname}* is a command-line utility for hidden file/directory.
+
+== COMMANDS
+
+*hf-hide*(1)::
+
+  Make files or directories invisible.
+
+*hf-show*(1)::
+
+  Make hidden files or hidden directories visible.
+
+*hf-help*(1)::
+
+  Print the help for a command.
+
+== OPTIONS
+
+*--log-level* _LEVEL_::
+
+  The minimum log level to print. Default is "INFO".
+
+*-h*, *--help*::
+
+  Print help message. The short flag (*-h*) will print a condensed help message
+  while the long flag (*--help*) will print a detailed help message.
+
+*-V*, *--version*::
+
+  Print version number. The long flag (*--version*) will also print the
+  copyright notice, the license notice and where to report bugs.
+
+*--generate-completion* _SHELL_::
+
+  Generate shell completion. The completion is output to stdout.
+
+  The possible values are:{blank}:::
+
+    *bash*::::
+
+      Bash.
+
+    *elvish*::::
+
+      Elvish.
+
+    *fish*::::
+
+      fish.
+
+    *nushell*::::
+
+      Nushell.
+
+    *powershell*::::
+
+      PowerShell.
+
+    *zsh*::::
+
+      Zsh.
+
+include::{includedir}/section-exit-status.adoc[]
+
+include::{includedir}/section-notes.adoc[]
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]

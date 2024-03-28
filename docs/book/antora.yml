@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2024 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+name: book
+title: hf
+version: ~
+nav:
+  - modules/ROOT/nav.adoc

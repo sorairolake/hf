@@ -1,1 +1,5 @@
-msrv = "1.61.0"
+# SPDX-FileCopyrightText: 2022 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+msrv = "1.74.0"

@@ -1,0 +1,23 @@
+// SPDX-FileCopyrightText: 2024 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= hf
+:project-url: https://github.com/sorairolake/hf
+:shields-url: https://img.shields.io
+:ci-badge: {shields-url}/github/actions/workflow/status/sorairolake/hf/CI.yaml?branch=develop&style=for-the-badge&logo=github&label=CI
+:ci-url: {project-url}/actions?query=branch%3Adevelop+workflow%3ACI++
+:version-badge: {shields-url}/crates/v/hf?style=for-the-badge&logo=rust
+:version-url: https://crates.io/crates/hf
+:msrv-badge: {shields-url}/crates/msrv/hf?style=for-the-badge&logo=rust
+:docs-badge: {shields-url}/docsrs/hf?style=for-the-badge&logo=docsdotrs&label=Docs.rs
+:docs-url: https://docs.rs/hf
+:license-badge: {shields-url}/crates/l/hf?style=for-the-badge
+
+image:{ci-badge}[CI,link={ci-url}]
+image:{version-badge}[Version,link={version-url}]
+image:{msrv-badge}[MSRV]
+image:{docs-badge}[Docs,link={docs-url}]
+image:{license-badge}[License]
+
+*hf* is a cross-platform hidden file library and utility.

@@ -1,14 +1,17 @@
+# SPDX-FileCopyrightText: 2022 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
 name: CI
 
 on:
+  pull_request:
   push:
     branches:
-      - '**'
-    tags-ignore:
-      - '**'
-  pull_request:
+      - "develop"
+      - "master"
   schedule:
-      - cron: '0 0 * * *'
+    - cron: "0 0 * * 0"
 
 jobs:
   test:
@@ -18,84 +21,94 @@ jobs:
       matrix:
         target:
           - x86_64-unknown-linux-gnu
-          - x86_64-unknown-linux-musl
           - x86_64-apple-darwin
           - x86_64-pc-windows-msvc
+        toolchain:
+          - 1.74.0 # MSRV
+          - stable
         include:
           - target: x86_64-unknown-linux-gnu
-            os: ubuntu-20.04
-          - target: x86_64-unknown-linux-musl
-            os: ubuntu-20.04
-            use-cross: true
+            os: ubuntu-22.04
           - target: x86_64-apple-darwin
-            os: macos-11
+            os: macos-12
           - target: x86_64-pc-windows-msvc
             os: windows-2022
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Setup Rust toolchain
-      uses: actions-rs/toolchain@v1.0.6
-      with:
-        toolchain: 1.61.0 # MSRV
-        target: ${{ matrix.target }}
-        override: true
-        profile: minimal
-    - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v1.3.0
-      with:
-        key: ${{ matrix.target }}
-    - name: Build a package
-      uses: actions-rs/cargo@v1.0.1
-      with:
-        command: build
-        args: --target ${{ matrix.target }}
-        use-cross: ${{ matrix.use-cross }}
-    - name: Run tests
-      uses: actions-rs/cargo@v1.0.1
-      with:
-        command: test
-        args: --target ${{ matrix.target }}
-        use-cross: ${{ matrix.use-cross }}
+      - name: Set Git to use LF
+        if: matrix.os == 'windows-2022'
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          targets: ${{ matrix.target }}
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.7.3
+        with:
+          key: ${{ matrix.target }}
+      - name: Run tests
+        run: cargo test --target ${{ matrix.target }}
+      - name: Run tests (no default features)
+        run: cargo test --target ${{ matrix.target }} --no-default-features
 
   rustfmt:
     name: Rustfmt
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Setup Rust toolchain
-      uses: actions-rs/toolchain@v1.0.6
-      with:
-        toolchain: stable
-        override: true
-        profile: minimal
-        components: rustfmt
-    - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v1.3.0
-    - name: Check code formatted
-      uses: actions-rs/cargo@v1.0.1
-      with:
-        command: fmt
-        args: -- --check
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.7.3
+      - name: Check code formatted
+        run: cargo fmt -- --check
 
   clippy:
     name: Clippy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Setup Rust toolchain
-      uses: actions-rs/toolchain@v1.0.6
-      with:
-        toolchain: stable
-        override: true
-        profile: minimal
-        components: clippy
-    - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v1.3.0
-    - name: Check no lint warnings
-      uses: actions-rs/cargo@v1.0.1
-      with:
-        command: clippy
-        args: -- -D warnings
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.7.3
+      - name: Check no lint warnings
+        run: cargo clippy -- -D warnings
+      - name: Check no lint warnings (no default features)
+        run: cargo clippy --no-default-features -- -D warnings
+
+  doc:
+    name: Documentation
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.7.3
+      - name: Check no `rustdoc` lint warnings
+        run: RUSTDOCFLAGS="-D warnings" cargo doc --no-deps --document-private-items --no-default-features
+
+  semver:
+    name: Semantic Versioning
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check Semantic Versioning
+        uses: obi1kenobi/cargo-semver-checks-action@v2.4

@@ -1,32 +1,60 @@
+# SPDX-FileCopyrightText: 2022 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
 [package]
 name = "hf"
-version = "0.2.2"
+version = "0.3.0"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
-rust-version = "1.61.0"
-description = "An utility for hidden file/directory"
+rust-version = "1.74.0"
+description = "Cross-platform hidden file library and utility"
+documentation = "https://docs.rs/hf"
 readme = "README.md"
+homepage = "https://sorairolake.github.io/hf/"
 repository = "https://github.com/sorairolake/hf"
 license = "Apache-2.0 OR MIT"
 keywords = ["hidden"]
-categories = ["command-line-utilities"]
+categories = ["command-line-utilities", "filesystem"]
+include = ["/LICENSES", "/README.md", "/src"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "hf"
+required-features = ["application"]
+
 [dependencies]
-anyhow = "1.0.65"
-clap = { version = "3.2.22", features = ["derive"] }
-clap_complete = "3.2.5"
-log = "0.4.17"
-simplelog = "0.12.0"
-sysexits = "0.3.2"
+anyhow = { version = "1.0.81", optional = true }
+clap = { version = "4.5.4", features = ["derive", "wrap_help"], optional = true }
+clap_complete = { version = "4.5.1", optional = true }
+clap_complete_nushell = { version = "4.5.1", optional = true }
+log = { version = "0.4.21", optional = true }
+simplelog = { version = "0.12.2", optional = true }
+sysexits = { version = "0.7.11", optional = true }
 
 [target.'cfg(windows)'.dependencies]
-windows = { version = "0.40.0", features = ["Win32_Foundation", "Win32_Storage_FileSystem"] }
+windows = { version = "0.54.0", features = ["Win32_Foundation", "Win32_Storage_FileSystem"] }
 
 [dev-dependencies]
-tempfile = "3.3.0"
+assert_cmd = "2.0.14"
+predicates = "3.1.0"
+tempfile = "3.10.1"
+
+[features]
+default = ["application"]
+application = [
+  "dep:anyhow",
+  "dep:clap",
+  "dep:clap_complete",
+  "dep:clap_complete_nushell",
+  "dep:log",
+  "dep:simplelog",
+  "dep:sysexits",
+]
 
 [profile.release]
+codegen-units = 1
 lto = true
+panic = "abort"
 strip = true

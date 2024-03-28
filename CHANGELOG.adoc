@@ -1,5 +1,9 @@
+// SPDX-FileCopyrightText: 2022 Shun Sakai
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+
 = Changelog
-:toc: macro
+:toc: preamble
 :project-url: https://github.com/sorairolake/hf
 :compare-url: {project-url}/compare
 :issue-url: {project-url}/issues
@@ -10,7 +14,16 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
-toc::[]
+== {compare-url}/v0.2.2\...v0.3.0[0.3.0] - 2024-03-28
+
+=== Added
+
+* Add `hf` as a library ({pull-request-url}/86[#86])
+
+=== Changed
+
+* Change to use subcommands ({pull-request-url}/86[#86])
+* Bump MSRV to 1.74.0 ({pull-request-url}/86[#86])
 
 == {compare-url}/v0.2.1\...v0.2.2[0.2.2] - 2022-09-18
 

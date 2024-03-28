@@ -1,0 +1,18 @@
+// SPDX-FileCopyrightText: 2024 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= Use as a library
+
+This crate is also available as a library.
+
+.Add this to your `Cargo.toml` to use it as a library
+[source,toml]
+----
+[dependencies]
+hf = { version = "0.3.0", default-features = false }
+----
+
+By default, the dependencies required to build the application are also built.
+If you disable the `default` feature, only the dependencies required to build
+the library will be built.

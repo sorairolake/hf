@@ -1,0 +1,51 @@
+// SPDX-FileCopyrightText: 2024 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= Usage
+
+== Make files invisible
+
+.Don't actually hide anything, just show what would be done
+[source,sh]
+----
+hf hide -n data.txt
+----
+
+.Actually hide files
+[source,sh]
+----
+hf hide -f data.txt
+----
+
+== Make hidden files visible
+
+.Don't actually show anything, just show what would be done
+[source,sh]
+----
+hf show -n .data.txt
+----
+
+.Actually show hidden files
+[source,sh]
+----
+hf show -f .data.txt
+----
+
+== Generate shell completion
+
+`--generate-completion` option generates shell completions to stdout.
+
+.The following shells are supported
+* `bash`
+* `elvish`
+* `fish`
+* `nushell`
+* `powershell`
+* `zsh`
+
+.Example
+[source,sh]
+----
+hf --generate-completion bash > hf.bash
+----

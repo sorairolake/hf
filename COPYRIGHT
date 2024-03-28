@@ -1,6 +1,0 @@
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: https://github.com/sorairolake/hf
-
-Files: *
-Copyright: 2022 Shun Sakai
-License: Apache-2.0 or MIT
