@@ -3,14 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use std::{
-    ffi::CString,
     fs,
     io::{self, Error},
     os::windows::fs::MetadataExt,
     path::Path,
 };
 
-use windows::{core::PCSTR, Win32::Storage::FileSystem};
+use windows::{core::HSTRING, Win32::Storage::FileSystem};
 
 fn get_file_attributes(path: &Path) -> io::Result<FileSystem::FILE_FLAGS_AND_ATTRIBUTES> {
     let attributes = fs::metadata(path)?.file_attributes();
@@ -26,20 +25,14 @@ pub fn is_hidden(path: &Path) -> io::Result<bool> {
 
 pub fn hide(path: &Path) -> io::Result<()> {
     let attributes = get_file_attributes(path)? | FileSystem::FILE_ATTRIBUTE_HIDDEN;
-    let path = path.to_string_lossy();
-    let path = CString::new(path.as_bytes()).map_err(Error::from)?;
-    let path = path.as_bytes_with_nul();
-    let path = PCSTR::from_raw(path.as_ptr());
-    unsafe { FileSystem::SetFileAttributesA(path, attributes) }.map_err(Error::from)
+    let path = HSTRING::from(path);
+    unsafe { FileSystem::SetFileAttributesW(&path, attributes) }.map_err(Error::from)
 }
 
 pub fn show(path: &Path) -> io::Result<()> {
     let attributes = get_file_attributes(path)? & !FileSystem::FILE_ATTRIBUTE_HIDDEN;
-    let path = path.to_string_lossy();
-    let path = CString::new(path.as_bytes()).map_err(Error::from)?;
-    let path = path.as_bytes_with_nul();
-    let path = PCSTR::from_raw(path.as_ptr());
-    unsafe { FileSystem::SetFileAttributesA(path, attributes) }.map_err(Error::from)
+    let path = HSTRING::from(path);
+    unsafe { FileSystem::SetFileAttributesW(&path, attributes) }.map_err(Error::from)
 }
 
 #[cfg(test)]

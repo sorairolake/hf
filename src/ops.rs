@@ -78,8 +78,7 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// Returns [`Err`] if any of the following are true:
 ///
 /// - Metadata about a file could not be obtained.
-/// - `path` contains the null character.
-/// - The [`SetFileAttributesA`] function fails.
+/// - The [`SetFileAttributesW`] function fails.
 ///
 /// # Examples
 ///
@@ -123,7 +122,7 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// # }
 /// ```
 ///
-/// [`SetFileAttributesA`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesa
+/// [`SetFileAttributesW`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
 pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
     imp::hide(path.as_ref())
 }
@@ -145,8 +144,7 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// Returns [`Err`] if any of the following are true:
 ///
 /// - Metadata about a file could not be obtained.
-/// - `path` contains the null character.
-/// - The [`SetFileAttributesA`] function fails.
+/// - The [`SetFileAttributesW`] function fails.
 ///
 /// # Examples
 ///
@@ -196,7 +194,7 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// # }
 /// ```
 ///
-/// [`SetFileAttributesA`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesa
+/// [`SetFileAttributesW`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
 pub fn show(path: impl AsRef<Path>) -> io::Result<()> {
     imp::show(path.as_ref())
 }
