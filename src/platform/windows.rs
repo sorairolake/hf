@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+//! Provides functionality for Windows.
+
 use std::{
     fs,
     io::{self, Error},

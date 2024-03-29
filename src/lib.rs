@@ -67,3 +67,5 @@ mod ops;
 mod platform;
 
 pub use crate::ops::{hide, is_hidden, show};
+#[cfg(unix)]
+pub use crate::platform::unix;

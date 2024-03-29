@@ -2,14 +2,16 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+//! Provides functionality for Unix platforms.
+
 use std::{
     ffi::OsStr,
     fs,
     io::{self, Error, ErrorKind},
-    path::Path,
+    path::{Path, PathBuf},
 };
 
-pub fn is_hidden(path: &Path) -> io::Result<bool> {
+pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
     let file_name = path
         .file_name()
         .ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
@@ -17,24 +19,64 @@ pub fn is_hidden(path: &Path) -> io::Result<bool> {
     Ok(is_hidden)
 }
 
-pub fn hide(path: &Path) -> io::Result<()> {
-    let file_name = path
-        .file_name()
-        .map(OsStr::to_string_lossy)
-        .filter(|n| !n.starts_with('.'))
-        .ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
-    let dest_file_name = String::from('.') + &file_name;
-    fs::rename(path, path.with_file_name(dest_file_name))
+pub(crate) fn hide(path: &Path) -> io::Result<()> {
+    let dest_path = hidden_file_name(path).ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
+    fs::rename(path, dest_path)
 }
 
-pub fn show(path: &Path) -> io::Result<()> {
+pub(crate) fn show(path: &Path) -> io::Result<()> {
+    let dest_path = normal_file_name(path).ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
+    fs::rename(path, dest_path)
+}
+
+/// Returns the path after making `path` invisible.
+///
+/// Returns [`None`] if `path` terminates in `..` or the file name starts with
+/// `.`.
+///
+/// # Examples
+///
+/// ```
+/// # use std::path::Path;
+/// #
+/// assert_eq!(
+///     hf::unix::hidden_file_name("file").unwrap(),
+///     Path::new(".file")
+/// );
+/// ```
+pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
+    let path = path.as_ref();
     let file_name = path
         .file_name()
         .map(OsStr::to_string_lossy)
-        .filter(|n| n.starts_with('.'))
-        .ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
-    let dest_file_name = file_name.trim_start_matches('.');
-    fs::rename(path, path.with_file_name(dest_file_name))
+        .filter(|n| !n.starts_with('.'))?;
+    let dest_path = path.with_file_name(String::from('.') + &file_name);
+    Some(dest_path)
+}
+
+/// Returns the path after making `path` visible.
+///
+/// Returns [`None`] if `path` terminates in `..` or the file name does not
+/// start with `.`.
+///
+/// # Examples
+///
+/// ```
+/// # use std::path::Path;
+/// #
+/// assert_eq!(
+///     hf::unix::normal_file_name(".file").unwrap(),
+///     Path::new("file")
+/// );
+/// ```
+pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
+    let path = path.as_ref();
+    let file_name = path
+        .file_name()
+        .map(OsStr::to_string_lossy)
+        .filter(|n| n.starts_with('.'))?;
+    let dest_path = path.with_file_name(file_name.trim_start_matches('.'));
+    Some(dest_path)
 }
 
 #[cfg(test)]
@@ -89,5 +131,23 @@ mod tests {
         super::show(&hidden_file_path).unwrap();
         assert!(!hidden_file_path.exists());
         assert!(file_path.exists());
+    }
+
+    #[test]
+    fn hidden_file_name() {
+        assert_eq!(super::hidden_file_name("file").unwrap(), Path::new(".file"));
+        assert_eq!(
+            super::hidden_file_name("path/to/file").unwrap(),
+            Path::new("path/to/.file")
+        );
+    }
+
+    #[test]
+    fn normal_file_name() {
+        assert_eq!(super::normal_file_name(".file").unwrap(), Path::new("file"));
+        assert_eq!(
+            super::normal_file_name("path/to/.file").unwrap(),
+            Path::new("path/to/file")
+        );
     }
 }

@@ -16,6 +16,11 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 == {compare-url}/v0.3.0\...HEAD[Unreleased]
 
+=== Added
+
+* Add functions to get the path after making it visible or invisible for Unix
+  platforms ({pull-request-url}/91[#91])
+
 === Fixed
 
 * Fix not being able to take path of Unicode string in Windows environment
