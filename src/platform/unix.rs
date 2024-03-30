@@ -40,9 +40,12 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 /// # use std::path::Path;
 /// #
 /// assert_eq!(
-///     hf::unix::hidden_file_name("file").unwrap(),
-///     Path::new(".file")
+///     hf::unix::hidden_file_name("foo/bar.txt").unwrap(),
+///     Path::new("foo/.bar.txt")
 /// );
+///
+/// assert!(hf::unix::hidden_file_name(".foo.txt").is_none());
+/// assert!(hf::unix::hidden_file_name("foo.txt/..").is_none());
 /// ```
 pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let path = path.as_ref();
@@ -65,9 +68,12 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// # use std::path::Path;
 /// #
 /// assert_eq!(
-///     hf::unix::normal_file_name(".file").unwrap(),
-///     Path::new("file")
+///     hf::unix::normal_file_name("foo/.bar.txt").unwrap(),
+///     Path::new("foo/bar.txt")
 /// );
+///
+/// assert!(hf::unix::normal_file_name("foo.txt").is_none());
+/// assert!(hf::unix::normal_file_name(".foo.txt/..").is_none());
 /// ```
 pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let path = path.as_ref();
@@ -87,67 +93,270 @@ mod tests {
 
     #[test]
     fn is_hidden() {
-        assert!(super::is_hidden(Path::new(".file")).unwrap());
-        assert!(super::is_hidden(Path::new("path/to/.file")).unwrap());
+        assert!(super::is_hidden(Path::new(".foo.txt")).unwrap());
+        assert!(super::is_hidden(Path::new("..foo.txt")).unwrap());
+        assert!(super::is_hidden(Path::new("foo/.bar.txt")).unwrap());
+        assert!(super::is_hidden(Path::new(".foo/.bar.txt")).unwrap());
     }
 
     #[test]
     fn is_hidden_when_non_hidden_file() {
-        assert!(!super::is_hidden(Path::new("file")).unwrap());
-        assert!(!super::is_hidden(Path::new("path/to/file")).unwrap());
+        assert!(!super::is_hidden(Path::new("foo.txt")).unwrap());
+        assert!(!super::is_hidden(Path::new("foo/bar.txt")).unwrap());
+        assert!(!super::is_hidden(Path::new(".foo/bar.txt")).unwrap());
+    }
+
+    #[test]
+    fn is_hidden_with_invalid_path() {
+        assert_eq!(
+            super::is_hidden(Path::new(".foo.txt/.."))
+                .unwrap_err()
+                .kind(),
+            ErrorKind::InvalidInput
+        );
+        assert_eq!(
+            super::is_hidden(Path::new("foo.txt/.."))
+                .unwrap_err()
+                .kind(),
+            ErrorKind::InvalidInput
+        );
+        assert_eq!(
+            super::is_hidden(Path::new("/")).unwrap_err().kind(),
+            ErrorKind::InvalidInput
+        );
     }
 
     #[test]
     fn hide() {
-        let temp_dir = tempfile::tempdir().unwrap();
-        let temp_dir = temp_dir.path();
-        let file_path = temp_dir.join("file");
-        let hidden_file_path = temp_dir.join(".file");
-        assert!(!file_path.exists());
-        assert!(!hidden_file_path.exists());
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let temp_dir = temp_dir.path();
+            let file_path = temp_dir.join("foo.txt");
+            let hidden_file_path = temp_dir.join(".foo.txt");
+            assert!(!file_path.exists());
+            assert!(!hidden_file_path.exists());
 
-        File::create(&file_path).unwrap();
-        assert!(file_path.exists());
-        assert!(!hidden_file_path.exists());
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!hidden_file_path.exists());
 
-        super::hide(&file_path).unwrap();
-        assert!(!file_path.exists());
-        assert!(hidden_file_path.exists());
+            super::hide(&file_path).unwrap();
+            assert!(!file_path.exists());
+            assert!(hidden_file_path.exists());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let temp_dir = temp_dir.path();
+            let parent_dir = temp_dir.join("foo");
+            let file_path = parent_dir.join("bar.txt");
+            let hidden_file_path = parent_dir.join(".bar.txt");
+            fs::create_dir(parent_dir).unwrap();
+            assert!(!file_path.exists());
+            assert!(!hidden_file_path.exists());
+
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!hidden_file_path.exists());
+
+            super::hide(&file_path).unwrap();
+            assert!(!file_path.exists());
+            assert!(hidden_file_path.exists());
+        }
+    }
+
+    #[test]
+    fn hide_when_hidden_file() {
+        {
+            let hidden_file_path = Path::new(".foo.txt");
+            assert_eq!(
+                super::hide(hidden_file_path).unwrap_err().kind(),
+                ErrorKind::InvalidInput
+            );
+        }
+        {
+            let hidden_file_path = Path::new("..foo.txt");
+            assert_eq!(
+                super::hide(hidden_file_path).unwrap_err().kind(),
+                ErrorKind::InvalidInput
+            );
+        }
+        {
+            let hidden_file_path = Path::new("foo/.bar.txt");
+            assert_eq!(
+                super::hide(hidden_file_path).unwrap_err().kind(),
+                ErrorKind::InvalidInput
+            );
+        }
+    }
+
+    #[test]
+    fn hide_with_invalid_path() {
+        let file_path = Path::new("foo.txt/..");
+        assert_eq!(
+            super::hide(file_path).unwrap_err().kind(),
+            ErrorKind::InvalidInput
+        );
+    }
+
+    #[test]
+    fn hide_when_file_does_not_exist() {
+        let file_path = Path::new("foo.txt");
+        assert_eq!(
+            super::hide(file_path).unwrap_err().kind(),
+            ErrorKind::NotFound
+        );
     }
 
     #[test]
     fn show() {
-        let temp_dir = tempfile::tempdir().unwrap();
-        let temp_dir = temp_dir.path();
-        let hidden_file_path = temp_dir.join(".file");
-        let file_path = temp_dir.join("file");
-        assert!(!hidden_file_path.exists());
-        assert!(!file_path.exists());
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let temp_dir = temp_dir.path();
+            let hidden_file_path = temp_dir.join(".foo.txt");
+            let file_path = temp_dir.join("foo.txt");
+            assert!(!hidden_file_path.exists());
+            assert!(!file_path.exists());
 
-        File::create(&hidden_file_path).unwrap();
-        assert!(hidden_file_path.exists());
-        assert!(!file_path.exists());
+            File::create(&hidden_file_path).unwrap();
+            assert!(hidden_file_path.exists());
+            assert!(!file_path.exists());
 
-        super::show(&hidden_file_path).unwrap();
-        assert!(!hidden_file_path.exists());
-        assert!(file_path.exists());
+            super::show(&hidden_file_path).unwrap();
+            assert!(!hidden_file_path.exists());
+            assert!(file_path.exists());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let temp_dir = temp_dir.path();
+            let hidden_file_path = temp_dir.join("..foo.txt");
+            let file_path = temp_dir.join("foo.txt");
+            assert!(!hidden_file_path.exists());
+            assert!(!file_path.exists());
+
+            File::create(&hidden_file_path).unwrap();
+            assert!(hidden_file_path.exists());
+            assert!(!file_path.exists());
+
+            super::show(&hidden_file_path).unwrap();
+            assert!(!hidden_file_path.exists());
+            assert!(file_path.exists());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let temp_dir = temp_dir.path();
+            let parent_dir = temp_dir.join("foo");
+            let hidden_file_path = parent_dir.join(".bar.txt");
+            let file_path = parent_dir.join("bar.txt");
+            fs::create_dir(parent_dir).unwrap();
+            assert!(!hidden_file_path.exists());
+            assert!(!file_path.exists());
+
+            File::create(&hidden_file_path).unwrap();
+            assert!(hidden_file_path.exists());
+            assert!(!file_path.exists());
+
+            super::show(&hidden_file_path).unwrap();
+            assert!(!hidden_file_path.exists());
+            assert!(file_path.exists());
+        }
+    }
+
+    #[test]
+    fn show_when_non_hidden_file() {
+        {
+            let file_path = Path::new("foo.txt");
+            assert_eq!(
+                super::show(file_path).unwrap_err().kind(),
+                ErrorKind::InvalidInput
+            );
+        }
+        {
+            let file_path = Path::new("foo/bar.txt");
+            assert_eq!(
+                super::show(file_path).unwrap_err().kind(),
+                ErrorKind::InvalidInput
+            );
+        }
+    }
+
+    #[test]
+    fn show_with_invalid_path() {
+        let hidden_file_path = Path::new(".foo.txt/..");
+        assert_eq!(
+            super::show(hidden_file_path).unwrap_err().kind(),
+            ErrorKind::InvalidInput
+        );
+    }
+
+    #[test]
+    fn show_when_file_does_not_exist() {
+        let hidden_file_path = Path::new(".foo.txt");
+        assert_eq!(
+            super::show(hidden_file_path).unwrap_err().kind(),
+            ErrorKind::NotFound
+        );
     }
 
     #[test]
     fn hidden_file_name() {
-        assert_eq!(super::hidden_file_name("file").unwrap(), Path::new(".file"));
         assert_eq!(
-            super::hidden_file_name("path/to/file").unwrap(),
-            Path::new("path/to/.file")
+            super::hidden_file_name("foo.txt").unwrap(),
+            Path::new(".foo.txt")
+        );
+        assert_eq!(
+            super::hidden_file_name("foo/bar.txt").unwrap(),
+            Path::new("foo/.bar.txt")
+        );
+        assert_eq!(
+            super::hidden_file_name(".foo/bar.txt").unwrap(),
+            Path::new(".foo/.bar.txt")
         );
     }
 
     #[test]
+    fn hidden_file_name_when_hidden_file() {
+        assert!(super::hidden_file_name(".foo.txt").is_none());
+        assert!(super::hidden_file_name("..foo.txt").is_none());
+        assert!(super::hidden_file_name("foo/.bar.txt").is_none(),);
+        assert!(super::hidden_file_name(".foo/.bar.txt").is_none());
+    }
+
+    #[test]
+    fn hidden_file_name_with_invalid_path() {
+        assert!(super::hidden_file_name("foo.txt/..").is_none());
+        assert!(super::hidden_file_name("/").is_none(),);
+    }
+
+    #[test]
     fn normal_file_name() {
-        assert_eq!(super::normal_file_name(".file").unwrap(), Path::new("file"));
         assert_eq!(
-            super::normal_file_name("path/to/.file").unwrap(),
-            Path::new("path/to/file")
+            super::normal_file_name(".foo.txt").unwrap(),
+            Path::new("foo.txt")
         );
+        assert_eq!(
+            super::normal_file_name("..foo.txt").unwrap(),
+            Path::new("foo.txt")
+        );
+        assert_eq!(
+            super::normal_file_name("foo/.bar.txt").unwrap(),
+            Path::new("foo/bar.txt")
+        );
+        assert_eq!(
+            super::normal_file_name(".foo/.bar.txt").unwrap(),
+            Path::new(".foo/bar.txt")
+        );
+    }
+
+    #[test]
+    fn normal_file_name_when_non_hidden_file() {
+        assert!(super::normal_file_name("foo.txt").is_none());
+        assert!(super::normal_file_name("foo/bar.txt").is_none(),);
+        assert!(super::normal_file_name(".foo/bar.txt").is_none());
+    }
+
+    #[test]
+    fn normal_file_name_with_invalid_path() {
+        assert!(super::normal_file_name(".foo.txt/..").is_none());
+        assert!(super::normal_file_name("/").is_none(),);
     }
 }
