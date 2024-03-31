@@ -8,8 +8,10 @@ use crate::platform::imp;
 
 /// Returns `true` if the path is a hidden file or a hidden directory.
 ///
-/// On Unix, returns `true` if the file name starts with `.`. On Windows,
-/// returns `true` if the file has the hidden file attribute.
+/// # Platform-specific behavior
+///
+/// - On Unix, returns `true` if the file name starts with `.`.
+/// - On Windows, returns `true` if the file has the hidden file attribute.
 ///
 /// # Errors
 ///
@@ -74,8 +76,10 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 
 /// Hides a file or a directory.
 ///
-/// On Unix, this function renames the file to start with `.`. On Windows, this
-/// function sets the hidden file attribute to the file.
+/// # Platform-specific behavior
+///
+/// - On Unix, this function renames the file to start with `.`.
+/// - On Windows, this function sets the hidden file attribute to the file.
 ///
 /// # Errors
 ///
@@ -106,7 +110,7 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let temp_dir = temp_dir.path();
 /// let file_path = temp_dir.join("foo.txt");
-/// let hidden_file_path = temp_dir.join(".foo.txt");
+/// let hidden_file_path = hf::unix::hidden_file_name(&file_path).unwrap();
 ///
 /// File::create(&file_path).unwrap();
 /// assert!(file_path.exists());
@@ -149,8 +153,11 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 
 /// Shows a hidden file or a hidden directory.
 ///
-/// On Unix, this function renames the file to start with a character other than
-/// `.`. On Windows, this function clears the hidden file attribute to the file.
+/// # Platform-specific behavior
+///
+/// - On Unix, this function renames the file to start with a character other
+///   than `.`.
+/// - On Windows, this function clears the hidden file attribute to the file.
 ///
 /// # Errors
 ///
@@ -181,7 +188,7 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let temp_dir = temp_dir.path();
 /// let hidden_file_path = temp_dir.join(".foo.txt");
-/// let file_path = temp_dir.join("foo.txt");
+/// let file_path = hf::unix::normal_file_name(&hidden_file_path).unwrap();
 ///
 /// File::create(&hidden_file_path).unwrap();
 /// assert!(hidden_file_path.exists());

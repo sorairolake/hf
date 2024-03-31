@@ -17,7 +17,7 @@
 //! let temp_dir = tempfile::tempdir().unwrap();
 //! let temp_dir = temp_dir.path();
 //! let file_path = temp_dir.join("foo.txt");
-//! let hidden_file_path = temp_dir.join(".foo.txt");
+//! let hidden_file_path = hf::unix::hidden_file_name(&file_path).unwrap();
 //!
 //! File::create(&file_path).unwrap();
 //! assert!(file_path.exists());

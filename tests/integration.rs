@@ -229,27 +229,43 @@ fn hide_when_hidden_file() {
 
 #[test]
 fn hide_when_file_does_not_exist() {
-    command()
-        .arg("hide")
-        .arg("-n")
-        .arg("non_existent.txt")
-        .assert()
-        .failure()
-        .code(1)
-        .stderr(predicate::str::contains(
-            r#""non_existent.txt" does not exist"#.to_string(),
-        ));
+    {
+        let command = command()
+            .arg("hide")
+            .arg("-n")
+            .arg("non_existent.txt")
+            .assert()
+            .failure()
+            .code(66);
+        if cfg!(windows) {
+            command.stderr(predicate::str::contains(
+                r#"could not read information from "non_existent.txt""#,
+            ));
+        } else {
+            command.stderr(predicate::str::contains(
+                r#""non_existent.txt" does not exist"#,
+            ));
+        }
+    }
 
-    command()
-        .arg("hide")
-        .arg("-f")
-        .arg("non_existent.txt")
-        .assert()
-        .failure()
-        .code(1)
-        .stderr(predicate::str::contains(
-            r#""non_existent.txt" does not exist"#.to_string(),
-        ));
+    {
+        let command = command()
+            .arg("hide")
+            .arg("-f")
+            .arg("non_existent.txt")
+            .assert()
+            .failure()
+            .code(66);
+        if cfg!(windows) {
+            command.stderr(predicate::str::contains(
+                r#"could not read information from "non_existent.txt""#,
+            ));
+        } else {
+            command.stderr(predicate::str::contains(
+                r#""non_existent.txt" does not exist"#,
+            ));
+        }
+    }
 }
 
 #[test]
@@ -484,27 +500,43 @@ fn show_when_non_hidden_file() {
 
 #[test]
 fn show_when_file_does_not_exist() {
-    command()
-        .arg("show")
-        .arg("-n")
-        .arg("non_existent.txt")
-        .assert()
-        .failure()
-        .code(1)
-        .stderr(predicate::str::contains(
-            r#""non_existent.txt" does not exist"#.to_string(),
-        ));
+    {
+        let command = command()
+            .arg("show")
+            .arg("-n")
+            .arg("non_existent.txt")
+            .assert()
+            .failure()
+            .code(66);
+        if cfg!(windows) {
+            command.stderr(predicate::str::contains(
+                r#"could not read information from "non_existent.txt""#,
+            ));
+        } else {
+            command.stderr(predicate::str::contains(
+                r#""non_existent.txt" does not exist"#,
+            ));
+        }
+    }
 
-    command()
-        .arg("show")
-        .arg("-f")
-        .arg("non_existent.txt")
-        .assert()
-        .failure()
-        .code(1)
-        .stderr(predicate::str::contains(
-            r#""non_existent.txt" does not exist"#.to_string(),
-        ));
+    {
+        let command = command()
+            .arg("show")
+            .arg("-f")
+            .arg("non_existent.txt")
+            .assert()
+            .failure()
+            .code(66);
+        if cfg!(windows) {
+            command.stderr(predicate::str::contains(
+                r#"could not read information from "non_existent.txt""#,
+            ));
+        } else {
+            command.stderr(predicate::str::contains(
+                r#""non_existent.txt" does not exist"#,
+            ));
+        }
+    }
 }
 
 #[test]

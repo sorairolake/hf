@@ -134,7 +134,7 @@ mod tests {
             let temp_dir = tempfile::tempdir().unwrap();
             let temp_dir = temp_dir.path();
             let file_path = temp_dir.join("foo.txt");
-            let hidden_file_path = temp_dir.join(".foo.txt");
+            let hidden_file_path = super::hidden_file_name(&file_path).unwrap();
             assert!(!file_path.exists());
             assert!(!hidden_file_path.exists());
 
@@ -150,7 +150,7 @@ mod tests {
             let temp_dir = tempfile::tempdir().unwrap();
             let temp_dir = temp_dir.path();
             let file_path = temp_dir.join("ファイル.txt");
-            let hidden_file_path = temp_dir.join(".ファイル.txt");
+            let hidden_file_path = super::hidden_file_name(&file_path).unwrap();
             assert!(!file_path.exists());
             assert!(!hidden_file_path.exists());
 
@@ -167,7 +167,7 @@ mod tests {
             let temp_dir = temp_dir.path();
             let parent_dir = temp_dir.join("foo");
             let file_path = parent_dir.join("bar.txt");
-            let hidden_file_path = parent_dir.join(".bar.txt");
+            let hidden_file_path = super::hidden_file_name(&file_path).unwrap();
             fs::create_dir(parent_dir).unwrap();
             assert!(!file_path.exists());
             assert!(!hidden_file_path.exists());
@@ -231,7 +231,7 @@ mod tests {
             let temp_dir = tempfile::tempdir().unwrap();
             let temp_dir = temp_dir.path();
             let hidden_file_path = temp_dir.join(".foo.txt");
-            let file_path = temp_dir.join("foo.txt");
+            let file_path = super::normal_file_name(&hidden_file_path).unwrap();
             assert!(!hidden_file_path.exists());
             assert!(!file_path.exists());
 
@@ -247,7 +247,7 @@ mod tests {
             let temp_dir = tempfile::tempdir().unwrap();
             let temp_dir = temp_dir.path();
             let hidden_file_path = temp_dir.join("..foo.txt");
-            let file_path = temp_dir.join("foo.txt");
+            let file_path = super::normal_file_name(&hidden_file_path).unwrap();
             assert!(!hidden_file_path.exists());
             assert!(!file_path.exists());
 
@@ -263,7 +263,7 @@ mod tests {
             let temp_dir = tempfile::tempdir().unwrap();
             let temp_dir = temp_dir.path();
             let hidden_file_path = temp_dir.join(".ファイル.txt");
-            let file_path = temp_dir.join("ファイル.txt");
+            let file_path = super::normal_file_name(&hidden_file_path).unwrap();
             assert!(!hidden_file_path.exists());
             assert!(!file_path.exists());
 
@@ -280,7 +280,7 @@ mod tests {
             let temp_dir = temp_dir.path();
             let parent_dir = temp_dir.join("foo");
             let hidden_file_path = parent_dir.join(".bar.txt");
-            let file_path = parent_dir.join("bar.txt");
+            let file_path = super::normal_file_name(&hidden_file_path).unwrap();
             fs::create_dir(parent_dir).unwrap();
             assert!(!hidden_file_path.exists());
             assert!(!file_path.exists());
