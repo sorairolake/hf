@@ -87,8 +87,8 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - `path` terminates in `..`.
 /// - The file name starts with `.`.
+/// - `path` terminates in `..`.
 /// - [`std::fs::rename`] returns an error.
 ///
 /// ## On Windows
@@ -165,8 +165,8 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - `path` terminates in `..`.
 /// - The file name does not start with `.`.
+/// - `path` terminates in `..`.
 /// - [`std::fs::rename`] returns an error.
 ///
 /// ## On Windows

@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! The `hf` crate is a cross-platform library for manipulating hidden files or
-//! hidden directories.
+//! The `hf` crate is a cross-platform library for manipulating [hidden files or
+//! hidden directories].
 //!
 //! # Examples
 //!
@@ -53,6 +53,8 @@
 //! assert!(!hf::is_hidden(file_path).unwrap());
 //! # }
 //! ```
+//!
+//! [hidden files or hidden directories]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 
 #![doc(html_root_url = "https://docs.rs/hf/0.3.1/")]
 #![cfg_attr(doc_cfg, feature(doc_auto_cfg, doc_cfg))]

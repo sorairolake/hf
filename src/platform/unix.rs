@@ -31,8 +31,8 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 
 /// Returns the path after making `path` invisible.
 ///
-/// Returns [`None`] if `path` terminates in `..` or the file name starts with
-/// `.`.
+/// Returns [`None`] if the file name starts with `.` or `path` terminates in
+/// `..`.
 ///
 /// # Examples
 ///
@@ -59,8 +59,8 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 
 /// Returns the path after making `path` visible.
 ///
-/// Returns [`None`] if `path` terminates in `..` or the file name does not
-/// start with `.`.
+/// Returns [`None`] if the file name does not start with `.` or `path`
+/// terminates in `..`.
 ///
 /// # Examples
 ///
