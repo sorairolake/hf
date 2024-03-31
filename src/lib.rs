@@ -16,8 +16,8 @@
 //!
 //! let temp_dir = tempfile::tempdir().unwrap();
 //! let temp_dir = temp_dir.path();
-//! let file_path = temp_dir.join("file");
-//! let hidden_file_path = temp_dir.join(".file");
+//! let file_path = temp_dir.join("foo.txt");
+//! let hidden_file_path = hf::unix::hidden_file_name(&file_path).unwrap();
 //!
 //! File::create(&file_path).unwrap();
 //! assert!(file_path.exists());
@@ -41,7 +41,7 @@
 //! use std::fs::File;
 //!
 //! let temp_dir = tempfile::tempdir().unwrap();
-//! let file_path = temp_dir.path().join("file");
+//! let file_path = temp_dir.path().join("foo.txt");
 //!
 //! File::create(&file_path).unwrap();
 //! assert!(!hf::is_hidden(&file_path).unwrap());
@@ -54,7 +54,7 @@
 //! # }
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/hf/0.3.0/")]
+#![doc(html_root_url = "https://docs.rs/hf/0.3.1/")]
 #![cfg_attr(doc_cfg, feature(doc_auto_cfg, doc_cfg))]
 // Lint levels of rustc.
 #![deny(missing_debug_implementations, missing_docs)]
@@ -67,3 +67,5 @@ mod ops;
 mod platform;
 
 pub use crate::ops::{hide, is_hidden, show};
+#[cfg(unix)]
+pub use crate::platform::unix;

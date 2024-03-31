@@ -34,6 +34,8 @@ pub fn run() -> anyhow::Result<()> {
                     .input
                     .into_iter()
                     .map(|f| {
+                        #[cfg(unix)]
+                        std::fs::metadata(&f).with_context(|| format!("{f:?} does not exist"))?;
                         let is_hidden = hf::is_hidden(&f)
                             .with_context(|| format!("could not read information from {f:?}"));
                         match is_hidden {
@@ -74,6 +76,8 @@ pub fn run() -> anyhow::Result<()> {
                     .input
                     .into_iter()
                     .map(|f| {
+                        #[cfg(unix)]
+                        std::fs::metadata(&f).with_context(|| format!("{f:?} does not exist"))?;
                         let is_hidden = hf::is_hidden(&f)
                             .with_context(|| format!("could not read information from {f:?}"));
                         match is_hidden {

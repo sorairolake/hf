@@ -14,6 +14,18 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.3.0\...v0.3.1[0.3.1] - 2024-03-31
+
+=== Added
+
+* Add functions to get the path after making it visible or invisible for Unix
+  platforms ({pull-request-url}/91[#91])
+
+=== Fixed
+
+* Fix not being able to take path of Unicode string in Windows environment
+  ({pull-request-url}/90[#90])
+
 == {compare-url}/v0.2.2\...v0.3.0[0.3.0] - 2024-03-28
 
 === Added
