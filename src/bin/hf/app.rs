@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use anyhow::Context;
+use anyhow::{bail, Context};
 use clap::Parser;
 use log::{info, warn};
 use simplelog::{ColorChoice, Config, SimpleLogger, TermLogger, TerminalMode};
@@ -34,6 +34,9 @@ pub fn run() -> anyhow::Result<()> {
                     .input
                     .into_iter()
                     .map(|f| {
+                        if !f.exists() {
+                            bail!("{f:?} does not exist");
+                        }
                         let is_hidden = hf::is_hidden(&f)
                             .with_context(|| format!("could not read information from {f:?}"));
                         match is_hidden {
@@ -74,6 +77,9 @@ pub fn run() -> anyhow::Result<()> {
                     .input
                     .into_iter()
                     .map(|f| {
+                        if !f.exists() {
+                            bail!("{f:?} does not exist");
+                        }
                         let is_hidden = hf::is_hidden(&f)
                             .with_context(|| format!("could not read information from {f:?}"));
                         match is_hidden {
