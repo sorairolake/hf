@@ -95,6 +95,7 @@ mod tests {
     fn is_hidden() {
         assert!(super::is_hidden(Path::new(".foo.txt")).unwrap());
         assert!(super::is_hidden(Path::new("..foo.txt")).unwrap());
+        assert!(super::is_hidden(Path::new(".ファイル.txt")).unwrap());
         assert!(super::is_hidden(Path::new("foo/.bar.txt")).unwrap());
         assert!(super::is_hidden(Path::new(".foo/.bar.txt")).unwrap());
     }
@@ -102,6 +103,7 @@ mod tests {
     #[test]
     fn is_hidden_when_non_hidden_file() {
         assert!(!super::is_hidden(Path::new("foo.txt")).unwrap());
+        assert!(!super::is_hidden(Path::new("ファイル.txt")).unwrap());
         assert!(!super::is_hidden(Path::new("foo/bar.txt")).unwrap());
         assert!(!super::is_hidden(Path::new(".foo/bar.txt")).unwrap());
     }
@@ -133,6 +135,22 @@ mod tests {
             let temp_dir = temp_dir.path();
             let file_path = temp_dir.join("foo.txt");
             let hidden_file_path = temp_dir.join(".foo.txt");
+            assert!(!file_path.exists());
+            assert!(!hidden_file_path.exists());
+
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!hidden_file_path.exists());
+
+            super::hide(&file_path).unwrap();
+            assert!(!file_path.exists());
+            assert!(hidden_file_path.exists());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let temp_dir = temp_dir.path();
+            let file_path = temp_dir.join("ファイル.txt");
+            let hidden_file_path = temp_dir.join(".ファイル.txt");
             assert!(!file_path.exists());
             assert!(!hidden_file_path.exists());
 
@@ -244,6 +262,22 @@ mod tests {
         {
             let temp_dir = tempfile::tempdir().unwrap();
             let temp_dir = temp_dir.path();
+            let hidden_file_path = temp_dir.join(".ファイル.txt");
+            let file_path = temp_dir.join("ファイル.txt");
+            assert!(!hidden_file_path.exists());
+            assert!(!file_path.exists());
+
+            File::create(&hidden_file_path).unwrap();
+            assert!(hidden_file_path.exists());
+            assert!(!file_path.exists());
+
+            super::show(&hidden_file_path).unwrap();
+            assert!(!hidden_file_path.exists());
+            assert!(file_path.exists());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let temp_dir = temp_dir.path();
             let parent_dir = temp_dir.join("foo");
             let hidden_file_path = parent_dir.join(".bar.txt");
             let file_path = parent_dir.join("bar.txt");
@@ -304,6 +338,10 @@ mod tests {
             Path::new(".foo.txt")
         );
         assert_eq!(
+            super::hidden_file_name("ファイル.txt").unwrap(),
+            Path::new(".ファイル.txt")
+        );
+        assert_eq!(
             super::hidden_file_name("foo/bar.txt").unwrap(),
             Path::new("foo/.bar.txt")
         );
@@ -336,6 +374,10 @@ mod tests {
         assert_eq!(
             super::normal_file_name("..foo.txt").unwrap(),
             Path::new("foo.txt")
+        );
+        assert_eq!(
+            super::normal_file_name(".ファイル.txt").unwrap(),
+            Path::new("ファイル.txt")
         );
         assert_eq!(
             super::normal_file_name("foo/.bar.txt").unwrap(),
