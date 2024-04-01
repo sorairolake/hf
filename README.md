@@ -87,7 +87,7 @@ Add this to your `Cargo.toml` to use it as a library:
 
 ```toml
 [dependencies]
-hf = { version = "0.3.1", default-features = false }
+hf = { version = "0.3.2", default-features = false }
 ```
 
 By default, the dependencies required to build the application are also built.
