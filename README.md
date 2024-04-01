@@ -94,6 +94,30 @@ By default, the dependencies required to build the application are also built.
 If you disable the `default` feature, only the dependencies required to build
 the library will be built.
 
+### Example
+
+```rust
+use std::fs::File;
+
+let temp_dir = tempfile::tempdir().unwrap();
+let file_path = temp_dir.path().join("foo.txt");
+
+File::create(&file_path).unwrap();
+assert!(!hf::is_hidden(&file_path).unwrap());
+
+hf::hide(&file_path).unwrap();
+// Change the file name to start with `.`.
+#[cfg(unix)]
+let file_path = hf::unix::hidden_file_name(&file_path).unwrap();
+assert!(hf::is_hidden(&file_path).unwrap());
+
+hf::show(&file_path).unwrap();
+// Change the file name to start with a character other than `.`.
+#[cfg(unix)]
+let file_path = hf::unix::normal_file_name(&file_path).unwrap();
+assert!(!hf::is_hidden(file_path).unwrap());
+```
+
 ### Documentation
 
 See the [documentation][docs-url] for more details.
