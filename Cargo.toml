@@ -4,7 +4,7 @@
 
 [package]
 name = "hf"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -17,6 +17,10 @@ license = "Apache-2.0 OR MIT"
 keywords = ["hidden"]
 categories = ["command-line-utilities", "filesystem"]
 include = ["/LICENSES", "/README.md", "/src"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "doc_cfg"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

@@ -49,9 +49,11 @@ use crate::platform::imp;
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
+/// # assert!(!file_path.exists());
 ///
 /// File::create(&file_path).unwrap();
 ///
+/// // Set the hidden file attribute.
 /// Command::new("attrib")
 ///     .arg("+h")
 ///     .arg(&file_path)
@@ -59,6 +61,7 @@ use crate::platform::imp;
 ///     .unwrap();
 /// assert!(hf::is_hidden(&file_path).unwrap());
 ///
+/// // Clear the hidden file attribute.
 /// Command::new("attrib")
 ///     .arg("-h")
 ///     .arg(&file_path)
@@ -87,8 +90,8 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - `path` terminates in `..`.
 /// - The file name starts with `.`.
+/// - `path` terminates in `..`.
 /// - [`std::fs::rename`] returns an error.
 ///
 /// ## On Windows
@@ -108,17 +111,19 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// # use std::fs::File;
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
-/// let temp_dir = temp_dir.path();
-/// let file_path = temp_dir.join("foo.txt");
-/// let hidden_file_path = hf::unix::hidden_file_name(&file_path).unwrap();
+/// let file_path = temp_dir.path().join("foo.txt");
+/// # assert!(!file_path.exists());
 ///
 /// File::create(&file_path).unwrap();
 /// assert!(file_path.exists());
-/// assert!(!hidden_file_path.exists());
+/// assert!(!hf::is_hidden(&file_path).unwrap());
 ///
 /// hf::hide(&file_path).unwrap();
 /// assert!(!file_path.exists());
-/// assert!(hidden_file_path.exists());
+/// // Change the file name to start with `.`.
+/// let file_path = hf::unix::hidden_file_name(&file_path).unwrap();
+/// assert!(file_path.exists());
+/// assert!(hf::is_hidden(file_path).unwrap());
 ///
 /// assert!(hf::hide(".bar.txt").is_err());
 /// assert!(hf::hide("bar.txt/..").is_err());
@@ -135,6 +140,7 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
+/// # assert!(!file_path.exists());
 ///
 /// File::create(&file_path).unwrap();
 /// assert!(!hf::is_hidden(&file_path).unwrap());
@@ -165,8 +171,8 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - `path` terminates in `..`.
 /// - The file name does not start with `.`.
+/// - `path` terminates in `..`.
 /// - [`std::fs::rename`] returns an error.
 ///
 /// ## On Windows
@@ -186,17 +192,19 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// # use std::fs::File;
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
-/// let temp_dir = temp_dir.path();
-/// let hidden_file_path = temp_dir.join(".foo.txt");
-/// let file_path = hf::unix::normal_file_name(&hidden_file_path).unwrap();
+/// let file_path = temp_dir.path().join(".foo.txt");
+/// # assert!(!file_path.exists());
 ///
-/// File::create(&hidden_file_path).unwrap();
-/// assert!(hidden_file_path.exists());
-/// assert!(!file_path.exists());
-///
-/// hf::show(&hidden_file_path).unwrap();
-/// assert!(!hidden_file_path.exists());
+/// File::create(&file_path).unwrap();
 /// assert!(file_path.exists());
+/// assert!(hf::is_hidden(&file_path).unwrap());
+///
+/// hf::show(&file_path).unwrap();
+/// assert!(!file_path.exists());
+/// // Change the file name to start with a character other than `.`.
+/// let file_path = hf::unix::normal_file_name(&file_path).unwrap();
+/// assert!(file_path.exists());
+/// assert!(!hf::is_hidden(file_path).unwrap());
 ///
 /// assert!(hf::show("bar.txt").is_err());
 /// assert!(hf::show(".bar.txt/..").is_err());
@@ -213,9 +221,11 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
+/// # assert!(!file_path.exists());
 ///
 /// File::create(&file_path).unwrap();
 ///
+/// // Set the hidden file attribute.
 /// Command::new("attrib")
 ///     .arg("+h")
 ///     .arg(&file_path)
