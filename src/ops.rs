@@ -6,12 +6,12 @@ use std::{io, path::Path};
 
 use crate::platform::imp;
 
-/// Returns `true` if the path is a hidden file or a hidden directory.
+/// Returns [`true`] if the path is a hidden file or a hidden directory.
 ///
 /// # Platform-specific behavior
 ///
-/// - On Unix, returns `true` if the file name starts with `.`.
-/// - On Windows, returns `true` if the file has the hidden file attribute.
+/// - On Unix, returns [`true`] if the file name starts with `.`.
+/// - On Windows, returns [`true`] if the file has the hidden file attribute.
 ///
 /// # Errors
 ///
