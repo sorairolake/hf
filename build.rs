@@ -21,7 +21,6 @@ fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
         .args(["-b", "manpage"])
         .args(["-a", concat!("revnumber=", env!("CARGO_PKG_VERSION"))])
         .args(["-D", out_dir])
-        .args(["--failure-level", "WARN"])
         .arg(man_dir.join("*.1.adoc"))
         .status()
 }
