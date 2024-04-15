@@ -4,7 +4,7 @@
 
 = hf-show(1)
 // Specify in UTC.
-:docdate: 2024-03-27
+:docdate: 2024-04-15
 :doctype: manpage
 ifdef::revnumber[:mansource: hf {revnumber}]
 ifndef::revnumber[:mansource: hf]
@@ -62,6 +62,10 @@ include::{includedir}/section-notes.adoc[]
 Make the given hidden file visible:{blank}::
 
   $ *hf show -f .data.txt*
+
+Show what would be done:{blank}::
+
+  $ *hf show -n .github/ .gitignore*
 
 include::{includedir}/section-reporting-bugs.adoc[]
 
