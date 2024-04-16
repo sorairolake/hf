@@ -4,11 +4,12 @@
 
 = hf-hide(1)
 // Specify in UTC.
-:docdate: 2024-03-27
+:docdate: 2024-04-15
 :doctype: manpage
 ifdef::revnumber[:mansource: hf {revnumber}]
+ifndef::revnumber[:mansource: hf]
 :manmanual: General Commands Manual
-:includedir: ../include
+:includedir: ./include
 
 == NAME
 
@@ -61,6 +62,10 @@ include::{includedir}/section-notes.adoc[]
 Make the given file invisible:{blank}::
 
   $ *hf hide -f data.txt*
+
+Show what would be done:{blank}::
+
+  $ *hf hide -n Cargo.toml src/*
 
 include::{includedir}/section-reporting-bugs.adoc[]
 
