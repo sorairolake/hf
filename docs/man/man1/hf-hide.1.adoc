@@ -9,7 +9,7 @@
 ifdef::revnumber[:mansource: hf {revnumber}]
 ifndef::revnumber[:mansource: hf]
 :manmanual: General Commands Manual
-:includedir: ./include
+ifndef::site-gen-antora[:includedir: ./include]
 
 == NAME
 
@@ -53,9 +53,11 @@ _FILE_::
   Print version number. The long flag (*--version*) will also print the
   copyright notice, the license notice and where to report bugs.
 
-include::{includedir}/section-exit-status.adoc[]
+ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
+ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]
 
-include::{includedir}/section-notes.adoc[]
+ifndef::site-gen-antora[include::{includedir}/section-notes.adoc[]]
+ifdef::site-gen-antora[include::partial$man/man1/include/section-notes.adoc[]]
 
 == EXAMPLES
 
@@ -67,9 +69,11 @@ Show what would be done:{blank}::
 
   $ *hf hide -n Cargo.toml src/*
 
-include::{includedir}/section-reporting-bugs.adoc[]
+ifndef::site-gen-antora[include::{includedir}/section-reporting-bugs.adoc[]]
+ifdef::site-gen-antora[include::partial$man/man1/include/section-reporting-bugs.adoc[]]
 
-include::{includedir}/section-copyright.adoc[]
+ifndef::site-gen-antora[include::{includedir}/section-copyright.adoc[]]
+ifdef::site-gen-antora[include::partial$man/man1/include/section-copyright.adoc[]]
 
 == SEE ALSO
 
