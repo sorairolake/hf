@@ -42,7 +42,7 @@
 //!
 //! [hidden files or hidden directories]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 
-#![doc(html_root_url = "https://docs.rs/hf/0.3.3/")]
+#![doc(html_root_url = "https://docs.rs/hf/0.3.4/")]
 #![cfg_attr(doc_cfg, feature(doc_auto_cfg, doc_cfg))]
 // Lint levels of rustc.
 #![deny(missing_debug_implementations, missing_docs)]

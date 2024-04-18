@@ -4,7 +4,7 @@
 
 [package]
 name = "hf"
-version = "0.3.3"
+version = "0.3.4"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
