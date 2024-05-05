@@ -8,7 +8,7 @@
 * xref:use-as-a-library.adoc[]
 * https://docs.rs/hf[API Reference]
 
-.Manual pages
+.Man pages
 * xref:man/man1/hf.1.adoc[`hf(1)`]
 * xref:man/man1/hf-hide.1.adoc[`hf-hide(1)`]
 * xref:man/man1/hf-show.1.adoc[`hf-show(1)`]
