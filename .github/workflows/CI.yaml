@@ -106,6 +106,7 @@ jobs:
 
   semver:
     name: Semantic Versioning
+    if: startsWith(github.ref, 'refs/heads/release')
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
