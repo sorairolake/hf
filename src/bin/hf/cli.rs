@@ -45,8 +45,15 @@ const SHOW_AFTER_LONG_HELP: &str = "See `hf-show(1)` for more details.";
 )]
 pub struct Opt {
     /// The minimum log level to print.
-    #[arg(long, default_value("INFO"), global(true), value_name("LEVEL"))]
-    pub log_level: LevelFilter,
+    #[arg(
+        long,
+        value_enum,
+        default_value_t,
+        global(true),
+        value_name("LEVEL"),
+        ignore_case(true)
+    )]
+    pub log_level: LogLevel,
 
     /// Generate shell completion.
     ///
@@ -161,6 +168,42 @@ impl Generator for Shell {
     }
 }
 
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, ValueEnum)]
+#[value(rename_all = "UPPER")]
+pub enum LogLevel {
+    /// Lowest log level.
+    Off,
+
+    /// Error log level.
+    Error,
+
+    /// Warn log level.
+    Warn,
+
+    /// Info log level.
+    #[default]
+    Info,
+
+    /// Debug log level.
+    Debug,
+
+    /// Trace log level.
+    Trace,
+}
+
+impl From<LogLevel> for LevelFilter {
+    fn from(level: LogLevel) -> Self {
+        match level {
+            LogLevel::Off => Self::Off,
+            LogLevel::Error => Self::Error,
+            LogLevel::Warn => Self::Warn,
+            LogLevel::Info => Self::Info,
+            LogLevel::Debug => Self::Debug,
+            LogLevel::Trace => Self::Trace,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -178,5 +221,20 @@ mod tests {
         assert_eq!(Shell::Nushell.file_name("hf"), "hf.nu");
         assert_eq!(Shell::PowerShell.file_name("hf"), "_hf.ps1");
         assert_eq!(Shell::Zsh.file_name("hf"), "_hf");
+    }
+
+    #[test]
+    fn default_log_level() {
+        assert_eq!(LogLevel::default(), LogLevel::Info);
+    }
+
+    #[test]
+    fn from_log_level_to_level_filter() {
+        assert_eq!(LevelFilter::from(LogLevel::Off), LevelFilter::Off);
+        assert_eq!(LevelFilter::from(LogLevel::Error), LevelFilter::Error);
+        assert_eq!(LevelFilter::from(LogLevel::Warn), LevelFilter::Warn);
+        assert_eq!(LevelFilter::from(LogLevel::Info), LevelFilter::Info);
+        assert_eq!(LevelFilter::from(LogLevel::Debug), LevelFilter::Debug);
+        assert_eq!(LevelFilter::from(LogLevel::Trace), LevelFilter::Trace);
     }
 }

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use anyhow::Context;
-use clap::Parser;
+use clap::{error::ErrorKind, CommandFactory, Parser};
 use log::{info, warn};
 use simplelog::{ColorChoice, Config, SimpleLogger, TermLogger, TerminalMode};
 
@@ -19,13 +19,14 @@ pub fn run() -> anyhow::Result<()> {
         return Ok(());
     }
 
+    let log_level = opt.log_level.into();
     TermLogger::init(
-        opt.log_level,
+        log_level,
         Config::default(),
         TerminalMode::Mixed,
         ColorChoice::Auto,
     )
-    .or_else(|_| SimpleLogger::init(opt.log_level, Config::default()))?;
+    .or_else(|_| SimpleLogger::init(log_level, Config::default()))?;
 
     if let Some(command) = opt.command {
         match command {
@@ -46,30 +47,29 @@ pub fn run() -> anyhow::Result<()> {
                     })
                     .collect::<anyhow::Result<Vec<_>>>()?;
 
-                if arg.dry_run {
-                    for file in files {
-                        if file.1 {
-                            println!("{:?}", file.0);
-                        } else {
-                            warn!("{:?} is ignored", file.0);
+                match (arg.dry_run, arg.force) {
+                    (true, _) => {
+                        for file in files {
+                            if file.1 {
+                                println!("{:?}", file.0);
+                            } else {
+                                warn!("{:?} is ignored", file.0);
+                            }
                         }
                     }
-                    return Ok(());
-                }
-
-                if arg.force {
-                    for file in files {
-                        if file.1 {
-                            hf::hide(&file.0)
-                                .with_context(|| format!("could not hide {:?}", file.0))?;
-                            info!("{:?} has been hidden", file.0);
-                        } else {
-                            warn!("{:?} is already hidden", file.0);
+                    (_, true) => {
+                        for file in files {
+                            if file.1 {
+                                hf::hide(&file.0)
+                                    .with_context(|| format!("could not hide {:?}", file.0))?;
+                                info!("{:?} has been hidden", file.0);
+                            } else {
+                                warn!("{:?} is already hidden", file.0);
+                            }
                         }
                     }
-                    return Ok(());
+                    _ => unreachable!(),
                 }
-                unreachable!();
             }
             Command::Show(arg) => {
                 let files = arg
@@ -88,33 +88,35 @@ pub fn run() -> anyhow::Result<()> {
                     })
                     .collect::<anyhow::Result<Vec<_>>>()?;
 
-                if arg.dry_run {
-                    for file in files {
-                        if file.1 {
-                            println!("{:?}", file.0);
-                        } else {
-                            warn!("{:?} is ignored", file.0);
+                match (arg.dry_run, arg.force) {
+                    (true, _) => {
+                        for file in files {
+                            if file.1 {
+                                println!("{:?}", file.0);
+                            } else {
+                                warn!("{:?} is ignored", file.0);
+                            }
                         }
                     }
-                    return Ok(());
-                }
-
-                if arg.force {
-                    for file in files {
-                        if file.1 {
-                            hf::show(&file.0)
-                                .with_context(|| format!("could not show {:?}", file.0))?;
-                            info!("{:?} has been shown", file.0);
-                        } else {
-                            warn!("{:?} is already shown", file.0);
+                    (_, true) => {
+                        for file in files {
+                            if file.1 {
+                                hf::show(&file.0)
+                                    .with_context(|| format!("could not show {:?}", file.0))?;
+                                info!("{:?} has been shown", file.0);
+                            } else {
+                                warn!("{:?} is already shown", file.0);
+                            }
                         }
                     }
-                    return Ok(());
+                    _ => unreachable!(),
                 }
-                unreachable!();
             }
         }
     } else {
-        unreachable!();
+        Opt::command()
+            .error(ErrorKind::MissingSubcommand, "missing subcommand")
+            .exit()
     }
+    Ok(())
 }

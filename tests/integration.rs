@@ -92,6 +92,17 @@ fn generate_completion_with_invalid_shell() {
 }
 
 #[test]
+fn log_level_without_subcommand() {
+    utils::command::command()
+        .arg("--log-level")
+        .arg("WARN")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains("missing subcommand"));
+}
+
+#[test]
 fn long_version() {
     utils::command::command()
         .arg("--version")

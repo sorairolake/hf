@@ -181,6 +181,33 @@ fn show_when_file_does_not_exist() {
 }
 
 #[test]
+fn show_with_force_and_dry_run() {
+    let temp_dir = tempfile::tempdir().unwrap();
+    let temp_dir = temp_dir.path();
+    let file_path = temp_dir.join(if cfg!(unix) { ".foo.txt" } else { "foo.txt" });
+
+    File::create(&file_path).unwrap();
+    #[cfg(windows)]
+    std::process::Command::new("attrib")
+        .arg("+h")
+        .arg(&file_path)
+        .status()
+        .unwrap();
+
+    utils::command::command()
+        .arg("show")
+        .arg("-f")
+        .arg("-n")
+        .arg(&file_path)
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "the argument '--force' cannot be used with '--dry-run'",
+        ));
+}
+
+#[test]
 fn show_with_off_log_level() {
     let temp_dir = tempfile::tempdir().unwrap();
     let temp_dir = temp_dir.path();
@@ -198,6 +225,31 @@ fn show_with_off_log_level() {
         .arg("show")
         .arg("--log-level")
         .arg("OFF")
+        .arg("-f")
+        .arg(&file_path)
+        .assert()
+        .success()
+        .stdout(predicate::str::is_empty());
+}
+
+#[test]
+fn show_with_error_log_level() {
+    let temp_dir = tempfile::tempdir().unwrap();
+    let temp_dir = temp_dir.path();
+    let file_path = temp_dir.join(if cfg!(unix) { ".foo.txt" } else { "foo.txt" });
+
+    File::create(&file_path).unwrap();
+    #[cfg(windows)]
+    std::process::Command::new("attrib")
+        .arg("+h")
+        .arg(&file_path)
+        .status()
+        .unwrap();
+
+    utils::command::command()
+        .arg("show")
+        .arg("--log-level")
+        .arg("ERROR")
         .arg("-f")
         .arg(&file_path)
         .assert()
@@ -261,6 +313,108 @@ fn show_with_info_log_level() {
             r#"{:?} is already shown"#,
             file_path.1
         )));
+}
+
+#[test]
+fn show_with_debug_log_level() {
+    let temp_dir = tempfile::tempdir().unwrap();
+    let temp_dir = temp_dir.path();
+    let file_path = (
+        temp_dir.join(if cfg!(unix) { ".foo.txt" } else { "foo.txt" }),
+        temp_dir.join("bar.txt"),
+    );
+
+    File::create(&file_path.0).unwrap();
+    File::create(&file_path.1).unwrap();
+    #[cfg(windows)]
+    std::process::Command::new("attrib")
+        .arg("+h")
+        .arg(&file_path.0)
+        .status()
+        .unwrap();
+
+    utils::command::command()
+        .arg("show")
+        .arg("--log-level")
+        .arg("DEBUG")
+        .arg("-f")
+        .arg(&file_path.0)
+        .arg(&file_path.1)
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(format!(
+            r#"{:?} has been shown"#,
+            file_path.0
+        )))
+        .stdout(predicate::str::contains(format!(
+            r#"{:?} is already shown"#,
+            file_path.1
+        )));
+}
+
+#[test]
+fn show_with_trace_log_level() {
+    let temp_dir = tempfile::tempdir().unwrap();
+    let temp_dir = temp_dir.path();
+    let file_path = (
+        temp_dir.join(if cfg!(unix) { ".foo.txt" } else { "foo.txt" }),
+        temp_dir.join("bar.txt"),
+    );
+
+    File::create(&file_path.0).unwrap();
+    File::create(&file_path.1).unwrap();
+    #[cfg(windows)]
+    std::process::Command::new("attrib")
+        .arg("+h")
+        .arg(&file_path.0)
+        .status()
+        .unwrap();
+
+    utils::command::command()
+        .arg("show")
+        .arg("--log-level")
+        .arg("TRACE")
+        .arg("-f")
+        .arg(&file_path.0)
+        .arg(&file_path.1)
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(format!(
+            r#"{:?} has been shown"#,
+            file_path.0
+        )))
+        .stdout(predicate::str::contains(format!(
+            r#"{:?} is already shown"#,
+            file_path.1
+        )));
+}
+
+#[test]
+fn show_with_invalid_log_level() {
+    let temp_dir = tempfile::tempdir().unwrap();
+    let temp_dir = temp_dir.path();
+    let file_path = temp_dir.join(if cfg!(unix) { ".foo.txt" } else { "foo.txt" });
+
+    File::create(&file_path).unwrap();
+    #[cfg(windows)]
+    std::process::Command::new("attrib")
+        .arg("+h")
+        .arg(&file_path)
+        .status()
+        .unwrap();
+
+    utils::command::command()
+        .arg("show")
+        .arg("--log-level")
+        .arg("a")
+        .arg("-f")
+        .arg(&file_path)
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--log-level <LEVEL>'",
+        ));
 }
 
 #[test]

@@ -4,7 +4,7 @@
 
 = hf-hide(1)
 // Specify in UTC.
-:docdate: 2024-04-15
+:docdate: 2024-06-28
 :doctype: manpage
 ifdef::revnumber[:mansource: hf {revnumber}]
 ifndef::revnumber[:mansource: hf]
@@ -33,7 +33,33 @@ _FILE_::
 
 *--log-level* _LEVEL_::
 
-  The minimum log level to print. Default is "INFO".
+  The minimum log level to print.
+
+  The possible values are:{blank}:::
+
+    *OFF*::::
+
+      Lowest log level.
+
+    *ERROR*::::
+
+      Error log level.
+
+    *WARN*::::
+
+      Warn log level.
+
+    *INFO*::::
+
+      Info log level. This is the default value.
+
+    *DEBUG*::::
+
+      Debug log level.
+
+    *TRACE*::::
+
+      Trace log level.
 
 *-f*, *--force*::
 
