@@ -168,7 +168,7 @@ impl Generator for Shell {
     }
 }
 
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, ValueEnum)]
+#[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 #[value(rename_all = "UPPER")]
 pub enum LogLevel {
     /// Lowest log level.
