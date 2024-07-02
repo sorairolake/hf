@@ -36,9 +36,11 @@ pub fn run() -> anyhow::Result<()> {
                     .into_iter()
                     .map(|f| {
                         #[cfg(unix)]
-                        std::fs::metadata(&f).with_context(|| format!("{f:?} does not exist"))?;
-                        let is_hidden = hf::is_hidden(&f)
-                            .with_context(|| format!("could not read information from {f:?}"));
+                        std::fs::metadata(&f)
+                            .with_context(|| format!("{} does not exist", f.display()))?;
+                        let is_hidden = hf::is_hidden(&f).with_context(|| {
+                            format!("could not read information from {}", f.display())
+                        });
                         match is_hidden {
                             Ok(false) => Ok((f, true)),
                             Ok(true) => Ok((f, false)),
@@ -51,20 +53,21 @@ pub fn run() -> anyhow::Result<()> {
                     (true, _) => {
                         for file in files {
                             if file.1 {
-                                println!("{:?}", file.0);
+                                println!("{}", file.0.display());
                             } else {
-                                warn!("{:?} is ignored", file.0);
+                                warn!("{} is ignored", file.0.display());
                             }
                         }
                     }
                     (_, true) => {
                         for file in files {
                             if file.1 {
-                                hf::hide(&file.0)
-                                    .with_context(|| format!("could not hide {:?}", file.0))?;
-                                info!("{:?} has been hidden", file.0);
+                                hf::hide(&file.0).with_context(|| {
+                                    format!("could not hide {}", file.0.display())
+                                })?;
+                                info!("{} has been hidden", file.0.display());
                             } else {
-                                warn!("{:?} is already hidden", file.0);
+                                warn!("{} is already hidden", file.0.display());
                             }
                         }
                     }
@@ -77,9 +80,11 @@ pub fn run() -> anyhow::Result<()> {
                     .into_iter()
                     .map(|f| {
                         #[cfg(unix)]
-                        std::fs::metadata(&f).with_context(|| format!("{f:?} does not exist"))?;
-                        let is_hidden = hf::is_hidden(&f)
-                            .with_context(|| format!("could not read information from {f:?}"));
+                        std::fs::metadata(&f)
+                            .with_context(|| format!("{} does not exist", f.display()))?;
+                        let is_hidden = hf::is_hidden(&f).with_context(|| {
+                            format!("could not read information from {}", f.display())
+                        });
                         match is_hidden {
                             Ok(true) => Ok((f, true)),
                             Ok(false) => Ok((f, false)),
@@ -92,20 +97,21 @@ pub fn run() -> anyhow::Result<()> {
                     (true, _) => {
                         for file in files {
                             if file.1 {
-                                println!("{:?}", file.0);
+                                println!("{}", file.0.display());
                             } else {
-                                warn!("{:?} is ignored", file.0);
+                                warn!("{} is ignored", file.0.display());
                             }
                         }
                     }
                     (_, true) => {
                         for file in files {
                             if file.1 {
-                                hf::show(&file.0)
-                                    .with_context(|| format!("could not show {:?}", file.0))?;
-                                info!("{:?} has been shown", file.0);
+                                hf::show(&file.0).with_context(|| {
+                                    format!("could not show {}", file.0.display())
+                                })?;
+                                info!("{} has been shown", file.0.display());
                             } else {
-                                warn!("{:?} is already shown", file.0);
+                                warn!("{} is already shown", file.0.display());
                             }
                         }
                     }

@@ -36,7 +36,7 @@ fn basic_show() {
         .arg(&file_path)
         .assert()
         .success()
-        .stdout(predicate::str::contains(format!(r#"{file_path:?}"#)));
+        .stdout(predicate::str::contains(format!("{}", file_path.display())));
 
     utils::command::command()
         .arg("show")
@@ -45,7 +45,8 @@ fn basic_show() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{file_path:?} has been shown"#
+            "{} has been shown",
+            file_path.display()
         )));
 
     #[cfg(unix)]
@@ -85,8 +86,14 @@ fn show_with_multiple_files() {
         .arg(&file_path.1)
         .assert()
         .success()
-        .stdout(predicate::str::contains(format!(r#"{:?}"#, file_path.0)))
-        .stdout(predicate::str::contains(format!(r#"{:?}"#, file_path.1)));
+        .stdout(predicate::str::contains(format!(
+            "{}",
+            file_path.0.display()
+        )))
+        .stdout(predicate::str::contains(format!(
+            "{}",
+            file_path.1.display()
+        )));
 
     utils::command::command()
         .arg("show")
@@ -96,12 +103,12 @@ fn show_with_multiple_files() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been shown"#,
-            file_path.0
+            "{} has been shown",
+            file_path.0.display()
         )))
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been shown"#,
-            file_path.1
+            "{} has been shown",
+            file_path.1.display()
         )));
 }
 
@@ -120,7 +127,8 @@ fn show_when_non_hidden_file() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{file_path:?} is ignored"#
+            "{} is ignored",
+            file_path.display()
         )));
 
     utils::command::command()
@@ -130,7 +138,8 @@ fn show_when_non_hidden_file() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{file_path:?} is already shown"#
+            "{} is already shown",
+            file_path.display()
         )));
 
     #[cfg(unix)]
@@ -151,12 +160,10 @@ fn show_when_file_does_not_exist() {
             .code(66);
         if cfg!(windows) {
             command.stderr(predicate::str::contains(
-                r#"could not read information from "non_existent.txt""#,
+                "could not read information from non_existent.txt",
             ));
         } else {
-            command.stderr(predicate::str::contains(
-                r#""non_existent.txt" does not exist"#,
-            ));
+            command.stderr(predicate::str::contains("non_existent.txt does not exist"));
         }
     }
 
@@ -170,12 +177,10 @@ fn show_when_file_does_not_exist() {
             .code(66);
         if cfg!(windows) {
             command.stderr(predicate::str::contains(
-                r#"could not read information from "non_existent.txt""#,
+                "could not read information from non_existent.txt",
             ));
         } else {
-            command.stderr(predicate::str::contains(
-                r#""non_existent.txt" does not exist"#,
-            ));
+            command.stderr(predicate::str::contains("non_existent.txt does not exist"));
         }
     }
 }
@@ -274,7 +279,8 @@ fn show_with_warn_log_level() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{file_path:?} is already shown"#
+            "{} is already shown",
+            file_path.display()
         )));
 }
 
@@ -306,12 +312,12 @@ fn show_with_info_log_level() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been shown"#,
-            file_path.0
+            "{} has been shown",
+            file_path.0.display()
         )))
         .stdout(predicate::str::contains(format!(
-            r#"{:?} is already shown"#,
-            file_path.1
+            "{} is already shown",
+            file_path.1.display()
         )));
 }
 
@@ -343,12 +349,12 @@ fn show_with_debug_log_level() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been shown"#,
-            file_path.0
+            "{} has been shown",
+            file_path.0.display()
         )))
         .stdout(predicate::str::contains(format!(
-            r#"{:?} is already shown"#,
-            file_path.1
+            "{} is already shown",
+            file_path.1.display()
         )));
 }
 
@@ -380,12 +386,12 @@ fn show_with_trace_log_level() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been shown"#,
-            file_path.0
+            "{} has been shown",
+            file_path.0.display()
         )))
         .stdout(predicate::str::contains(format!(
-            r#"{:?} is already shown"#,
-            file_path.1
+            "{} is already shown",
+            file_path.1.display()
         )));
 }
 

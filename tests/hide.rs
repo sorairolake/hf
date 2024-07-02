@@ -30,7 +30,7 @@ fn basic_hide() {
         .arg(&file_path)
         .assert()
         .success()
-        .stdout(predicate::str::contains(format!(r#"{file_path:?}"#)));
+        .stdout(predicate::str::contains(format!("{}", file_path.display())));
 
     utils::command::command()
         .arg("hide")
@@ -39,7 +39,8 @@ fn basic_hide() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{file_path:?} has been hidden"#
+            "{} has been hidden",
+            file_path.display()
         )));
 
     #[cfg(unix)]
@@ -64,8 +65,14 @@ fn hide_with_multiple_files() {
         .arg(&file_path.1)
         .assert()
         .success()
-        .stdout(predicate::str::contains(format!(r#"{:?}"#, file_path.0)))
-        .stdout(predicate::str::contains(format!(r#"{:?}"#, file_path.1)));
+        .stdout(predicate::str::contains(format!(
+            "{}",
+            file_path.0.display()
+        )))
+        .stdout(predicate::str::contains(format!(
+            "{}",
+            file_path.1.display()
+        )));
 
     utils::command::command()
         .arg("hide")
@@ -75,12 +82,12 @@ fn hide_with_multiple_files() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been hidden"#,
-            file_path.0
+            "{} has been hidden",
+            file_path.0.display()
         )))
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been hidden"#,
-            file_path.1
+            "{} has been hidden",
+            file_path.1.display()
         )));
 }
 
@@ -105,7 +112,8 @@ fn hide_when_hidden_file() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{file_path:?} is ignored"#
+            "{} is ignored",
+            file_path.display()
         )));
 
     utils::command::command()
@@ -115,7 +123,8 @@ fn hide_when_hidden_file() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{file_path:?} is already hidden"#
+            "{} is already hidden",
+            file_path.display()
         )));
 
     #[cfg(unix)]
@@ -136,12 +145,10 @@ fn hide_when_file_does_not_exist() {
             .code(66);
         if cfg!(windows) {
             command.stderr(predicate::str::contains(
-                r#"could not read information from "non_existent.txt""#,
+                "could not read information from non_existent.txt",
             ));
         } else {
-            command.stderr(predicate::str::contains(
-                r#""non_existent.txt" does not exist"#,
-            ));
+            command.stderr(predicate::str::contains("non_existent.txt does not exist"));
         }
     }
 
@@ -155,12 +162,10 @@ fn hide_when_file_does_not_exist() {
             .code(66);
         if cfg!(windows) {
             command.stderr(predicate::str::contains(
-                r#"could not read information from "non_existent.txt""#,
+                "could not read information from non_existent.txt",
             ));
         } else {
-            command.stderr(predicate::str::contains(
-                r#""non_existent.txt" does not exist"#,
-            ));
+            command.stderr(predicate::str::contains("non_existent.txt does not exist"));
         }
     }
 }
@@ -247,7 +252,8 @@ fn hide_with_warn_log_level() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{file_path:?} is already hidden"#
+            "{} is already hidden",
+            file_path.display()
         )));
 }
 
@@ -279,12 +285,12 @@ fn hide_with_info_log_level() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been hidden"#,
-            file_path.0
+            "{} has been hidden",
+            file_path.0.display()
         )))
         .stdout(predicate::str::contains(format!(
-            r#"{:?} is already hidden"#,
-            file_path.1
+            "{} is already hidden",
+            file_path.1.display()
         )));
 }
 
@@ -316,12 +322,12 @@ fn hide_with_debug_log_level() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been hidden"#,
-            file_path.0
+            "{} has been hidden",
+            file_path.0.display()
         )))
         .stdout(predicate::str::contains(format!(
-            r#"{:?} is already hidden"#,
-            file_path.1
+            "{} is already hidden",
+            file_path.1.display()
         )));
 }
 
@@ -353,12 +359,12 @@ fn hide_with_trace_log_level() {
         .assert()
         .success()
         .stdout(predicate::str::contains(format!(
-            r#"{:?} has been hidden"#,
-            file_path.0
+            "{} has been hidden",
+            file_path.0.display()
         )))
         .stdout(predicate::str::contains(format!(
-            r#"{:?} is already hidden"#,
-            file_path.1
+            "{} is already hidden",
+            file_path.1.display()
         )));
 }
 
