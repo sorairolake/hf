@@ -22,6 +22,12 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 cargo install hf
 ```
 
+### Via a package manager
+
+| OS    | Package manager | Command                           |
+| ----- | --------------- | --------------------------------- |
+| _Any_ | [Homebrew]      | `brew install sorairolake/tap/hf` |
+
 ### From binaries
 
 The [release page] contains pre-built binaries for Linux, macOS and Windows.
@@ -87,7 +93,7 @@ Add this to your `Cargo.toml` to use it as a library:
 
 ```toml
 [dependencies]
-hf = { version = "0.3.4", default-features = false }
+hf = { version = "0.3.5", default-features = false }
 ```
 
 By default, the dependencies required to build the application are also built.
@@ -164,6 +170,7 @@ licensing information.
 [docs-badge]: https://img.shields.io/docsrs/hf?style=for-the-badge&logo=docsdotrs&label=Docs.rs
 [docs-url]: https://docs.rs/hf
 [license-badge]: https://img.shields.io/crates/l/hf?style=for-the-badge
+[Homebrew]: https://brew.sh/
 [release page]: https://github.com/sorairolake/hf/releases
 [BUILD.adoc]: BUILD.adoc
 [`hf(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf.1.html
