@@ -158,7 +158,7 @@ Copyright &copy; 2022&ndash;2024 Shun Sakai (see [AUTHORS.adoc])
 2. Some files are distributed under the terms of the _Creative Commons
    Attribution 4.0 International Public License_.
 
-This project is compliant with version 3.0 of the [_REUSE Specification_]. See
+This project is compliant with version 3.2 of the [_REUSE Specification_]. See
 copyright notices of individual files for more details on copyright and
 licensing information.
 
