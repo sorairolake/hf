@@ -31,7 +31,7 @@ required-features = ["application"]
 [dependencies]
 anyhow = { version = "1.0.86", optional = true }
 clap = { version = "4.5.9", features = ["derive", "wrap_help"], optional = true }
-clap_complete = { version = "4.5.7", optional = true }
+clap_complete = { version = "4.5.8", optional = true }
 clap_complete_nushell = { version = "4.5.2", optional = true }
 log = { version = "0.4.22", optional = true }
 simplelog = { version = "0.12.2", optional = true }
