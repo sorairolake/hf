@@ -4,7 +4,6 @@
 
 = Installation
 :github-url: https://github.com
-:brew-url: https://brew.sh/
 :release-page-url: {github-url}/sorairolake/hf/releases
 
 == From source
@@ -13,16 +12,6 @@
 ----
 cargo install hf
 ----
-
-== Via a package manager
-
-|===
-|OS |Package manager |Command
-
-|_Any_
-|{brew-url}[Homebrew]
-|`brew install sorairolake/tap/hf`
-|===
 
 == From binaries
 
