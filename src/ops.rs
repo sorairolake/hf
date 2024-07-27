@@ -74,7 +74,8 @@ use crate::platform::imp;
 /// # }
 /// ```
 pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
-    imp::is_hidden(path.as_ref())
+    let inner = |path: &Path| -> io::Result<bool> { imp::is_hidden(path) };
+    inner(path.as_ref())
 }
 
 /// Hides a file or a directory.
@@ -154,7 +155,8 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 ///
 /// [`SetFileAttributesW`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
 pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
-    imp::hide(path.as_ref())
+    let inner = |path: &Path| -> io::Result<()> { imp::hide(path) };
+    inner(path.as_ref())
 }
 
 /// Shows a hidden file or a hidden directory.
@@ -242,5 +244,6 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 ///
 /// [`SetFileAttributesW`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
 pub fn show(path: impl AsRef<Path>) -> io::Result<()> {
-    imp::show(path.as_ref())
+    let inner = |path: &Path| -> io::Result<()> { imp::show(path) };
+    inner(path.as_ref())
 }
