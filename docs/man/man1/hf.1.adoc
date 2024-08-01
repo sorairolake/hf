@@ -4,12 +4,15 @@
 
 = hf(1)
 // Specify in UTC.
-:docdate: 2024-06-28
+:docdate: 2024-08-01
 :doctype: manpage
 ifdef::revnumber[:mansource: hf {revnumber}]
 ifndef::revnumber[:mansource: hf]
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
+:enwp-url: https://en.wikipedia.org
+:enwp-article-url: {enwp-url}/wiki
+:hidden-file-url: {enwp-article-url}/Hidden_file_and_hidden_directory
 
 == NAME
 
@@ -21,7 +24,8 @@ hf - an utility for hidden file/directory
 
 == DESCRIPTION
 
-*{manname}* is a command-line utility for hidden file/directory.
+*{manname}* is a command-line utility for
+{hidden-file-url}[hidden file/directory].
 
 == COMMANDS
 
