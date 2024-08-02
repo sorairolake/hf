@@ -4,7 +4,7 @@
 
 = hf(1)
 // Specify in UTC.
-:docdate: 2024-08-01
+:docdate: 2024-08-02
 :doctype: manpage
 ifdef::revnumber[:mansource: hf {revnumber}]
 ifndef::revnumber[:mansource: hf]
@@ -85,7 +85,7 @@ hf - an utility for hidden file/directory
 
 *--generate-completion* _SHELL_::
 
-  Generate shell completion. The completion is output to stdout.
+  Generate shell completion. The completion is output to standard output.
 
   The possible values are:{blank}:::
 

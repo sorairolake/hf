@@ -57,7 +57,7 @@ pub struct Opt {
 
     /// Generate shell completion.
     ///
-    /// The completion is output to stdout.
+    /// The completion is output to standard output.
     #[arg(long, value_enum, value_name("SHELL"))]
     pub generate_completion: Option<Shell>,
 
