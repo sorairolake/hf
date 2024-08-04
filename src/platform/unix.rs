@@ -48,13 +48,15 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 /// assert!(hf::unix::hidden_file_name("foo.txt/..").is_none());
 /// ```
 pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
-    let path = path.as_ref();
-    let file_name = path
-        .file_name()
-        .map(OsStr::to_string_lossy)
-        .filter(|n| !n.starts_with('.'))?;
-    let dest_path = path.with_file_name(String::from('.') + &file_name);
-    Some(dest_path)
+    let inner = |path: &Path| -> Option<PathBuf> {
+        let file_name = path
+            .file_name()
+            .map(OsStr::to_string_lossy)
+            .filter(|n| !n.starts_with('.'))?;
+        let dest_path = path.with_file_name(String::from('.') + &file_name);
+        Some(dest_path)
+    };
+    inner(path.as_ref())
 }
 
 /// Returns the path after making `path` visible.
@@ -76,13 +78,15 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// assert!(hf::unix::normal_file_name(".foo.txt/..").is_none());
 /// ```
 pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
-    let path = path.as_ref();
-    let file_name = path
-        .file_name()
-        .map(OsStr::to_string_lossy)
-        .filter(|n| n.starts_with('.'))?;
-    let dest_path = path.with_file_name(file_name.trim_start_matches('.'));
-    Some(dest_path)
+    let inner = |path: &Path| -> Option<PathBuf> {
+        let file_name = path
+            .file_name()
+            .map(OsStr::to_string_lossy)
+            .filter(|n| n.starts_with('.'))?;
+        let dest_path = path.with_file_name(file_name.trim_start_matches('.'));
+        Some(dest_path)
+    };
+    inner(path.as_ref())
 }
 
 #[cfg(test)]

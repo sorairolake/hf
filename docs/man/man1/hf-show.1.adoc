@@ -4,7 +4,7 @@
 
 = hf-show(1)
 // Specify in UTC.
-:docdate: 2024-06-28
+:docdate: 2024-08-01
 :doctype: manpage
 ifdef::revnumber[:mansource: hf {revnumber}]
 ifndef::revnumber[:mansource: hf]
@@ -22,6 +22,13 @@ hf-show - make hidden files or hidden directories visible
 == DESCRIPTION
 
 This command makes hidden files or hidden directories visible.
+
+On Unix, this command renames the file to start with a character other than
+`.`. On Windows, this command clears the hidden file attribute to the file.
+
+When you run this command, you must specify either *-f* or *-n*. When *-n* is
+specified, it just shows what would be done. When *-f* is specified, it
+actually show hidden files.
 
 == POSITIONAL ARGUMENTS
 
