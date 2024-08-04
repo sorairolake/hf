@@ -10,7 +10,7 @@ This crate is also available as a library.
 [source,toml]
 ----
 [dependencies]
-hf = { version = "0.3.5", default-features = false }
+hf = { version = "0.3.6", default-features = false }
 ----
 
 By default, the dependencies required to build the application are also built.
