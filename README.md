@@ -135,6 +135,16 @@ Please see the following:
 - [`hf-show(1)`]
 - [`hf-help(1)`]
 
+## Source code
+
+The upstream repository is available at
+<https://github.com/sorairolake/hf.git>.
+
+The source code is also available at:
+
+- <https://gitlab.com/sorairolake/hf.git>
+- <https://codeberg.org/sorairolake/hf.git>
+
 ## Changelog
 
 Please see [CHANGELOG.adoc].
