@@ -44,11 +44,7 @@
 
 #![doc(html_root_url = "https://docs.rs/hf/0.3.6/")]
 #![cfg_attr(docsrs, feature(doc_auto_cfg, doc_cfg))]
-// Lint levels of rustc.
-#![deny(missing_debug_implementations, missing_docs)]
-#![warn(rust_2018_idioms)]
 // Lint levels of Clippy.
-#![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
 #![allow(clippy::multiple_crate_versions)]
 
 mod ops;
