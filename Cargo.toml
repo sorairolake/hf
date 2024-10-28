@@ -28,7 +28,7 @@ name = "hf"
 required-features = ["application"]
 
 [dependencies]
-anyhow = { version = "1.0.90", optional = true }
+anyhow = { version = "1.0.91", optional = true }
 clap = { version = "4.5.20", features = ["derive", "wrap_help"], optional = true }
 clap_complete = { version = "4.5.35", optional = true }
 clap_complete_nushell = { version = "4.5.4", optional = true }
