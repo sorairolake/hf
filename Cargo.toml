@@ -56,12 +56,6 @@ application = [
   "dep:sysexits",
 ]
 
-[profile.release]
-codegen-units = 1
-lto = true
-panic = "abort"
-strip = true
-
 [lints.clippy]
 cargo = "warn"
 nursery = "warn"
@@ -71,3 +65,9 @@ pedantic = "warn"
 missing_debug_implementations = "deny"
 rust_2018_idioms = { level = "warn", priority = -1 }
 unsafe_code = "forbid"
+
+[profile.release]
+codegen-units = 1
+lto = true
+panic = "abort"
+strip = true
