@@ -2,6 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+// Lint levels of rustc.
+#![forbid(unsafe_code)]
+
 mod app;
 mod cli;
 
