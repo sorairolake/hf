@@ -19,18 +19,21 @@ fn get_file_attributes(path: &Path) -> io::Result<FileSystem::FILE_FLAGS_AND_ATT
     Ok(attributes)
 }
 
+#[inline]
 pub fn is_hidden(path: &Path) -> io::Result<bool> {
     let attributes = get_file_attributes(path)?;
     let is_hidden = (attributes & FileSystem::FILE_ATTRIBUTE_HIDDEN).0 > 0;
     Ok(is_hidden)
 }
 
+#[inline]
 pub fn hide(path: &Path) -> io::Result<()> {
     let attributes = get_file_attributes(path)? | FileSystem::FILE_ATTRIBUTE_HIDDEN;
     let path = HSTRING::from(path);
     unsafe { FileSystem::SetFileAttributesW(&path, attributes) }.map_err(Error::from)
 }
 
+#[inline]
 pub fn show(path: &Path) -> io::Result<()> {
     let attributes = get_file_attributes(path)? & !FileSystem::FILE_ATTRIBUTE_HIDDEN;
     let path = HSTRING::from(path);
