@@ -30,11 +30,11 @@ required-features = ["application"]
 [dependencies]
 anyhow = { version = "1.0.91", optional = true }
 clap = { version = "4.5.20", features = ["derive", "wrap_help"], optional = true }
-clap_complete = { version = "4.5.35", optional = true }
+clap_complete = { version = "4.5.36", optional = true }
 clap_complete_nushell = { version = "4.5.4", optional = true }
 log = { version = "0.4.22", optional = true }
 simplelog = { version = "0.12.2", optional = true }
-sysexits = { version = "0.8.2", optional = true }
+sysexits = { version = "0.8.4", optional = true }
 
 [target.'cfg(windows)'.dependencies]
 windows = { version = "0.58.0", features = ["Win32_Foundation", "Win32_Storage_FileSystem"] }
