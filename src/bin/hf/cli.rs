@@ -32,7 +32,6 @@ const HIDE_AFTER_LONG_HELP: &str = "See `hf-hide(1)` for more details.";
 const SHOW_AFTER_LONG_HELP: &str = "See `hf-show(1)` for more details.";
 
 #[derive(Debug, Parser)]
-#[allow(clippy::struct_excessive_bools)]
 #[command(
     version,
     long_version(LONG_VERSION),
