@@ -131,7 +131,7 @@ Please see [CONTRIBUTING.adoc].
 
 ## License
 
-Copyright &copy; 2022&ndash;2024 Shun Sakai (see [AUTHORS.adoc])
+Copyright (C) 2022-2024 Shun Sakai (see [AUTHORS.adoc])
 
 1.  This program is distributed under the terms of either the _Apache License
     2.0_ or the _MIT License_.
