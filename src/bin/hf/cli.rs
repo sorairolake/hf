@@ -14,7 +14,7 @@ use simplelog::LevelFilter;
 const LONG_VERSION: &str = concat!(
     env!("CARGO_PKG_VERSION"),
     '\n',
-    "Copyright (C) 2022-2024 Shun Sakai\n",
+    "Copyright (C) 2022 Shun Sakai\n",
     '\n',
     "This program is distributed under the terms of either the Apache License 2.0 or\n",
     "the MIT License.\n",
