@@ -2,12 +2,10 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use std::{
-    env, io,
-    process::{Command, ExitStatus},
-};
+#[cfg(feature = "application")]
+fn generate_man_page(out_dir: &str) -> std::io::Result<std::process::ExitStatus> {
+    use std::{env, process::Command};
 
-fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
     let man_dir = env::current_dir()?.join("docs/man/man1");
     let mut command = Command::new("asciidoctor");
     command
@@ -17,7 +15,10 @@ fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
         .status()
 }
 
+#[cfg(feature = "application")]
 fn main() {
+    use std::env;
+
     println!("cargo:rerun-if-changed=docs/man");
 
     let out_dir = env::var("OUT_DIR").expect("environment variable `OUT_DIR` not defined");
@@ -32,3 +33,6 @@ fn main() {
         }
     }
 }
+
+#[cfg(not(feature = "application"))]
+fn main() {}
