@@ -9,6 +9,9 @@ current_version = "0.3.6"
 filename = "docs/book/modules/ROOT/pages/use-as-a-library.adoc"
 
 [[tool.bumpversion.files]]
+glob = "docs/man/man1/*.1.adoc"
+
+[[tool.bumpversion.files]]
 filename = "README.md"
 
 [[tool.bumpversion.files]]

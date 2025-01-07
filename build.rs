@@ -12,7 +12,6 @@ fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
     let mut command = Command::new("asciidoctor");
     command
         .args(["-b", "manpage"])
-        .args(["-a", concat!("revnumber=", env!("CARGO_PKG_VERSION"))])
         .args(["-D", out_dir])
         .arg(man_dir.join("*.1.adoc"))
         .status()
