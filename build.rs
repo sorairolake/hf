@@ -2,10 +2,12 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-#[cfg(feature = "application")]
-fn generate_man_page(out_dir: &str) -> std::io::Result<std::process::ExitStatus> {
-    use std::{env, process::Command};
+use std::{
+    env, io,
+    process::{Command, ExitStatus},
+};
 
+fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
     let man_dir = env::current_dir()?.join("docs/man/man1");
     let mut command = Command::new("asciidoctor");
     command
@@ -15,24 +17,20 @@ fn generate_man_page(out_dir: &str) -> std::io::Result<std::process::ExitStatus>
         .status()
 }
 
-#[cfg(feature = "application")]
 fn main() {
-    use std::env;
+    if cfg!(feature = "application") {
+        println!("cargo:rerun-if-changed=docs/man");
 
-    println!("cargo:rerun-if-changed=docs/man");
-
-    let out_dir = env::var("OUT_DIR").expect("environment variable `OUT_DIR` not defined");
-    match generate_man_page(&out_dir) {
-        Ok(exit_status) => {
-            if !exit_status.success() {
-                println!("cargo:warning=Asciidoctor failed: {exit_status}");
+        let out_dir = env::var("OUT_DIR").expect("environment variable `OUT_DIR` not defined");
+        match generate_man_page(&out_dir) {
+            Ok(exit_status) => {
+                if !exit_status.success() {
+                    println!("cargo:warning=Asciidoctor failed: {exit_status}");
+                }
             }
-        }
-        Err(err) => {
-            println!("cargo:warning=failed to execute Asciidoctor: {err}");
+            Err(err) => {
+                println!("cargo:warning=failed to execute Asciidoctor: {err}");
+            }
         }
     }
 }
-
-#[cfg(not(feature = "application"))]
-fn main() {}
