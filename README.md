@@ -14,6 +14,12 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 
 **hf** is a cross-platform hidden file library and utility.
 
+This crate supports both Unix and Windows. On Unix, hidden files and
+directories are files and directories that starts with a dot character (`.`).
+On Windows, hidden files and directories are files and directories with the
+hidden file attribute. This crate provides operations related to hidden files
+and directories, such as making files and directories invisible and visible.
+
 ## Installation
 
 ### From source

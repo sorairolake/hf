@@ -6,7 +6,7 @@ use std::{io, path::Path};
 
 use crate::platform::imp;
 
-/// Returns [`true`] if the path is a hidden file or a hidden directory.
+/// Returns [`true`] if the path is a hidden file or directory.
 ///
 /// # Platform-specific behavior
 ///
@@ -79,7 +79,7 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
     inner(path.as_ref())
 }
 
-/// Hides a file or a directory.
+/// Hides a file or directory.
 ///
 /// # Platform-specific behavior
 ///
@@ -161,7 +161,7 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
     inner(path.as_ref())
 }
 
-/// Shows a hidden file or a hidden directory.
+/// Shows a hidden file or directory.
 ///
 /// # Platform-specific behavior
 ///

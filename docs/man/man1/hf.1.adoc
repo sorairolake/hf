@@ -4,7 +4,7 @@
 
 = hf(1)
 // Specify in UTC.
-:docdate: 2024-08-02
+:docdate: 2025-01-08
 :revnumber: 0.3.6
 :doctype: manpage
 :mansource: hf {revnumber}
@@ -16,7 +16,7 @@ ifndef::site-gen-antora[:includedir: ./include]
 
 == NAME
 
-hf - an utility for hidden file/directory
+hf - an utility for hidden files and directories
 
 == SYNOPSIS
 
@@ -25,17 +25,17 @@ hf - an utility for hidden file/directory
 == DESCRIPTION
 
 *{manname}* is a command-line utility for
-{hidden-file-url}[hidden file/directory].
+{hidden-file-url}[hidden files and directories].
 
 == COMMANDS
 
 *hf-hide*(1)::
 
-  Make files or directories invisible.
+  Make files and directories invisible.
 
 *hf-show*(1)::
 
-  Make hidden files or hidden directories visible.
+  Make hidden files and directories visible.
 
 *hf-help*(1)::
 

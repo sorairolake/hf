@@ -4,7 +4,7 @@
 
 = hf-hide(1)
 // Specify in UTC.
-:docdate: 2024-08-01
+:docdate: 2025-01-08
 :revnumber: 0.3.6
 :doctype: manpage
 :mansource: hf {revnumber}
@@ -13,7 +13,7 @@ ifndef::site-gen-antora[:includedir: ./include]
 
 == NAME
 
-hf-hide - make files or directories invisible
+hf-hide - make files and directories invisible
 
 == SYNOPSIS
 
@@ -21,7 +21,7 @@ hf-hide - make files or directories invisible
 
 == DESCRIPTION
 
-This command makes files or directories invisible.
+This command makes files and directories invisible.
 
 On Unix, this command renames the file to start with `.`. On Windows, this
 command sets the hidden file attribute to the file.
@@ -34,7 +34,7 @@ actually hide files.
 
 _FILE_::
 
-  Files or directories to hide.
+  Files and directories to hide.
 
 == OPTIONS
 
@@ -70,7 +70,7 @@ _FILE_::
 
 *-f*, *--force*::
 
-  Actually hide files or directories.
+  Actually hide files and directories.
 
 *-n*, *--dry-run*::
 

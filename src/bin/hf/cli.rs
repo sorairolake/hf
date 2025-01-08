@@ -66,11 +66,11 @@ pub struct Opt {
 
 #[derive(Debug, Subcommand)]
 pub enum Command {
-    /// Make files or directories invisible.
+    /// Make files and directories invisible.
     #[command(after_long_help(HIDE_AFTER_LONG_HELP))]
     Hide(Hide),
 
-    /// Make hidden files or hidden directories visible.
+    /// Make hidden files and directories visible.
     #[command(after_long_help(SHOW_AFTER_LONG_HELP))]
     Show(Show),
 }
@@ -78,7 +78,7 @@ pub enum Command {
 #[derive(Args, Debug)]
 #[command(group(ArgGroup::new("mode").required(true)))]
 pub struct Hide {
-    /// Actually hide files or directories.
+    /// Actually hide files and directories.
     #[arg(short, long, group("mode"))]
     pub force: bool,
 
@@ -86,7 +86,7 @@ pub struct Hide {
     #[arg(short('n'), long, group("mode"))]
     pub dry_run: bool,
 
-    /// Files or directories to hide.
+    /// Files and directories to hide.
     #[arg(value_name("FILE"), value_hint(ValueHint::FilePath))]
     pub input: Vec<PathBuf>,
 }
@@ -94,7 +94,7 @@ pub struct Hide {
 #[derive(Args, Debug)]
 #[command(group(ArgGroup::new("mode").required(true)))]
 pub struct Show {
-    /// Actually show hidden files or hidden directories.
+    /// Actually show hidden files and directories.
     #[arg(short, long, group("mode"))]
     pub force: bool,
 
@@ -102,7 +102,7 @@ pub struct Show {
     #[arg(short('n'), long, group("mode"))]
     pub dry_run: bool,
 
-    /// Hidden files or hidden directories to show.
+    /// Hidden files and directories to show.
     #[arg(value_name("FILE"), value_hint(ValueHint::FilePath))]
     pub input: Vec<PathBuf>,
 }
