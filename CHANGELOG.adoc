@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.3.6\...v0.3.7[0.3.7] - 2025-01-09
+
+=== Changed
+
+* Update documentation ({pull-request-url}/318[#318])
+
 == {compare-url}/v0.3.5\...v0.3.6[0.3.6] - 2024-08-04
 
 === Changed
@@ -24,7 +30,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 === Changed
 
-* Show possible values ​​for `--log-level` in the help message
+* Show possible values for `--log-level` in the help message
   ({pull-request-url}/189[#189])
 * Change to use `Display` to display path ({pull-request-url}/192[#192])
 

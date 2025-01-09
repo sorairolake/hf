@@ -2,8 +2,13 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! The `hf` crate is a cross-platform library for manipulating [hidden files or
-//! hidden directories].
+//! The `hf` crate is a cross-platform library for manipulating [hidden files
+//! and directories].
+//!
+//! This crate supports both Unix and Windows. On Unix, hidden files and
+//! directories are files and directories that starts with a dot character
+//! (`.`). On Windows, hidden files and directories are files and directories
+//! with the hidden file attribute.
 //!
 //! # Examples
 //!
@@ -40,16 +45,12 @@
 //! assert!(!hf::is_hidden(file_path).unwrap());
 //! ```
 //!
-//! [hidden files or hidden directories]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
+//! [hidden files and directories]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 
-#![doc(html_root_url = "https://docs.rs/hf/0.3.6/")]
+#![doc(html_root_url = "https://docs.rs/hf/0.3.7/")]
 #![cfg_attr(docsrs, feature(doc_auto_cfg, doc_cfg))]
 // Lint levels of rustc.
-#![deny(missing_debug_implementations, missing_docs)]
-#![warn(rust_2018_idioms)]
-// Lint levels of Clippy.
-#![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
-#![allow(clippy::multiple_crate_versions)]
+#![deny(missing_docs)]
 
 mod ops;
 mod platform;

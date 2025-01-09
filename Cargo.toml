@@ -4,7 +4,7 @@
 
 [package]
 name = "hf"
-version = "0.3.6"
+version = "0.3.7"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -28,21 +28,21 @@ name = "hf"
 required-features = ["application"]
 
 [dependencies]
-anyhow = { version = "1.0.86", optional = true }
-clap = { version = "4.5.13", features = ["derive", "wrap_help"], optional = true }
-clap_complete = { version = "4.5.12", optional = true }
-clap_complete_nushell = { version = "4.5.3", optional = true }
+anyhow = { version = "1.0.95", optional = true }
+clap = { version = "4.5.24", features = ["derive", "wrap_help"], optional = true }
+clap_complete = { version = "4.5.41", optional = true }
+clap_complete_nushell = { version = "4.5.5", optional = true }
 log = { version = "0.4.22", optional = true }
 simplelog = { version = "0.12.2", optional = true }
-sysexits = { version = "0.8.1", optional = true }
+sysexits = { version = "0.8.5", optional = true }
 
 [target.'cfg(windows)'.dependencies]
-windows = { version = "0.58.0", features = ["Win32_Foundation", "Win32_Storage_FileSystem"] }
+windows = { version = "0.59.0", features = ["Win32_Foundation", "Win32_Storage_FileSystem"] }
 
 [dev-dependencies]
-assert_cmd = "2.0.15"
-predicates = "3.1.2"
-tempfile = "3.11.0"
+assert_cmd = "2.0.16"
+predicates = "3.1.3"
+tempfile = "3.15.0"
 
 [features]
 default = ["application"]
@@ -55,6 +55,16 @@ application = [
   "dep:simplelog",
   "dep:sysexits",
 ]
+
+[lints.clippy]
+cargo = { level = "warn", priority = -1 }
+multiple_crate_versions = "allow"
+nursery = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+
+[lints.rust]
+missing_debug_implementations = "deny"
+rust_2018_idioms = { level = "warn", priority = -1 }
 
 [profile.release]
 codegen-units = 1

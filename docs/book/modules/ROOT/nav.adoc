@@ -15,6 +15,7 @@
 * xref:man/man1/hf-help.1.adoc[`hf-help(1)`]
 
 .Resources
+* xref:repository.adoc[]
 * xref:changelog.adoc[]
 * xref:contributing.adoc[]
 * xref:authors.adoc[]

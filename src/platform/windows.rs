@@ -19,18 +19,21 @@ fn get_file_attributes(path: &Path) -> io::Result<FileSystem::FILE_FLAGS_AND_ATT
     Ok(attributes)
 }
 
+#[inline]
 pub fn is_hidden(path: &Path) -> io::Result<bool> {
     let attributes = get_file_attributes(path)?;
     let is_hidden = (attributes & FileSystem::FILE_ATTRIBUTE_HIDDEN).0 > 0;
     Ok(is_hidden)
 }
 
+#[inline]
 pub fn hide(path: &Path) -> io::Result<()> {
     let attributes = get_file_attributes(path)? | FileSystem::FILE_ATTRIBUTE_HIDDEN;
     let path = HSTRING::from(path);
     unsafe { FileSystem::SetFileAttributesW(&path, attributes) }.map_err(Error::from)
 }
 
+#[inline]
 pub fn show(path: &Path) -> io::Result<()> {
     let attributes = get_file_attributes(path)? & !FileSystem::FILE_ATTRIBUTE_HIDDEN;
     let path = HSTRING::from(path);
@@ -61,7 +64,7 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
-            let file_path = temp_dir.path().join("ファイル.txt");
+            let file_path = temp_dir.path().join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
@@ -103,7 +106,7 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
-            let file_path = temp_dir.path().join("ファイル.txt");
+            let file_path = temp_dir.path().join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
@@ -170,7 +173,7 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
-            let file_path = temp_dir.path().join("ファイル.txt");
+            let file_path = temp_dir.path().join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
@@ -212,7 +215,7 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
-            let file_path = temp_dir.path().join("ファイル.txt");
+            let file_path = temp_dir.path().join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();

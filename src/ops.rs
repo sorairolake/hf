@@ -6,7 +6,7 @@ use std::{io, path::Path};
 
 use crate::platform::imp;
 
-/// Returns [`true`] if the path is a hidden file or a hidden directory.
+/// Returns [`true`] if the path is a hidden file or directory.
 ///
 /// # Platform-specific behavior
 ///
@@ -73,12 +73,13 @@ use crate::platform::imp;
 /// assert!(hf::is_hidden(file_path).is_err());
 /// # }
 /// ```
+#[inline]
 pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
     let inner = |path: &Path| -> io::Result<bool> { imp::is_hidden(path) };
     inner(path.as_ref())
 }
 
-/// Hides a file or a directory.
+/// Hides a file or directory.
 ///
 /// # Platform-specific behavior
 ///
@@ -154,12 +155,13 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// ```
 ///
 /// [`SetFileAttributesW`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
+#[inline]
 pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
     let inner = |path: &Path| -> io::Result<()> { imp::hide(path) };
     inner(path.as_ref())
 }
 
-/// Shows a hidden file or a hidden directory.
+/// Shows a hidden file or directory.
 ///
 /// # Platform-specific behavior
 ///
@@ -243,6 +245,7 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// ```
 ///
 /// [`SetFileAttributesW`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
+#[inline]
 pub fn show(path: impl AsRef<Path>) -> io::Result<()> {
     let inner = |path: &Path| -> io::Result<()> { imp::show(path) };
     inner(path.as_ref())

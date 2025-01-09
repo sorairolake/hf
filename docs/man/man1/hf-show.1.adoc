@@ -4,16 +4,16 @@
 
 = hf-show(1)
 // Specify in UTC.
-:docdate: 2024-08-01
+:docdate: 2025-01-08
+:revnumber: 0.3.7
 :doctype: manpage
-ifdef::revnumber[:mansource: hf {revnumber}]
-ifndef::revnumber[:mansource: hf]
+:mansource: hf {revnumber}
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
 
 == NAME
 
-hf-show - make hidden files or hidden directories visible
+hf-show - make hidden files and directories visible
 
 == SYNOPSIS
 
@@ -21,7 +21,7 @@ hf-show - make hidden files or hidden directories visible
 
 == DESCRIPTION
 
-This command makes hidden files or hidden directories visible.
+This command makes hidden files and directories visible.
 
 On Unix, this command renames the file to start with a character other than
 `.`. On Windows, this command clears the hidden file attribute to the file.
@@ -34,7 +34,7 @@ actually show hidden files.
 
 _FILE_::
 
-  Hidden files or hidden directories to show.
+  Hidden files and directories to show.
 
 == OPTIONS
 
@@ -70,7 +70,7 @@ _FILE_::
 
 *-f*, *--force*::
 
-  Actually show hidden files or hidden directories.
+  Actually show hidden files and directories.
 
 *-n*, *--dry-run*::
 

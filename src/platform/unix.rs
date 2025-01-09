@@ -11,6 +11,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+#[inline]
 pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
     let file_name = path
         .file_name()
@@ -19,11 +20,13 @@ pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
     Ok(is_hidden)
 }
 
+#[inline]
 pub(crate) fn hide(path: &Path) -> io::Result<()> {
     let dest_path = hidden_file_name(path).ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
     fs::rename(path, dest_path)
 }
 
+#[inline]
 pub(crate) fn show(path: &Path) -> io::Result<()> {
     let dest_path = normal_file_name(path).ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
     fs::rename(path, dest_path)
@@ -47,6 +50,7 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 /// assert!(hf::unix::hidden_file_name(".foo.txt").is_none());
 /// assert!(hf::unix::hidden_file_name("foo.txt/..").is_none());
 /// ```
+#[inline]
 pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let inner = |path: &Path| -> Option<PathBuf> {
         let file_name = path
@@ -77,6 +81,7 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// assert!(hf::unix::normal_file_name("foo.txt").is_none());
 /// assert!(hf::unix::normal_file_name(".foo.txt/..").is_none());
 /// ```
+#[inline]
 pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let inner = |path: &Path| -> Option<PathBuf> {
         let file_name = path
@@ -99,7 +104,7 @@ mod tests {
     fn is_hidden() {
         assert!(super::is_hidden(Path::new(".foo.txt")).unwrap());
         assert!(super::is_hidden(Path::new("..foo.txt")).unwrap());
-        assert!(super::is_hidden(Path::new(".ファイル.txt")).unwrap());
+        assert!(super::is_hidden(Path::new(".\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt")).unwrap());
         assert!(super::is_hidden(Path::new("foo/.bar.txt")).unwrap());
         assert!(super::is_hidden(Path::new(".foo/.bar.txt")).unwrap());
     }
@@ -107,7 +112,7 @@ mod tests {
     #[test]
     fn is_hidden_when_non_hidden_file() {
         assert!(!super::is_hidden(Path::new("foo.txt")).unwrap());
-        assert!(!super::is_hidden(Path::new("ファイル.txt")).unwrap());
+        assert!(!super::is_hidden(Path::new("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt")).unwrap());
         assert!(!super::is_hidden(Path::new("foo/bar.txt")).unwrap());
         assert!(!super::is_hidden(Path::new(".foo/bar.txt")).unwrap());
     }
@@ -153,7 +158,7 @@ mod tests {
         {
             let temp_dir = tempfile::tempdir().unwrap();
             let temp_dir = temp_dir.path();
-            let file_path = temp_dir.join("ファイル.txt");
+            let file_path = temp_dir.join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
             let hidden_file_path = super::hidden_file_name(&file_path).unwrap();
             assert!(!file_path.exists());
             assert!(!hidden_file_path.exists());
@@ -266,7 +271,7 @@ mod tests {
         {
             let temp_dir = tempfile::tempdir().unwrap();
             let temp_dir = temp_dir.path();
-            let hidden_file_path = temp_dir.join(".ファイル.txt");
+            let hidden_file_path = temp_dir.join(".\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
             let file_path = super::normal_file_name(&hidden_file_path).unwrap();
             assert!(!hidden_file_path.exists());
             assert!(!file_path.exists());
@@ -342,8 +347,8 @@ mod tests {
             Path::new(".foo.txt")
         );
         assert_eq!(
-            super::hidden_file_name("ファイル.txt").unwrap(),
-            Path::new(".ファイル.txt")
+            super::hidden_file_name("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt").unwrap(),
+            Path::new(".\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt")
         );
         assert_eq!(
             super::hidden_file_name("foo/bar.txt").unwrap(),
@@ -380,8 +385,8 @@ mod tests {
             Path::new("foo.txt")
         );
         assert_eq!(
-            super::normal_file_name(".ファイル.txt").unwrap(),
-            Path::new("ファイル.txt")
+            super::normal_file_name(".\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt").unwrap(),
+            Path::new("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt")
         );
         assert_eq!(
             super::normal_file_name("foo/.bar.txt").unwrap(),

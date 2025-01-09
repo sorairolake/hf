@@ -14,6 +14,12 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 
 **hf** is a cross-platform hidden file library and utility.
 
+This crate supports both Unix and Windows. On Unix, hidden files and
+directories are files and directories that starts with a dot character (`.`).
+On Windows, hidden files and directories are files and directories with the
+hidden file attribute. This crate provides operations related to hidden files
+and directories, such as making files and directories invisible and visible.
+
 ## Installation
 
 ### From source
@@ -87,36 +93,12 @@ Add this to your `Cargo.toml` to use it as a library:
 
 ```toml
 [dependencies]
-hf = { version = "0.3.6", default-features = false }
+hf = { version = "0.3.7", default-features = false }
 ```
 
 By default, the dependencies required to build the application are also built.
 If you disable the `default` feature, only the dependencies required to build
 the library will be built.
-
-### Example
-
-```rust
-use std::fs::File;
-
-let temp_dir = tempfile::tempdir().unwrap();
-let file_path = temp_dir.path().join("foo.txt");
-
-File::create(&file_path).unwrap();
-assert!(!hf::is_hidden(&file_path).unwrap());
-
-hf::hide(&file_path).unwrap();
-// Change the file name to start with `.`.
-#[cfg(unix)]
-let file_path = hf::unix::hidden_file_name(&file_path).unwrap();
-assert!(hf::is_hidden(&file_path).unwrap());
-
-hf::show(&file_path).unwrap();
-// Change the file name to start with a character other than `.`.
-#[cfg(unix)]
-let file_path = hf::unix::normal_file_name(&file_path).unwrap();
-assert!(!hf::is_hidden(file_path).unwrap());
-```
 
 ### Documentation
 
@@ -135,6 +117,16 @@ Please see the following:
 - [`hf-show(1)`]
 - [`hf-help(1)`]
 
+## Source code
+
+The upstream repository is available at
+<https://github.com/sorairolake/hf.git>.
+
+The source code is also available at:
+
+- <https://gitlab.com/sorairolake/hf.git>
+- <https://codeberg.org/sorairolake/hf.git>
+
 ## Changelog
 
 Please see [CHANGELOG.adoc].
@@ -143,14 +135,18 @@ Please see [CHANGELOG.adoc].
 
 Please see [CONTRIBUTING.adoc].
 
+## Home page
+
+<https://sorairolake.github.io/hf/>
+
 ## License
 
-Copyright &copy; 2022&ndash;2024 Shun Sakai (see [AUTHORS.adoc])
+Copyright (C) 2022 Shun Sakai (see [AUTHORS.adoc])
 
-1. This program is distributed under the terms of either the _Apache License
-   2.0_ or the _MIT License_.
-2. Some files are distributed under the terms of the _Creative Commons
-   Attribution 4.0 International Public License_.
+1.  This program is distributed under the terms of either the _Apache License
+    2.0_ or the _MIT License_.
+2.  Some files are distributed under the terms of the _Creative Commons
+    Attribution 4.0 International Public License_.
 
 This project is compliant with version 3.2 of the [_REUSE Specification_]. See
 copyright notices of individual files for more details on copyright and
