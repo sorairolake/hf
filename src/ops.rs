@@ -49,9 +49,10 @@ use crate::platform::imp;
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
-/// # assert!(!file_path.exists());
+/// assert!(!file_path.exists());
 ///
 /// File::create(&file_path).unwrap();
+/// assert!(file_path.exists());
 ///
 /// // Set the hidden file attribute.
 /// Command::new("attrib")
@@ -110,22 +111,26 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// ```
 /// # #[cfg(unix)]
 /// # {
-/// # use std::fs::File;
+/// # use std::{ffi::OsStr, fs::File};
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
-/// let file_path = temp_dir.path().join("foo.txt");
-/// # assert!(!file_path.exists());
+/// let temp_dir = temp_dir.path();
+/// let file_path = temp_dir.join("foo.txt");
+/// let hidden_file_path = hf::unix::hidden_file_name(&file_path).unwrap();
+/// assert_eq!(
+///     hidden_file_path.file_name().unwrap(),
+///     OsStr::new(".foo.txt")
+/// );
+/// assert!(!file_path.exists());
+/// assert!(!hidden_file_path.exists());
 ///
 /// File::create(&file_path).unwrap();
 /// assert!(file_path.exists());
-/// assert!(!hf::is_hidden(&file_path).unwrap());
+/// assert!(!hidden_file_path.exists());
 ///
 /// hf::hide(&file_path).unwrap();
 /// assert!(!file_path.exists());
-/// // Change the file name to start with `.`.
-/// let file_path = hf::unix::hidden_file_name(&file_path).unwrap();
-/// assert!(file_path.exists());
-/// assert!(hf::is_hidden(file_path).unwrap());
+/// assert!(hidden_file_path.exists());
 ///
 /// assert!(hf::hide(".bar.txt").is_err());
 /// assert!(hf::hide("bar.txt/..").is_err());
@@ -142,12 +147,14 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
-/// # assert!(!file_path.exists());
+/// assert!(!file_path.exists());
 ///
 /// File::create(&file_path).unwrap();
+/// assert!(file_path.exists());
 /// assert!(!hf::is_hidden(&file_path).unwrap());
 ///
 /// hf::hide(&file_path).unwrap();
+/// assert!(file_path.exists());
 /// assert!(hf::is_hidden(file_path).unwrap());
 ///
 /// assert!(hf::hide("bar.txt").is_err());
@@ -193,22 +200,23 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// ```
 /// # #[cfg(unix)]
 /// # {
-/// # use std::fs::File;
+/// # use std::{ffi::OsStr, fs::File};
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
-/// let file_path = temp_dir.path().join(".foo.txt");
-/// # assert!(!file_path.exists());
-///
-/// File::create(&file_path).unwrap();
-/// assert!(file_path.exists());
-/// assert!(hf::is_hidden(&file_path).unwrap());
-///
-/// hf::show(&file_path).unwrap();
+/// let temp_dir = temp_dir.path();
+/// let hidden_file_path = temp_dir.join(".foo.txt");
+/// let file_path = hf::unix::normal_file_name(&hidden_file_path).unwrap();
+/// assert_eq!(file_path.file_name().unwrap(), OsStr::new("foo.txt"));
+/// assert!(!hidden_file_path.exists());
 /// assert!(!file_path.exists());
-/// // Change the file name to start with a character other than `.`.
-/// let file_path = hf::unix::normal_file_name(&file_path).unwrap();
+///
+/// File::create(&hidden_file_path).unwrap();
+/// assert!(hidden_file_path.exists());
+/// assert!(!file_path.exists());
+///
+/// hf::show(&hidden_file_path).unwrap();
+/// assert!(!hidden_file_path.exists());
 /// assert!(file_path.exists());
-/// assert!(!hf::is_hidden(file_path).unwrap());
 ///
 /// assert!(hf::show("bar.txt").is_err());
 /// assert!(hf::show(".bar.txt/..").is_err());
@@ -225,9 +233,11 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
-/// # assert!(!file_path.exists());
+/// assert!(!file_path.exists());
 ///
 /// File::create(&file_path).unwrap();
+/// assert!(file_path.exists());
+/// assert!(!hf::is_hidden(&file_path).unwrap());
 ///
 /// // Set the hidden file attribute.
 /// Command::new("attrib")
@@ -238,6 +248,7 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// assert!(hf::is_hidden(&file_path).unwrap());
 ///
 /// hf::show(&file_path).unwrap();
+/// assert!(file_path.exists());
 /// assert!(!hf::is_hidden(file_path).unwrap());
 ///
 /// assert!(hf::show("bar.txt").is_err());
