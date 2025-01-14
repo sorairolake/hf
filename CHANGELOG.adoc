@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.3.8\...HEAD[Unreleased]
+
+=== Changed
+
+* Restore crate level doctests ({pull-request-url}/326[#326])
+
 == {compare-url}/v0.3.7\...v0.3.8[0.3.8] - 2025-01-14
 
 === Changed
