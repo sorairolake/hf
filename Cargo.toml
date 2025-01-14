@@ -4,7 +4,7 @@
 
 [package]
 name = "hf"
-version = "0.3.8"
+version = "0.3.9"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -32,7 +32,7 @@ anyhow = { version = "1.0.95", optional = true }
 clap = { version = "4.5.26", features = ["derive", "wrap_help"], optional = true }
 clap_complete = { version = "4.5.42", optional = true }
 clap_complete_nushell = { version = "4.5.5", optional = true }
-log = { version = "0.4.22", optional = true }
+log = { version = "0.4.25", optional = true }
 simplelog = { version = "0.12.2", optional = true }
 sysexits = { version = "0.8.5", optional = true }
 
