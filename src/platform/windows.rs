@@ -54,6 +54,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
 
             Command::new("attrib")
                 .arg("+h")
@@ -68,6 +69,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
 
             Command::new("attrib")
                 .arg("+h")
@@ -83,6 +85,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
 
             Command::new("attrib")
                 .arg("+h")
@@ -101,6 +104,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
 
             assert!(!super::is_hidden(&file_path).unwrap());
         }
@@ -110,6 +114,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
 
             assert!(!super::is_hidden(&file_path).unwrap());
         }
@@ -120,6 +125,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
 
             assert!(!super::is_hidden(&file_path).unwrap());
         }
@@ -130,6 +136,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
 
             Command::new("attrib")
                 .arg("+h")
@@ -166,9 +173,11 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
             assert!(!super::is_hidden(&file_path).unwrap());
 
             super::hide(&file_path).unwrap();
+            assert!(file_path.exists());
             assert!(super::is_hidden(&file_path).unwrap());
         }
         {
@@ -177,9 +186,25 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
             assert!(!super::is_hidden(&file_path).unwrap());
 
             super::hide(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(super::is_hidden(&file_path).unwrap());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let file_path = temp_dir.path().join("foo/bar.txt");
+            fs::create_dir(file_path.parent().unwrap()).unwrap();
+            assert!(!file_path.exists());
+
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!super::is_hidden(&file_path).unwrap());
+
+            super::hide(&file_path).unwrap();
+            assert!(file_path.exists());
             assert!(super::is_hidden(&file_path).unwrap());
         }
     }
@@ -201,6 +226,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
             assert!(!super::is_hidden(&file_path).unwrap());
 
             Command::new("attrib")
@@ -211,6 +237,7 @@ mod tests {
             assert!(super::is_hidden(&file_path).unwrap());
 
             super::show(&file_path).unwrap();
+            assert!(file_path.exists());
             assert!(!super::is_hidden(&file_path).unwrap());
         }
         {
@@ -219,6 +246,7 @@ mod tests {
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
+            assert!(file_path.exists());
             assert!(!super::is_hidden(&file_path).unwrap());
 
             Command::new("attrib")
@@ -229,6 +257,28 @@ mod tests {
             assert!(super::is_hidden(&file_path).unwrap());
 
             super::show(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!super::is_hidden(&file_path).unwrap());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            let file_path = temp_dir.path().join("foo/bar.txt");
+            fs::create_dir(file_path.parent().unwrap()).unwrap();
+            assert!(!file_path.exists());
+
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!super::is_hidden(&file_path).unwrap());
+
+            Command::new("attrib")
+                .arg("+h")
+                .arg(&file_path)
+                .status()
+                .unwrap();
+            assert!(super::is_hidden(&file_path).unwrap());
+
+            super::show(&file_path).unwrap();
+            assert!(file_path.exists());
             assert!(!super::is_hidden(&file_path).unwrap());
         }
     }
