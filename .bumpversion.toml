@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
 [tool.bumpversion]
-current_version = "0.3.8"
+current_version = "0.3.9"
 
 [[tool.bumpversion.files]]
 filename = "docs/book/modules/ROOT/pages/use-as-a-library.adoc"
