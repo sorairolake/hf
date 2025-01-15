@@ -5,7 +5,7 @@
 = hf(1)
 // Specify in UTC.
 :docdate: 2025-01-08
-:revnumber: 0.3.9
+:revnumber: 0.3.10
 :doctype: manpage
 :mansource: hf {revnumber}
 :manmanual: General Commands Manual
