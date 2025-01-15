@@ -28,6 +28,10 @@ and directories, such as making files and directories invisible and visible.
 cargo install hf
 ```
 
+### Via a package manager
+
+[![Packaging status][repology-badge]][repology-versions]
+
 ### From binaries
 
 The [release page] contains pre-built binaries for Linux, macOS and Windows.
@@ -160,6 +164,8 @@ licensing information.
 [docs-badge]: https://img.shields.io/docsrs/hf?style=for-the-badge&logo=docsdotrs&label=Docs.rs
 [docs-url]: https://docs.rs/hf
 [license-badge]: https://img.shields.io/crates/l/hf?style=for-the-badge
+[repology-badge]: https://repology.org/badge/vertical-allrepos/hf.svg?columns=3
+[repology-versions]: https://repology.org/project/hf/versions
 [release page]: https://github.com/sorairolake/hf/releases
 [BUILD.adoc]: BUILD.adoc
 [`hf(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf.1.html
