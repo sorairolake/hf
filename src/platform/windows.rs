@@ -22,7 +22,7 @@ fn get_file_attributes(path: &Path) -> io::Result<FileSystem::FILE_FLAGS_AND_ATT
 #[inline]
 pub fn is_hidden(path: &Path) -> io::Result<bool> {
     let attributes = get_file_attributes(path)?;
-    let is_hidden = (attributes & FileSystem::FILE_ATTRIBUTE_HIDDEN).0 > 0;
+    let is_hidden = attributes.contains(FileSystem::FILE_ATTRIBUTE_HIDDEN);
     Ok(is_hidden)
 }
 

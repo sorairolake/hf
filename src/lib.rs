@@ -17,16 +17,13 @@
 //! ```
 //! # #[cfg(unix)]
 //! # {
-//! use std::{ffi::OsStr, fs::File};
+//! use std::fs::File;
 //!
 //! let temp_dir = tempfile::tempdir().unwrap();
 //! let temp_dir = temp_dir.path();
 //! let file_path = temp_dir.join("foo.txt");
 //! let hidden_file_path = hf::unix::hidden_file_name(&file_path).unwrap();
-//! assert_eq!(
-//!     hidden_file_path.file_name().unwrap(),
-//!     OsStr::new(".foo.txt")
-//! );
+//! assert_eq!(hidden_file_path, temp_dir.join(".foo.txt"));
 //! assert!(!file_path.exists());
 //! assert!(!hidden_file_path.exists());
 //!
@@ -71,7 +68,7 @@
 //!
 //! [hidden files and directories]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 
-#![doc(html_root_url = "https://docs.rs/hf/0.3.9/")]
+#![doc(html_root_url = "https://docs.rs/hf/0.3.10/")]
 #![cfg_attr(docsrs, feature(doc_auto_cfg, doc_cfg))]
 // Lint levels of rustc.
 #![deny(missing_docs)]

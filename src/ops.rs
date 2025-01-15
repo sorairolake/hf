@@ -111,16 +111,13 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// ```
 /// # #[cfg(unix)]
 /// # {
-/// # use std::{ffi::OsStr, fs::File};
+/// # use std::fs::File;
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let temp_dir = temp_dir.path();
 /// let file_path = temp_dir.join("foo.txt");
 /// let hidden_file_path = hf::unix::hidden_file_name(&file_path).unwrap();
-/// assert_eq!(
-///     hidden_file_path.file_name().unwrap(),
-///     OsStr::new(".foo.txt")
-/// );
+/// assert_eq!(hidden_file_path, temp_dir.join(".foo.txt"));
 /// assert!(!file_path.exists());
 /// assert!(!hidden_file_path.exists());
 ///
@@ -200,13 +197,13 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// ```
 /// # #[cfg(unix)]
 /// # {
-/// # use std::{ffi::OsStr, fs::File};
+/// # use std::fs::File;
 /// #
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let temp_dir = temp_dir.path();
 /// let hidden_file_path = temp_dir.join(".foo.txt");
 /// let file_path = hf::unix::normal_file_name(&hidden_file_path).unwrap();
-/// assert_eq!(file_path.file_name().unwrap(), OsStr::new("foo.txt"));
+/// assert_eq!(file_path, temp_dir.join("foo.txt"));
 /// assert!(!hidden_file_path.exists());
 /// assert!(!file_path.exists());
 ///

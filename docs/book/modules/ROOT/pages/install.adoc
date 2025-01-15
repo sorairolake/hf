@@ -3,7 +3,10 @@
 // SPDX-License-Identifier: CC-BY-4.0
 
 = Installation
+:repology-url: https://repology.org
 :github-url: https://github.com
+:repology-badge: {repology-url}/badge/vertical-allrepos/hf.svg?columns=3
+:repology-versions: {repology-url}/project/hf/versions
 :release-page-url: {github-url}/sorairolake/hf/releases
 
 == From source
@@ -12,6 +15,10 @@
 ----
 cargo install hf
 ----
+
+== Via a package manager
+
+image::{repology-badge}[Packaging status,link={repology-versions}]
 
 == From binaries
 
