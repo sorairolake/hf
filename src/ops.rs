@@ -30,8 +30,8 @@ use crate::platform::imp;
 /// ```
 /// # #[cfg(unix)]
 /// # {
-/// assert!(hf::is_hidden(".foo.txt").unwrap());
-/// assert!(!hf::is_hidden("foo.txt").unwrap());
+/// assert_eq!(hf::is_hidden(".foo.txt").unwrap(), true);
+/// assert_eq!(hf::is_hidden("foo.txt").unwrap(), false);
 ///
 /// assert!(hf::is_hidden(".foo.txt/..").is_err());
 /// # }
@@ -60,7 +60,7 @@ use crate::platform::imp;
 ///     .arg(&file_path)
 ///     .status()
 ///     .unwrap();
-/// assert!(hf::is_hidden(&file_path).unwrap());
+/// assert_eq!(hf::is_hidden(&file_path).unwrap(), true);
 ///
 /// // Clear the hidden file attribute.
 /// Command::new("attrib")
@@ -68,7 +68,7 @@ use crate::platform::imp;
 ///     .arg(&file_path)
 ///     .status()
 ///     .unwrap();
-/// assert!(!hf::is_hidden(&file_path).unwrap());
+/// assert_eq!(hf::is_hidden(&file_path).unwrap(), false);
 ///
 /// fs::remove_file(&file_path).unwrap();
 /// assert!(hf::is_hidden(file_path).is_err());

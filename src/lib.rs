@@ -54,15 +54,15 @@
 //!
 //! File::create(&file_path).unwrap();
 //! assert!(file_path.exists());
-//! assert!(!hf::is_hidden(&file_path).unwrap());
+//! assert_eq!(hf::is_hidden(&file_path).unwrap(), false);
 //!
 //! hf::hide(&file_path).unwrap();
 //! assert!(file_path.exists());
-//! assert!(hf::is_hidden(&file_path).unwrap());
+//! assert_eq!(hf::is_hidden(&file_path).unwrap(), true);
 //!
 //! hf::show(&file_path).unwrap();
 //! assert!(file_path.exists());
-//! assert!(!hf::is_hidden(file_path).unwrap());
+//! assert_eq!(hf::is_hidden(file_path).unwrap(), false);
 //! # }
 //! ```
 //!
