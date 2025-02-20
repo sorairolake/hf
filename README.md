@@ -93,11 +93,10 @@ hf --generate-completion bash > hf.bash
 
 This crate is also available as a library.
 
-Add this to your `Cargo.toml` to use it as a library:
+Run the following command in your project directory:
 
-```toml
-[dependencies]
-hf = { version = "0.3.10", default-features = false }
+```sh
+cargo add --no-default-features hf
 ```
 
 By default, the dependencies required to build the application are also built.
