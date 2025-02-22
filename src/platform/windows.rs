@@ -11,7 +11,7 @@ use std::{
     path::Path,
 };
 
-use windows::{core::HSTRING, Win32::Storage::FileSystem};
+use windows::{Win32::Storage::FileSystem, core::HSTRING};
 
 fn get_file_attributes(path: &Path) -> io::Result<FileSystem::FILE_FLAGS_AND_ATTRIBUTES> {
     let attributes = fs::metadata(path)?.file_attributes();

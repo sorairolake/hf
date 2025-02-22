@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use anyhow::Context;
-use clap::{error::ErrorKind, CommandFactory, Parser};
+use clap::{CommandFactory, Parser, error::ErrorKind};
 use log::{info, warn};
 use simplelog::{ColorChoice, Config, SimpleLogger, TermLogger, TerminalMode};
 
