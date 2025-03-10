@@ -4,7 +4,7 @@
 
 = hf-show(1)
 // Specify in UTC.
-:docdate: 2025-01-08
+:docdate: 2025-03-10
 :revnumber: 0.3.10
 :doctype: manpage
 :mansource: hf {revnumber}
