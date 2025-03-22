@@ -11,6 +11,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 ![MSRV][msrv-badge]
 [![Docs][docs-badge]][docs-url]
 ![License][license-badge]
+[![REUSE status][reuse-badge]][reuse-url]
 
 **hf** is a cross-platform hidden file library and utility.
 
@@ -163,6 +164,8 @@ licensing information.
 [docs-badge]: https://img.shields.io/docsrs/hf?style=for-the-badge&logo=docsdotrs&label=Docs.rs
 [docs-url]: https://docs.rs/hf
 [license-badge]: https://img.shields.io/crates/l/hf?style=for-the-badge
+[reuse-badge]: https://img.shields.io/reuse/compliance/github.com%2Fsorairolake%2Fhf?style=for-the-badge
+[reuse-url]: https://api.reuse.software/info/github.com/sorairolake/hf
 [repology-badge]: https://repology.org/badge/vertical-allrepos/hf.svg?columns=3
 [repology-versions]: https://repology.org/project/hf/versions
 [release page]: https://github.com/sorairolake/hf/releases

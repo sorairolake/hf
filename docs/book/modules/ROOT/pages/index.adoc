@@ -13,12 +13,15 @@
 :docs-badge: {shields-url}/docsrs/hf?style=for-the-badge&logo=docsdotrs&label=Docs.rs
 :docs-url: https://docs.rs/hf
 :license-badge: {shields-url}/crates/l/hf?style=for-the-badge
+:reuse-badge: {shields-url}/reuse/compliance/github.com%2Fsorairolake%2Fhf?style=for-the-badge
+:reuse-url: https://api.reuse.software/info/github.com/sorairolake/hf
 
 image:{ci-badge}[CI,link={ci-url}]
 image:{version-badge}[Version,link={version-url}]
 image:{msrv-badge}[MSRV]
 image:{docs-badge}[Docs,link={docs-url}]
 image:{license-badge}[License]
+image:{reuse-badge}[REUSE status,link={reuse-url}]
 
 *hf* is a cross-platform hidden file library and utility.
 
