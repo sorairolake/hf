@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
-alias all := default
 alias lint := clippy
 
 # Run default recipe
-default: build
+@_default:
+    just -l
 
 # Build a package
 @build:
@@ -40,6 +40,10 @@ default: build
 @clippy-fix:
     cargo clippy --fix --allow-dirty --allow-staged -- -D warnings
 
+# Build the package documentation
+@doc $RUSTDOCFLAGS="--cfg docsrs":
+    cargo +nightly doc --all-features
+
 # Run the linter for GitHub Actions workflow files
 @lint-github-actions:
     actionlint -verbose
@@ -54,5 +58,5 @@ default: build
 
 # Increment the version
 @bump part:
-    bump-my-version bump {{part}}
-    cargo set-version --bump {{part}}
+    bump-my-version bump {{ part }}
+    cargo set-version --bump {{ part }}

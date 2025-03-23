@@ -11,6 +11,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 ![MSRV][msrv-badge]
 [![Docs][docs-badge]][docs-url]
 ![License][license-badge]
+[![REUSE status][reuse-badge]][reuse-url]
 
 **hf** is a cross-platform hidden file library and utility.
 
@@ -93,11 +94,10 @@ hf --generate-completion bash > hf.bash
 
 This crate is also available as a library.
 
-Add this to your `Cargo.toml` to use it as a library:
+Run the following command in your project directory:
 
-```toml
-[dependencies]
-hf = { version = "0.3.10", default-features = false }
+```sh
+cargo add --no-default-features hf
 ```
 
 By default, the dependencies required to build the application are also built.
@@ -110,7 +110,7 @@ See the [documentation][docs-url] for more details.
 
 ## Minimum supported Rust version
 
-The minimum supported Rust version (MSRV) of this library is v1.74.0.
+The minimum supported Rust version (MSRV) of this library is v1.85.0.
 
 ## Command-line options
 
@@ -152,7 +152,7 @@ Copyright (C) 2022 Shun Sakai (see [AUTHORS.adoc])
 2.  Some files are distributed under the terms of the _Creative Commons
     Attribution 4.0 International Public License_.
 
-This project is compliant with version 3.2 of the [_REUSE Specification_]. See
+This project is compliant with version 3.3 of the [_REUSE Specification_]. See
 copyright notices of individual files for more details on copyright and
 licensing information.
 
@@ -164,6 +164,8 @@ licensing information.
 [docs-badge]: https://img.shields.io/docsrs/hf?style=for-the-badge&logo=docsdotrs&label=Docs.rs
 [docs-url]: https://docs.rs/hf
 [license-badge]: https://img.shields.io/crates/l/hf?style=for-the-badge
+[reuse-badge]: https://img.shields.io/reuse/compliance/github.com%2Fsorairolake%2Fhf?style=for-the-badge
+[reuse-url]: https://api.reuse.software/info/github.com/sorairolake/hf
 [repology-badge]: https://repology.org/badge/vertical-allrepos/hf.svg?columns=3
 [repology-versions]: https://repology.org/project/hf/versions
 [release page]: https://github.com/sorairolake/hf/releases
@@ -175,4 +177,4 @@ licensing information.
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [AUTHORS.adoc]: AUTHORS.adoc
-[_REUSE Specification_]: https://reuse.software/spec/
+[_REUSE Specification_]: https://reuse.software/spec-3.3/

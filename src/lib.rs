@@ -54,21 +54,21 @@
 //!
 //! File::create(&file_path).unwrap();
 //! assert!(file_path.exists());
-//! assert!(!hf::is_hidden(&file_path).unwrap());
+//! assert_eq!(hf::is_hidden(&file_path).unwrap(), false);
 //!
 //! hf::hide(&file_path).unwrap();
 //! assert!(file_path.exists());
-//! assert!(hf::is_hidden(&file_path).unwrap());
+//! assert_eq!(hf::is_hidden(&file_path).unwrap(), true);
 //!
 //! hf::show(&file_path).unwrap();
 //! assert!(file_path.exists());
-//! assert!(!hf::is_hidden(file_path).unwrap());
+//! assert_eq!(hf::is_hidden(file_path).unwrap(), false);
 //! # }
 //! ```
 //!
 //! [hidden files and directories]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 
-#![doc(html_root_url = "https://docs.rs/hf/0.3.10/")]
+#![doc(html_root_url = "https://docs.rs/hf/0.4.0/")]
 #![cfg_attr(docsrs, feature(doc_auto_cfg, doc_cfg))]
 // Lint levels of rustc.
 #![deny(missing_docs)]

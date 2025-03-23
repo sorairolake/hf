@@ -43,17 +43,17 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 /// # use std::path::Path;
 /// #
 /// assert_eq!(
-///     hf::unix::hidden_file_name("foo.txt").unwrap(),
-///     Path::new(".foo.txt")
+///     hf::unix::hidden_file_name("foo.txt").as_deref(),
+///     Some(Path::new(".foo.txt"))
 /// );
 /// assert_eq!(
-///     hf::unix::hidden_file_name("foo/bar.txt").unwrap(),
-///     Path::new("foo/.bar.txt")
+///     hf::unix::hidden_file_name("foo/bar.txt").as_deref(),
+///     Some(Path::new("foo/.bar.txt"))
 /// );
 ///
-/// assert!(hf::unix::hidden_file_name(".foo.txt").is_none());
-/// assert!(hf::unix::hidden_file_name("foo/.bar.txt").is_none());
-/// assert!(hf::unix::hidden_file_name("foo.txt/..").is_none());
+/// assert_eq!(hf::unix::hidden_file_name(".foo.txt"), None);
+/// assert_eq!(hf::unix::hidden_file_name("foo/.bar.txt"), None);
+/// assert_eq!(hf::unix::hidden_file_name("foo.txt/.."), None);
 /// ```
 #[inline]
 pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
@@ -79,17 +79,17 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// # use std::path::Path;
 /// #
 /// assert_eq!(
-///     hf::unix::normal_file_name(".foo.txt").unwrap(),
-///     Path::new("foo.txt")
+///     hf::unix::normal_file_name(".foo.txt").as_deref(),
+///     Some(Path::new("foo.txt"))
 /// );
 /// assert_eq!(
-///     hf::unix::normal_file_name("foo/.bar.txt").unwrap(),
-///     Path::new("foo/bar.txt")
+///     hf::unix::normal_file_name("foo/.bar.txt").as_deref(),
+///     Some(Path::new("foo/bar.txt"))
 /// );
 ///
-/// assert!(hf::unix::normal_file_name("foo.txt").is_none());
-/// assert!(hf::unix::normal_file_name("foo/bar.txt").is_none());
-/// assert!(hf::unix::normal_file_name(".foo.txt/..").is_none());
+/// assert_eq!(hf::unix::normal_file_name("foo.txt"), None);
+/// assert_eq!(hf::unix::normal_file_name("foo/bar.txt"), None);
+/// assert_eq!(hf::unix::normal_file_name(".foo.txt/.."), None);
 /// ```
 #[inline]
 pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
