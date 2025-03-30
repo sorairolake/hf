@@ -21,6 +21,8 @@ On Windows, hidden files and directories are files and directories with the
 hidden file attribute. This crate provides operations related to hidden files
 and directories, such as making files and directories invisible and visible.
 
+![Demo animation](assets/demo.gif)
+
 ## Installation
 
 ### From source

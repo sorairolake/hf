@@ -30,3 +30,5 @@ directories are files and directories that starts with a dot character (`.`).
 On Windows, hidden files and directories are files and directories with the
 hidden file attribute. This crate provides operations related to hidden files
 and directories, such as making files and directories invisible and visible.
+
+image::demo.gif[Demo animation]
