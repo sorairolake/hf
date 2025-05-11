@@ -34,7 +34,7 @@ hf show -f .data.txt
 
 == Generate shell completion
 
-`--generate-completion` option generates shell completions to standard output.
+`completion` subcommand generates shell completions to standard output.
 
 .The following shells are supported
 * `bash`
@@ -47,5 +47,5 @@ hf show -f .data.txt
 .Example
 [source,sh]
 ----
-hf --generate-completion bash > hf.bash
+hf completion bash > hf.bash
 ----

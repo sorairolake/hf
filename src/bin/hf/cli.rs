@@ -31,6 +31,12 @@ const HIDE_AFTER_LONG_HELP: &str = "See `hf-hide(1)` for more details.";
 
 const SHOW_AFTER_LONG_HELP: &str = "See `hf-show(1)` for more details.";
 
+const COMPLETION_AFTER_LONG_HELP: &str = concat!(
+    "The completion is output to standard output.\n",
+    '\n',
+    "See `hf-completion(1)` for more details."
+);
+
 #[derive(Debug, Parser)]
 #[command(
     version,
@@ -38,9 +44,7 @@ const SHOW_AFTER_LONG_HELP: &str = "See `hf-show(1)` for more details.";
     about,
     max_term_width(100),
     propagate_version(true),
-    after_long_help(AFTER_LONG_HELP),
-    arg_required_else_help(true),
-    args_conflicts_with_subcommands(true)
+    after_long_help(AFTER_LONG_HELP)
 )]
 pub struct Opt {
     /// The minimum log level to print.
@@ -54,14 +58,8 @@ pub struct Opt {
     )]
     pub log_level: LogLevel,
 
-    /// Generate shell completion.
-    ///
-    /// The completion is output to standard output.
-    #[arg(long, value_enum, value_name("SHELL"))]
-    pub generate_completion: Option<Shell>,
-
     #[command(subcommand)]
-    pub command: Option<Command>,
+    pub command: Command,
 }
 
 #[derive(Debug, Subcommand)]
@@ -73,6 +71,10 @@ pub enum Command {
     /// Make hidden files and directories visible.
     #[command(after_long_help(SHOW_AFTER_LONG_HELP))]
     Show(Show),
+
+    /// Generate shell completion.
+    #[command(after_long_help(COMPLETION_AFTER_LONG_HELP))]
+    Completion(Completion),
 }
 
 #[derive(Args, Debug)]
@@ -105,6 +107,13 @@ pub struct Show {
     /// Hidden files and directories to show.
     #[arg(value_name("FILE"), value_hint(ValueHint::FilePath))]
     pub input: Vec<PathBuf>,
+}
+
+#[derive(Args, Debug)]
+pub struct Completion {
+    /// Shell to generate completion for.
+    #[arg(value_enum, ignore_case(true))]
+    pub shell: Shell,
 }
 
 impl Opt {

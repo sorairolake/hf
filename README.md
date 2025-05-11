@@ -75,7 +75,7 @@ hf show -f .data.txt
 
 ### Generate shell completion
 
-`--generate-completion` option generates shell completions to standard output.
+`completion` subcommand generates shell completions to standard output.
 
 The following shells are supported:
 
@@ -89,7 +89,7 @@ The following shells are supported:
 Example:
 
 ```sh
-hf --generate-completion bash > hf.bash
+hf completion bash > hf.bash
 ```
 
 ## Use as a library
@@ -121,6 +121,7 @@ Please see the following:
 - [`hf(1)`]
 - [`hf-hide(1)`]
 - [`hf-show(1)`]
+- [`hf-completion(1)`]
 - [`hf-help(1)`]
 
 ## Source code
@@ -170,6 +171,7 @@ licensing information.
 [`hf(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf.1.html
 [`hf-hide(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-hide.1.html
 [`hf-show(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-show.1.html
+[`hf-completion(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-completion.1.html
 [`hf-help(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-help.1.html
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc

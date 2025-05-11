@@ -19,8 +19,13 @@ project adheres to https://semver.org/[Semantic Versioning].
 === Added
 
 * Add demo animation ({pull-request-url}/368[#368])
+
+=== Changed
+
 * Change the license for documents and assets to CC BY 4.0
   ({pull-request-url}/380[#380])
+* Replace `--generate-completion` with `completion` subcommand
+  ({pull-request-url}/387[#387])
 
 == {compare-url}/v0.3.10\...v0.4.0[0.4.0] - 2025-03-23
 
