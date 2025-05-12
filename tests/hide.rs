@@ -381,27 +381,3 @@ fn hide_with_invalid_log_level() {
             "invalid value 'a' for '--log-level <LEVEL>'",
         ));
 }
-
-#[test]
-fn long_version_for_hide_command() {
-    utils::command::command()
-        .arg("hide")
-        .arg("--version")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/long-version.md"
-        )));
-}
-
-#[test]
-fn after_long_help_for_hide_command() {
-    utils::command::command()
-        .arg("hide")
-        .arg("--help")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/hide-after-long-help.md"
-        )));
-}

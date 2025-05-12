@@ -11,40 +11,12 @@ use clap::{ArgGroup, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueH
 use clap_complete::Generator;
 use simplelog::LevelFilter;
 
-const LONG_VERSION: &str = concat!(
-    env!("CARGO_PKG_VERSION"),
-    '\n',
-    "Copyright (C) 2022 Shun Sakai\n",
-    '\n',
-    "This program is distributed under the terms of either the Apache License 2.0 or\n",
-    "the MIT License.\n",
-    '\n',
-    "This is free software: you are free to change and redistribute it. There is NO\n",
-    "WARRANTY, to the extent permitted by law.\n",
-    '\n',
-    "Report bugs to <https://github.com/sorairolake/hf/issues>."
-);
-
-const AFTER_LONG_HELP: &str = "See `hf(1)` for more details.";
-
-const HIDE_AFTER_LONG_HELP: &str = "See `hf-hide(1)` for more details.";
-
-const SHOW_AFTER_LONG_HELP: &str = "See `hf-show(1)` for more details.";
-
-const COMPLETION_AFTER_LONG_HELP: &str = concat!(
-    "The completion is output to standard output.\n",
-    '\n',
-    "See `hf-completion(1)` for more details."
-);
-
 #[derive(Debug, Parser)]
 #[command(
     version,
-    long_version(LONG_VERSION),
     about,
     max_term_width(100),
     propagate_version(true),
-    after_long_help(AFTER_LONG_HELP),
     arg_required_else_help(false)
 )]
 pub struct Opt {
@@ -66,15 +38,14 @@ pub struct Opt {
 #[derive(Debug, Subcommand)]
 pub enum Command {
     /// Make files and directories invisible.
-    #[command(after_long_help(HIDE_AFTER_LONG_HELP))]
     Hide(Hide),
 
     /// Make hidden files and directories visible.
-    #[command(after_long_help(SHOW_AFTER_LONG_HELP))]
     Show(Show),
 
     /// Generate shell completion.
-    #[command(after_long_help(COMPLETION_AFTER_LONG_HELP))]
+    ///
+    /// The completion is output to standard output.
     Completion(Completion),
 }
 

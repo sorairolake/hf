@@ -414,27 +414,3 @@ fn show_with_invalid_log_level() {
             "invalid value 'a' for '--log-level <LEVEL>'",
         ));
 }
-
-#[test]
-fn long_version_for_show_command() {
-    utils::command::command()
-        .arg("show")
-        .arg("--version")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/long-version.md"
-        )));
-}
-
-#[test]
-fn after_long_help_for_show_command() {
-    utils::command::command()
-        .arg("show")
-        .arg("--help")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/show-after-long-help.md"
-        )));
-}
