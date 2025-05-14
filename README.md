@@ -168,11 +168,11 @@ licensing information.
 [repology-versions]: https://repology.org/project/hf/versions
 [release page]: https://github.com/sorairolake/hf/releases
 [BUILD.adoc]: BUILD.adoc
-[`hf(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf.1.html
-[`hf-hide(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-hide.1.html
-[`hf-show(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-show.1.html
-[`hf-completion(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-completion.1.html
-[`hf-help(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-help.1.html
+[`hf(1)`]: docs/man/man1/hf.1.adoc
+[`hf-hide(1)`]: docs/man/man1/hf-hide.1.adoc
+[`hf-show(1)`]: docs/man/man1/hf-show.1.adoc
+[`hf-completion(1)`]: docs/man/man1/hf-completion.1.adoc
+[`hf-help(1)`]: docs/man/man1/hf-help.1.adoc
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [AUTHORS.adoc]: AUTHORS.adoc
