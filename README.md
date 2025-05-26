@@ -122,7 +122,6 @@ Please see the following:
 - [`hf-hide(1)`]
 - [`hf-show(1)`]
 - [`hf-completion(1)`]
-- [`hf-help(1)`]
 
 ## Source code
 
@@ -172,7 +171,6 @@ licensing information.
 [`hf-hide(1)`]: docs/man/man1/hf-hide.1.adoc
 [`hf-show(1)`]: docs/man/man1/hf-show.1.adoc
 [`hf-completion(1)`]: docs/man/man1/hf-completion.1.adoc
-[`hf-help(1)`]: docs/man/man1/hf-help.1.adoc
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [AUTHORS.adoc]: AUTHORS.adoc

@@ -4,7 +4,7 @@
 
 = hf(1)
 // Specify in UTC.
-:docdate: 2025-05-12
+:docdate: 2025-05-26
 :revnumber: 0.4.0
 :doctype: manpage
 :mansource: hf {revnumber}
@@ -40,10 +40,6 @@ hf - an utility for hidden files and directories
 *hf-completion*(1)::
 
   Generate shell completion.
-
-*hf-help*(1)::
-
-  Print the help for a command.
 
 == OPTIONS
 

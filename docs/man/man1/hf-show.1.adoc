@@ -4,7 +4,7 @@
 
 = hf-show(1)
 // Specify in UTC.
-:docdate: 2025-05-12
+:docdate: 2025-05-26
 :revnumber: 0.4.0
 :doctype: manpage
 :mansource: hf {revnumber}
@@ -109,4 +109,4 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-copyright.adoc[
 
 == SEE ALSO
 
-*hf*(1), *hf-completion*(1), *hf-help*(1), *hf-hide*(1)
+*hf*(1), *hf-completion*(1), *hf-hide*(1)
