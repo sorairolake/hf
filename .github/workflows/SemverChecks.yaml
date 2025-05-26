@@ -20,4 +20,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Check Semantic Versioning
-        uses: obi1kenobi/cargo-semver-checks-action@v2.6
+        uses: obi1kenobi/cargo-semver-checks-action@v2.7
