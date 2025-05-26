@@ -31,6 +31,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Make the message for `--version` the same as the message for `-V`
   ({pull-request-url}/393[#393])
 
+=== Removed
+
+* Remove `hf-help(1)`
+
 == {compare-url}/v0.3.10\...v0.4.0[0.4.0] - 2025-03-23
 
 === Changed
