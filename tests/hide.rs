@@ -42,6 +42,16 @@ fn basic_hide() {
 }
 
 #[test]
+fn infer_subcommand_name_for_hide_command() {
+    utils::command::command()
+        .arg("hi")
+        .arg("-V")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("hf-hide"));
+}
+
+#[test]
 fn hide_with_multiple_files() {
     let temp_dir = tempfile::tempdir().unwrap();
     let temp_dir = temp_dir.path();

@@ -48,6 +48,16 @@ fn basic_show() {
 }
 
 #[test]
+fn infer_subcommand_name_for_show_command() {
+    utils::command::command()
+        .arg("s")
+        .arg("-V")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("hf-show"));
+}
+
+#[test]
 fn show_with_multiple_files() {
     let temp_dir = tempfile::tempdir().unwrap();
     let temp_dir = temp_dir.path();
