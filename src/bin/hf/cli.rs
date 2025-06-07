@@ -17,7 +17,9 @@ use simplelog::LevelFilter;
     about,
     max_term_width(100),
     propagate_version(true),
-    arg_required_else_help(false)
+    infer_subcommands(true),
+    arg_required_else_help(false),
+    args_conflicts_with_subcommands(true)
 )]
 pub struct Opt {
     /// The minimum log level to print.
