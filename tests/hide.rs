@@ -42,6 +42,16 @@ fn basic_hide() {
 }
 
 #[test]
+fn infer_subcommand_name_for_hide_command() {
+    utils::command::command()
+        .arg("hi")
+        .arg("-V")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("hf-hide"));
+}
+
+#[test]
 fn hide_with_multiple_files() {
     let temp_dir = tempfile::tempdir().unwrap();
     let temp_dir = temp_dir.path();
@@ -380,28 +390,4 @@ fn hide_with_invalid_log_level() {
         .stderr(predicate::str::contains(
             "invalid value 'a' for '--log-level <LEVEL>'",
         ));
-}
-
-#[test]
-fn long_version_for_hide_command() {
-    utils::command::command()
-        .arg("hide")
-        .arg("--version")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/long-version.md"
-        )));
-}
-
-#[test]
-fn after_long_help_for_hide_command() {
-    utils::command::command()
-        .arg("hide")
-        .arg("--help")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/hide-after-long-help.md"
-        )));
 }

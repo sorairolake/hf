@@ -4,8 +4,8 @@
 
 = hf(1)
 // Specify in UTC.
-:docdate: 2025-03-10
-:revnumber: 0.4.0
+:docdate: 2025-05-26
+:revnumber: 0.5.0
 :doctype: manpage
 :mansource: hf {revnumber}
 :manmanual: General Commands Manual
@@ -37,9 +37,9 @@ hf - an utility for hidden files and directories
 
   Make hidden files and directories visible.
 
-*hf-help*(1)::
+*hf-completion*(1)::
 
-  Print the help for a command.
+  Generate shell completion.
 
 == OPTIONS
 
@@ -80,38 +80,7 @@ hf - an utility for hidden files and directories
 
 *-V*, *--version*::
 
-  Print version number. The long flag (*--version*) will also print the
-  copyright notice, the license notice and where to report bugs.
-
-*--generate-completion* _SHELL_::
-
-  Generate shell completion. The completion is output to standard output.
-
-  The possible values are:{blank}:::
-
-    *bash*::::
-
-      Bash.
-
-    *elvish*::::
-
-      Elvish.
-
-    *fish*::::
-
-      fish.
-
-    *nushell*::::
-
-      Nushell.
-
-    *powershell*::::
-
-      PowerShell.
-
-    *zsh*::::
-
-      Zsh.
+  Print version number.
 
 ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]

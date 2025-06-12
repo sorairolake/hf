@@ -12,7 +12,7 @@
 * xref:man/man1/hf.1.adoc[`hf(1)`]
 * xref:man/man1/hf-hide.1.adoc[`hf-hide(1)`]
 * xref:man/man1/hf-show.1.adoc[`hf-show(1)`]
-* xref:man/man1/hf-help.1.adoc[`hf-help(1)`]
+* xref:man/man1/hf-completion.1.adoc[`hf-completion(1)`]
 
 .Resources
 * xref:repository.adoc[]

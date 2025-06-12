@@ -1,7 +1,7 @@
 <!--
 SPDX-FileCopyrightText: 2022 Shun Sakai
 
-SPDX-License-Identifier: Apache-2.0 OR MIT
+SPDX-License-Identifier: CC-BY-4.0
 -->
 
 # hf
@@ -20,6 +20,8 @@ directories are files and directories that starts with a dot character (`.`).
 On Windows, hidden files and directories are files and directories with the
 hidden file attribute. This crate provides operations related to hidden files
 and directories, such as making files and directories invisible and visible.
+
+![Demo animation](assets/demo.gif)
 
 ## Installation
 
@@ -73,7 +75,7 @@ hf show -f .data.txt
 
 ### Generate shell completion
 
-`--generate-completion` option generates shell completions to standard output.
+`completion` subcommand generates shell completions to standard output.
 
 The following shells are supported:
 
@@ -87,7 +89,7 @@ The following shells are supported:
 Example:
 
 ```sh
-hf --generate-completion bash > hf.bash
+hf completion bash > hf.bash
 ```
 
 ## Use as a library
@@ -119,17 +121,12 @@ Please see the following:
 - [`hf(1)`]
 - [`hf-hide(1)`]
 - [`hf-show(1)`]
-- [`hf-help(1)`]
+- [`hf-completion(1)`]
 
 ## Source code
 
 The upstream repository is available at
 <https://github.com/sorairolake/hf.git>.
-
-The source code is also available at:
-
-- <https://gitlab.com/sorairolake/hf.git>
-- <https://codeberg.org/sorairolake/hf.git>
 
 ## Changelog
 
@@ -170,10 +167,10 @@ licensing information.
 [repology-versions]: https://repology.org/project/hf/versions
 [release page]: https://github.com/sorairolake/hf/releases
 [BUILD.adoc]: BUILD.adoc
-[`hf(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf.1.html
-[`hf-hide(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-hide.1.html
-[`hf-show(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-show.1.html
-[`hf-help(1)`]: https://sorairolake.github.io/hf/book/man/man1/hf-help.1.html
+[`hf(1)`]: docs/man/man1/hf.1.adoc
+[`hf-hide(1)`]: docs/man/man1/hf-hide.1.adoc
+[`hf-show(1)`]: docs/man/man1/hf-show.1.adoc
+[`hf-completion(1)`]: docs/man/man1/hf-completion.1.adoc
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [AUTHORS.adoc]: AUTHORS.adoc

@@ -65,7 +65,7 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
-            let file_path = temp_dir.path().join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
+            let file_path = temp_dir.path().join("ファイル.txt");
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
@@ -110,7 +110,7 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
-            let file_path = temp_dir.path().join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
+            let file_path = temp_dir.path().join("ファイル.txt");
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
@@ -182,7 +182,7 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
-            let file_path = temp_dir.path().join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
+            let file_path = temp_dir.path().join("ファイル.txt");
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
@@ -242,7 +242,7 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
-            let file_path = temp_dir.path().join("\u{30D5}\u{30A1}\u{30A4}\u{30EB}.txt");
+            let file_path = temp_dir.path().join("ファイル.txt");
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();

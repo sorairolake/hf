@@ -4,8 +4,8 @@
 
 = hf-show(1)
 // Specify in UTC.
-:docdate: 2025-03-10
-:revnumber: 0.4.0
+:docdate: 2025-05-26
+:revnumber: 0.5.0
 :doctype: manpage
 :mansource: hf {revnumber}
 :manmanual: General Commands Manual
@@ -83,8 +83,7 @@ _FILE_::
 
 *-V*, *--version*::
 
-  Print version number. The long flag (*--version*) will also print the
-  copyright notice, the license notice and where to report bugs.
+  Print version number.
 
 ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]
@@ -110,4 +109,4 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-copyright.adoc[
 
 == SEE ALSO
 
-*hf*(1), *hf-hide*(1), *hf-help*(1)
+*hf*(1), *hf-completion*(1), *hf-hide*(1)

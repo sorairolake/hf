@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2022 Shun Sakai
 //
-// SPDX-License-Identifier: Apache-2.0 OR MIT
+// SPDX-License-Identifier: CC-BY-4.0
 
 = Changelog
 :toc: preamble
@@ -13,6 +13,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
+
+== {compare-url}/v0.4.0\...v0.5.0[0.5.0] - 2025-06-12
+
+=== Added
+
+* Add demo animation ({pull-request-url}/368[#368])
+
+=== Changed
+
+* Change the license for documents and assets to CC BY 4.0
+  ({pull-request-url}/380[#380])
+* Replace `--generate-completion` with `completion` subcommand
+  ({pull-request-url}/387[#387])
+* Remove help text for after auto-generated `--help`
+  ({pull-request-url}/393[#393])
+* Make the message for `--version` the same as the message for `-V`
+  ({pull-request-url}/393[#393])
+* Allow partial matches of subcommand names ({pull-request-url}/401[#401])
+
+=== Removed
+
+* Remove `hf-help(1)`
 
 == {compare-url}/v0.3.10\...v0.4.0[0.4.0] - 2025-03-23
 

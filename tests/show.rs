@@ -48,6 +48,16 @@ fn basic_show() {
 }
 
 #[test]
+fn infer_subcommand_name_for_show_command() {
+    utils::command::command()
+        .arg("s")
+        .arg("-V")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("hf-show"));
+}
+
+#[test]
 fn show_with_multiple_files() {
     let temp_dir = tempfile::tempdir().unwrap();
     let temp_dir = temp_dir.path();
@@ -413,28 +423,4 @@ fn show_with_invalid_log_level() {
         .stderr(predicate::str::contains(
             "invalid value 'a' for '--log-level <LEVEL>'",
         ));
-}
-
-#[test]
-fn long_version_for_show_command() {
-    utils::command::command()
-        .arg("show")
-        .arg("--version")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/long-version.md"
-        )));
-}
-
-#[test]
-fn after_long_help_for_show_command() {
-    utils::command::command()
-        .arg("show")
-        .arg("--help")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/show-after-long-help.md"
-        )));
 }

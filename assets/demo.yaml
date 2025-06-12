@@ -1,0 +1,53 @@
+# SPDX-FileCopyrightText: 2025 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+settings:
+  width: 120
+  height: 30
+  title: hf demo
+
+instructions:
+  - !Command
+    command: rsync -ac ../{.github,.gitignore,build.rs,Cargo.toml,README.md} .
+    hidden: true
+
+  - !Marker Make files invisible
+  - !Command
+    command: eza -a
+  - !Wait 1s
+  - !Command
+    command: hf hide -n .github .gitignore build.rs Cargo.toml README.md
+  - !Wait 1s
+  - !Command
+    command: hf hide -f .github .gitignore build.rs Cargo.toml README.md
+  - !Wait 1s
+  - !Command
+    command: eza -a
+  - !Wait 3s
+  - !Clear
+
+  - !Command
+    command: git clean -df
+    hidden: true
+  - !Command
+    command: rsync -ac ../{.github,.gitignore,build.rs,Cargo.toml,README.md} .
+    hidden: true
+
+  - !Marker Make hidden files visible
+  - !Command
+    command: eza -a
+  - !Wait 1s
+  - !Command
+    command: hf show -n .github .gitignore build.rs Cargo.toml README.md
+  - !Wait 1s
+  - !Command
+    command: hf show -f .github .gitignore build.rs Cargo.toml README.md
+  - !Wait 1s
+  - !Command
+    command: eza -a
+  - !Wait 3s
+
+  - !Command
+    command: git clean -df
+    hidden: true
