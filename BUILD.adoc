@@ -27,12 +27,6 @@ cd hf
 just build
 ----
 
-.To find the directory where man pages are generated
-[source,sh]
-----
-fd -t directory out ./target/*/build/hf-*
-----
-
 == Crate features
 
 `application`::
