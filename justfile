@@ -44,6 +44,10 @@ clippy-fix:
 doc $RUSTDOCFLAGS="--cfg docsrs":
     cargo +nightly doc --all-features
 
+# Build man pages
+build-man:
+    asciidoctor -b manpage docs/man/man1/*.1.adoc
+
 # Run the linter for GitHub Actions workflow files
 lint-github-actions:
     actionlint -verbose
