@@ -4,7 +4,7 @@
 
 [package]
 name = "hf"
-version = "0.5.0"
+version = "0.5.1"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2024"
 rust-version = "1.85.0"
@@ -32,7 +32,7 @@ clap_complete = { version = "4.5.55", optional = true }
 clap_complete_nushell = { version = "4.5.8", optional = true }
 log = { version = "0.4.27", optional = true }
 simplelog = { version = "0.12.2", optional = true }
-sysexits = { version = "0.9.0", optional = true }
+sysexits = { version = "0.9.1", optional = true }
 
 [target.'cfg(windows)'.dependencies]
 windows = { version = "0.61.3", features = ["Win32_Foundation", "Win32_Storage_FileSystem"] }
