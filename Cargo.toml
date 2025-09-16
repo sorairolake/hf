@@ -5,12 +5,10 @@
 [package]
 name = "hf"
 version = "0.5.1"
-authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2024"
 rust-version = "1.85.0"
 description = "Cross-platform hidden file library and utility"
 documentation = "https://docs.rs/hf"
-readme = "README.md"
 homepage = "https://sorairolake.github.io/hf/"
 repository = "https://github.com/sorairolake/hf"
 license = "Apache-2.0 OR MIT"
