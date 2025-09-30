@@ -148,11 +148,13 @@ jobs:
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
       - name: Cache build artifacts
         uses: Swatinem/rust-cache@v2.8.1
       - name: Run linter
-        run: RUSTDOCFLAGS="-D warnings" cargo doc --no-deps --document-private-items --no-default-features
+        env:
+          RUSTDOCFLAGS: "--cfg docsrs -D warnings"
+        run: cargo doc --no-deps --document-private-items --no-default-features
 
   prettier:
     name: Prettier
