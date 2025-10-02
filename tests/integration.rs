@@ -6,9 +6,11 @@ mod utils;
 
 use predicates::prelude::predicate;
 
+use crate::utils::command;
+
 #[test]
 fn without_subcommand() {
-    utils::command::command()
+    command::command()
         .assert()
         .failure()
         .code(2)
@@ -19,7 +21,7 @@ fn without_subcommand() {
 
 #[test]
 fn log_level_without_subcommand() {
-    utils::command::command()
+    command::command()
         .arg("--log-level")
         .arg("WARN")
         .assert()

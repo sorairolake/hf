@@ -5,8 +5,12 @@
 mod utils;
 
 use std::fs::File;
+#[cfg(windows)]
+use std::process::Command;
 
 use predicates::prelude::predicate;
+
+use crate::utils::command;
 
 #[test]
 fn basic_show() {
@@ -16,13 +20,13 @@ fn basic_show() {
 
     File::create(&file_path).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("-n")
         .arg(&file_path)
@@ -30,7 +34,7 @@ fn basic_show() {
         .success()
         .stdout(predicate::str::contains(format!("{}", file_path.display())));
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("-f")
         .arg(&file_path)
@@ -49,7 +53,7 @@ fn basic_show() {
 
 #[test]
 fn infer_subcommand_name_for_show_command() {
-    utils::command::command()
+    command::command()
         .arg("s")
         .arg("-V")
         .assert()
@@ -69,19 +73,19 @@ fn show_with_multiple_files() {
     File::create(&file_path.0).unwrap();
     File::create(&file_path.1).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path.0)
         .status()
         .unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path.1)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("-n")
         .arg(&file_path.0)
@@ -97,7 +101,7 @@ fn show_with_multiple_files() {
             file_path.1.display()
         )));
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("-f")
         .arg(&file_path.0)
@@ -122,7 +126,7 @@ fn show_when_non_hidden_file() {
 
     File::create(&file_path).unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("-n")
         .arg(&file_path)
@@ -133,7 +137,7 @@ fn show_when_non_hidden_file() {
             file_path.display()
         )));
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("-f")
         .arg(&file_path)
@@ -153,7 +157,7 @@ fn show_when_non_hidden_file() {
 #[test]
 fn show_when_file_does_not_exist() {
     {
-        let command = utils::command::command()
+        let command = command::command()
             .arg("show")
             .arg("-n")
             .arg("non_existent.txt")
@@ -170,7 +174,7 @@ fn show_when_file_does_not_exist() {
     }
 
     {
-        let command = utils::command::command()
+        let command = command::command()
             .arg("show")
             .arg("-f")
             .arg("non_existent.txt")
@@ -195,13 +199,13 @@ fn show_with_force_and_dry_run() {
 
     File::create(&file_path).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("-f")
         .arg("-n")
@@ -222,13 +226,13 @@ fn show_with_off_log_level() {
 
     File::create(&file_path).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("--log-level")
         .arg("OFF")
@@ -247,13 +251,13 @@ fn show_with_error_log_level() {
 
     File::create(&file_path).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("--log-level")
         .arg("ERROR")
@@ -272,7 +276,7 @@ fn show_with_warn_log_level() {
 
     File::create(&file_path).unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("--log-level")
         .arg("WARN")
@@ -298,13 +302,13 @@ fn show_with_info_log_level() {
     File::create(&file_path.0).unwrap();
     File::create(&file_path.1).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path.0)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("--log-level")
         .arg("INFO")
@@ -335,13 +339,13 @@ fn show_with_debug_log_level() {
     File::create(&file_path.0).unwrap();
     File::create(&file_path.1).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path.0)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("--log-level")
         .arg("DEBUG")
@@ -372,13 +376,13 @@ fn show_with_trace_log_level() {
     File::create(&file_path.0).unwrap();
     File::create(&file_path.1).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path.0)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("--log-level")
         .arg("TRACE")
@@ -405,13 +409,13 @@ fn show_with_invalid_log_level() {
 
     File::create(&file_path).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("show")
         .arg("--log-level")
         .arg("a")
