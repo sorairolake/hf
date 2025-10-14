@@ -16,9 +16,6 @@ keywords = ["hidden"]
 categories = ["command-line-utilities", "filesystem"]
 include = ["/LICENSES", "/README.md", "/src"]
 
-[package.metadata.docs.rs]
-all-features = true
-
 [[bin]]
 name = "hf"
 required-features = ["application"]
