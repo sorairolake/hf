@@ -11,7 +11,6 @@ use std::{
     path::{Path, PathBuf},
 };
 
-#[inline]
 pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
     let file_name = path
         .file_name()
@@ -20,13 +19,11 @@ pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
     Ok(is_hidden)
 }
 
-#[inline]
 pub(crate) fn hide(path: &Path) -> io::Result<()> {
     let dest_path = hidden_file_name(path).ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
     fs::rename(path, dest_path)
 }
 
-#[inline]
 pub(crate) fn show(path: &Path) -> io::Result<()> {
     let dest_path = normal_file_name(path).ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
     fs::rename(path, dest_path)
@@ -55,7 +52,6 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 /// assert_eq!(hf::unix::hidden_file_name("foo/.bar.txt"), None);
 /// assert_eq!(hf::unix::hidden_file_name("foo.txt/.."), None);
 /// ```
-#[inline]
 pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let inner = |path: &Path| -> Option<PathBuf> {
         let file_name = path
@@ -91,7 +87,6 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// assert_eq!(hf::unix::normal_file_name("foo/bar.txt"), None);
 /// assert_eq!(hf::unix::normal_file_name(".foo.txt/.."), None);
 /// ```
-#[inline]
 pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let inner = |path: &Path| -> Option<PathBuf> {
         let file_name = path
