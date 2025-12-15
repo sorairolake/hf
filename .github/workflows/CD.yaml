@@ -125,7 +125,7 @@ jobs:
           fi
           rm -rv hf-*/
       - name: Upload artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: "hf-${{ needs.get-version.outputs.version }}-${{ matrix.target }}"
           path: "hf-*-*"
