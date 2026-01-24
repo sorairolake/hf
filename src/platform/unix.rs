@@ -14,8 +14,9 @@ use std::{
 pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
     let file_name = path
         .file_name()
+        .and_then(OsStr::to_str)
         .ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
-    let is_hidden = file_name.to_string_lossy().starts_with('.');
+    let is_hidden = file_name.starts_with('.');
     Ok(is_hidden)
 }
 
@@ -31,8 +32,11 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 
 /// Returns the path after making `path` invisible.
 ///
-/// Returns [`None`] if the file name starts with `.` or `path` terminates in
-/// `..`.
+/// Returns [`None`] if any of the following are true:
+///
+/// - `path` terminates in `..`.
+/// - `path` is not valid UTF-8.
+/// - The file name starts with `.`.
 ///
 /// # Examples
 ///
@@ -56,9 +60,10 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let inner = |path: &Path| -> Option<PathBuf> {
         let file_name = path
             .file_name()
-            .map(OsStr::to_string_lossy)
+            .and_then(OsStr::to_str)
             .filter(|n| !n.starts_with('.'))?;
-        let dest_path = path.with_file_name(String::from('.') + &file_name);
+        let file_name = String::from('.') + file_name;
+        let dest_path = path.with_file_name(file_name);
         Some(dest_path)
     };
     inner(path.as_ref())
@@ -66,8 +71,11 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 
 /// Returns the path after making `path` visible.
 ///
-/// Returns [`None`] if the file name does not start with `.` or `path`
-/// terminates in `..`.
+/// Returns [`None`] if any of the following are true:
+///
+/// - `path` terminates in `..`.
+/// - `path` is not valid UTF-8.
+/// - The file name does not start with `.`.
 ///
 /// # Examples
 ///
@@ -91,9 +99,10 @@ pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let inner = |path: &Path| -> Option<PathBuf> {
         let file_name = path
             .file_name()
-            .map(OsStr::to_string_lossy)
+            .and_then(OsStr::to_str)
             .filter(|n| n.starts_with('.'))?;
-        let dest_path = path.with_file_name(file_name.trim_start_matches('.'));
+        let file_name = file_name.trim_start_matches('.');
+        let dest_path = path.with_file_name(file_name);
         Some(dest_path)
     };
     inner(path.as_ref())
@@ -101,7 +110,7 @@ pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 
 #[cfg(test)]
 mod tests {
-    use std::fs::File;
+    use std::{fs::File, os::unix::ffi::OsStrExt};
 
     use super::*;
 
@@ -138,6 +147,16 @@ mod tests {
         );
         assert_eq!(
             super::is_hidden(Path::new("/")).unwrap_err().kind(),
+            ErrorKind::InvalidInput
+        );
+    }
+
+    #[test]
+    fn is_hidden_with_non_utf8_path() {
+        assert_eq!(
+            super::is_hidden(Path::new(OsStr::from_bytes(&[0x00, 0x9f, 0x92, 0x96])))
+                .unwrap_err()
+                .kind(),
             ErrorKind::InvalidInput
         );
     }
@@ -258,6 +277,15 @@ mod tests {
             ErrorKind::InvalidInput
         );
         let file_path = Path::new("/");
+        assert_eq!(
+            super::hide(file_path).unwrap_err().kind(),
+            ErrorKind::InvalidInput
+        );
+    }
+
+    #[test]
+    fn hide_with_non_utf8_path() {
+        let file_path = Path::new(OsStr::from_bytes(&[0x00, 0x9f, 0x92, 0x96]));
         assert_eq!(
             super::hide(file_path).unwrap_err().kind(),
             ErrorKind::InvalidInput
@@ -406,6 +434,15 @@ mod tests {
     }
 
     #[test]
+    fn show_with_non_utf8_path() {
+        let hidden_file_path = Path::new(OsStr::from_bytes(&[0x2e, 0x00, 0x9f, 0x92, 0x96]));
+        assert_eq!(
+            super::show(hidden_file_path).unwrap_err().kind(),
+            ErrorKind::InvalidInput
+        );
+    }
+
+    #[test]
     fn show_when_file_does_not_exist() {
         let hidden_file_path = Path::new(".foo.txt");
         assert_eq!(
@@ -449,6 +486,11 @@ mod tests {
     }
 
     #[test]
+    fn hidden_file_name_with_non_utf8_path() {
+        assert!(super::hidden_file_name(OsStr::from_bytes(&[0x00, 0x9f, 0x92, 0x96])).is_none());
+    }
+
+    #[test]
     fn normal_file_name() {
         assert_eq!(
             super::normal_file_name(".foo.txt").unwrap(),
@@ -483,5 +525,12 @@ mod tests {
     fn normal_file_name_with_invalid_path() {
         assert!(super::normal_file_name(".foo.txt/..").is_none());
         assert!(super::normal_file_name("/").is_none());
+    }
+
+    #[test]
+    fn normal_file_name_with_non_utf8_path() {
+        assert!(
+            super::normal_file_name(OsStr::from_bytes(&[0x2e, 0x00, 0x9f, 0x92, 0x96])).is_none()
+        );
     }
 }

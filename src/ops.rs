@@ -17,7 +17,10 @@ use crate::platform::imp;
 ///
 /// ## On Unix
 ///
-/// Returns [`Err`] if `path` terminates in `..`.
+/// Returns [`Err`] if any of the following are true:
+///
+/// - `path` terminates in `..`.
+/// - `path` is not valid UTF-8.
 ///
 /// ## On Windows
 ///
@@ -92,8 +95,9 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - The file name starts with `.`.
 /// - `path` terminates in `..`.
+/// - `path` is not valid UTF-8.
+/// - The file name starts with `.`.
 /// - [`std::fs::rename`] returns an error.
 ///
 /// ## On Windows
@@ -177,8 +181,9 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - The file name does not start with `.`.
 /// - `path` terminates in `..`.
+/// - `path` is not valid UTF-8.
+/// - The file name does not start with `.`.
 /// - [`std::fs::rename`] returns an error.
 ///
 /// ## On Windows

@@ -20,6 +20,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 * Add more archive formats for releases ({pull-request-url}/489[#489])
 
+=== Changed
+
+* Reject non-UTF-8 path on Unix ({pull-request-url}/527[#527])
+
 == {compare-url}/v0.5.0\...v0.5.1[0.5.1] - 2025-07-28
 
 === Changed
