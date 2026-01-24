@@ -1,0 +1,13 @@
+// SPDX-FileCopyrightText: 2026 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= Examples
+
+link:hide.rs[]::
+
+  An example of making a file or directory invisible.
+
+link:show.rs[]::
+
+  An example of making a hidden file or directory visible.
