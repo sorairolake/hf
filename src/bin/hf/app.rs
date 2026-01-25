@@ -29,7 +29,7 @@ pub fn run() -> anyhow::Result<()> {
     match opt.command {
         Command::Hide(arg) => {
             let files = arg
-                .input
+                .file
                 .into_iter()
                 .map(|f| {
                     #[cfg(unix)]
@@ -71,7 +71,7 @@ pub fn run() -> anyhow::Result<()> {
         }
         Command::Show(arg) => {
             let files = arg
-                .input
+                .file
                 .into_iter()
                 .map(|f| {
                     #[cfg(unix)]
