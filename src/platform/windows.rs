@@ -39,7 +39,9 @@ pub fn show(path: &Path) -> io::Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use std::{fs::File, io::ErrorKind, process::Command};
+    use std::{
+        ffi::OsString, fs::File, io::ErrorKind, os::windows::ffi::OsStringExt, process::Command,
+    };
 
     use super::*;
 
@@ -78,6 +80,24 @@ mod tests {
         {
             let temp_dir = tempfile::tempdir().unwrap();
             let file_path = temp_dir.path().join("🦀.txt");
+            assert!(!file_path.exists());
+
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+
+            Command::new("attrib")
+                .arg("+h")
+                .arg(&file_path)
+                .status()
+                .unwrap();
+            assert!(super::is_hidden(&file_path).unwrap());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            // Invalid UTF-16.
+            let file_path = temp_dir.path().join(OsString::from_wide(&[
+                0xD834, 0xDD1E, 0x006D, 0x0075, 0xD800, 0x0069, 0x0063,
+            ]));
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
@@ -133,6 +153,19 @@ mod tests {
         {
             let temp_dir = tempfile::tempdir().unwrap();
             let file_path = temp_dir.path().join("🦀.txt");
+            assert!(!file_path.exists());
+
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+
+            assert!(!super::is_hidden(&file_path).unwrap());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            // Invalid UTF-16.
+            let file_path = temp_dir.path().join(OsString::from_wide(&[
+                0xD834, 0xDD1E, 0x006D, 0x0075, 0xD800, 0x0069, 0x0063,
+            ]));
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();
@@ -230,6 +263,22 @@ mod tests {
         }
         {
             let temp_dir = tempfile::tempdir().unwrap();
+            // Invalid UTF-16.
+            let file_path = temp_dir.path().join(OsString::from_wide(&[
+                0xD834, 0xDD1E, 0x006D, 0x0075, 0xD800, 0x0069, 0x0063,
+            ]));
+            assert!(!file_path.exists());
+
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!super::is_hidden(&file_path).unwrap());
+
+            super::hide(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(super::is_hidden(&file_path).unwrap());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
             let file_path = temp_dir.path().join("foo/bar.txt");
             fs::create_dir(file_path.parent().unwrap()).unwrap();
             assert!(!file_path.exists());
@@ -298,6 +347,29 @@ mod tests {
         {
             let temp_dir = tempfile::tempdir().unwrap();
             let file_path = temp_dir.path().join("🦀.txt");
+            assert!(!file_path.exists());
+
+            File::create(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!super::is_hidden(&file_path).unwrap());
+
+            Command::new("attrib")
+                .arg("+h")
+                .arg(&file_path)
+                .status()
+                .unwrap();
+            assert!(super::is_hidden(&file_path).unwrap());
+
+            super::show(&file_path).unwrap();
+            assert!(file_path.exists());
+            assert!(!super::is_hidden(&file_path).unwrap());
+        }
+        {
+            let temp_dir = tempfile::tempdir().unwrap();
+            // Invalid UTF-16.
+            let file_path = temp_dir.path().join(OsString::from_wide(&[
+                0xD834, 0xDD1E, 0x006D, 0x0075, 0xD800, 0x0069, 0x0063,
+            ]));
             assert!(!file_path.exists());
 
             File::create(&file_path).unwrap();

@@ -156,7 +156,7 @@ mod tests {
     #[test]
     fn is_hidden_with_non_utf8_path() {
         assert_eq!(
-            super::is_hidden(Path::new(OsStr::from_bytes(&[0x00, 0x9f, 0x92, 0x96])))
+            super::is_hidden(Path::new(OsStr::from_bytes(&[0x00, 0x9F, 0x92, 0x96])))
                 .unwrap_err()
                 .kind(),
             ErrorKind::InvalidInput
@@ -304,7 +304,7 @@ mod tests {
 
     #[test]
     fn hide_with_non_utf8_path() {
-        let file_path = Path::new(OsStr::from_bytes(&[0x00, 0x9f, 0x92, 0x96]));
+        let file_path = Path::new(OsStr::from_bytes(&[0x00, 0x9F, 0x92, 0x96]));
         assert_eq!(
             super::hide(file_path).unwrap_err().kind(),
             ErrorKind::InvalidInput
@@ -471,7 +471,7 @@ mod tests {
 
     #[test]
     fn show_with_non_utf8_path() {
-        let hidden_file_path = Path::new(OsStr::from_bytes(&[0x2e, 0x00, 0x9f, 0x92, 0x96]));
+        let hidden_file_path = Path::new(OsStr::from_bytes(&[0x2E, 0x00, 0x9F, 0x92, 0x96]));
         assert_eq!(
             super::show(hidden_file_path).unwrap_err().kind(),
             ErrorKind::InvalidInput
@@ -527,7 +527,7 @@ mod tests {
 
     #[test]
     fn hidden_file_name_with_non_utf8_path() {
-        assert!(super::hidden_file_name(OsStr::from_bytes(&[0x00, 0x9f, 0x92, 0x96])).is_none());
+        assert!(super::hidden_file_name(OsStr::from_bytes(&[0x00, 0x9F, 0x92, 0x96])).is_none());
     }
 
     #[test]
@@ -574,7 +574,7 @@ mod tests {
     #[test]
     fn normal_file_name_with_non_utf8_path() {
         assert!(
-            super::normal_file_name(OsStr::from_bytes(&[0x2e, 0x00, 0x9f, 0x92, 0x96])).is_none()
+            super::normal_file_name(OsStr::from_bytes(&[0x2E, 0x00, 0x9F, 0x92, 0x96])).is_none()
         );
     }
 }
