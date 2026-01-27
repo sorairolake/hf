@@ -2,6 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+#[cfg(unix)]
+use std::fs;
+
 use anyhow::Context;
 use clap::Parser;
 use log::{info, warn};
@@ -26,12 +29,11 @@ pub fn run() -> anyhow::Result<()> {
     match opt.command {
         Command::Hide(arg) => {
             let files = arg
-                .input
+                .file
                 .into_iter()
                 .map(|f| {
                     #[cfg(unix)]
-                    std::fs::metadata(&f)
-                        .with_context(|| format!("{} does not exist", f.display()))?;
+                    fs::metadata(&f).with_context(|| format!("{} does not exist", f.display()))?;
                     let is_hidden = hf::is_hidden(&f).with_context(|| {
                         format!("could not read information from {}", f.display())
                     });
@@ -69,12 +71,11 @@ pub fn run() -> anyhow::Result<()> {
         }
         Command::Show(arg) => {
             let files = arg
-                .input
+                .file
                 .into_iter()
                 .map(|f| {
                     #[cfg(unix)]
-                    std::fs::metadata(&f)
-                        .with_context(|| format!("{} does not exist", f.display()))?;
+                    fs::metadata(&f).with_context(|| format!("{} does not exist", f.display()))?;
                     let is_hidden = hf::is_hidden(&f).with_context(|| {
                         format!("could not read information from {}", f.display())
                     });

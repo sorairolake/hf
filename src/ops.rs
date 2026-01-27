@@ -17,7 +17,10 @@ use crate::platform::imp;
 ///
 /// ## On Unix
 ///
-/// Returns [`Err`] if `path` terminates in `..`.
+/// Returns [`Err`] if any of the following are true:
+///
+/// - `path` terminates in `..`.
+/// - `path` is not valid UTF-8.
 ///
 /// ## On Windows
 ///
@@ -74,7 +77,6 @@ use crate::platform::imp;
 /// assert!(hf::is_hidden(file_path).is_err());
 /// # }
 /// ```
-#[inline]
 pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
     let inner = |path: &Path| -> io::Result<bool> { imp::is_hidden(path) };
     inner(path.as_ref())
@@ -93,8 +95,9 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - The file name starts with `.`.
 /// - `path` terminates in `..`.
+/// - `path` is not valid UTF-8.
+/// - The file name starts with `.`.
 /// - [`std::fs::rename`] returns an error.
 ///
 /// ## On Windows
@@ -159,7 +162,6 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// ```
 ///
 /// [`SetFileAttributesW`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
-#[inline]
 pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
     let inner = |path: &Path| -> io::Result<()> { imp::hide(path) };
     inner(path.as_ref())
@@ -179,8 +181,9 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - The file name does not start with `.`.
 /// - `path` terminates in `..`.
+/// - `path` is not valid UTF-8.
+/// - The file name does not start with `.`.
 /// - [`std::fs::rename`] returns an error.
 ///
 /// ## On Windows
@@ -253,7 +256,6 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// ```
 ///
 /// [`SetFileAttributesW`]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
-#[inline]
 pub fn show(path: impl AsRef<Path>) -> io::Result<()> {
     let inner = |path: &Path| -> io::Result<()> { imp::show(path) };
     inner(path.as_ref())

@@ -5,8 +5,12 @@
 mod utils;
 
 use std::fs::File;
+#[cfg(windows)]
+use std::process::Command;
 
 use predicates::prelude::predicate;
+
+use crate::utils::command;
 
 #[test]
 fn basic_hide() {
@@ -16,7 +20,7 @@ fn basic_hide() {
 
     File::create(&file_path).unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("-n")
         .arg(&file_path)
@@ -24,7 +28,7 @@ fn basic_hide() {
         .success()
         .stdout(predicate::str::contains(format!("{}", file_path.display())));
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("-f")
         .arg(&file_path)
@@ -43,7 +47,7 @@ fn basic_hide() {
 
 #[test]
 fn infer_subcommand_name_for_hide_command() {
-    utils::command::command()
+    command::command()
         .arg("hi")
         .arg("-V")
         .assert()
@@ -60,7 +64,7 @@ fn hide_with_multiple_files() {
     File::create(&file_path.0).unwrap();
     File::create(&file_path.1).unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("-n")
         .arg(&file_path.0)
@@ -76,7 +80,7 @@ fn hide_with_multiple_files() {
             file_path.1.display()
         )));
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("-f")
         .arg(&file_path.0)
@@ -101,13 +105,13 @@ fn hide_when_hidden_file() {
 
     File::create(&file_path).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("-n")
         .arg(&file_path)
@@ -118,7 +122,7 @@ fn hide_when_hidden_file() {
             file_path.display()
         )));
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("-f")
         .arg(&file_path)
@@ -138,7 +142,7 @@ fn hide_when_hidden_file() {
 #[test]
 fn hide_when_file_does_not_exist() {
     {
-        let command = utils::command::command()
+        let command = command::command()
             .arg("hide")
             .arg("-n")
             .arg("non_existent.txt")
@@ -155,7 +159,7 @@ fn hide_when_file_does_not_exist() {
     }
 
     {
-        let command = utils::command::command()
+        let command = command::command()
             .arg("hide")
             .arg("-f")
             .arg("non_existent.txt")
@@ -180,7 +184,7 @@ fn hide_with_force_and_dry_run() {
 
     File::create(&file_path).unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("-f")
         .arg("-n")
@@ -201,7 +205,7 @@ fn hide_with_off_log_level() {
 
     File::create(&file_path).unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("--log-level")
         .arg("OFF")
@@ -220,7 +224,7 @@ fn hide_with_error_log_level() {
 
     File::create(&file_path).unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("--log-level")
         .arg("ERROR")
@@ -239,13 +243,13 @@ fn hide_with_warn_log_level() {
 
     File::create(&file_path).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("--log-level")
         .arg("WARN")
@@ -271,13 +275,13 @@ fn hide_with_info_log_level() {
     File::create(&file_path.0).unwrap();
     File::create(&file_path.1).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path.1)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("--log-level")
         .arg("INFO")
@@ -308,13 +312,13 @@ fn hide_with_debug_log_level() {
     File::create(&file_path.0).unwrap();
     File::create(&file_path.1).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path.1)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("--log-level")
         .arg("DEBUG")
@@ -345,13 +349,13 @@ fn hide_with_trace_log_level() {
     File::create(&file_path.0).unwrap();
     File::create(&file_path.1).unwrap();
     #[cfg(windows)]
-    std::process::Command::new("attrib")
+    Command::new("attrib")
         .arg("+h")
         .arg(&file_path.1)
         .status()
         .unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("--log-level")
         .arg("TRACE")
@@ -378,7 +382,7 @@ fn hide_with_invalid_log_level() {
 
     File::create(&file_path).unwrap();
 
-    utils::command::command()
+    command::command()
         .arg("hide")
         .arg("--log-level")
         .arg("a")

@@ -27,6 +27,14 @@ cd hf
 just build
 ----
 
+.To build man pages
+[source,sh]
+----
+just build-man
+----
+
+The man pages are generated in `docs/man/man1`.
+
 == Crate features
 
 `application`::

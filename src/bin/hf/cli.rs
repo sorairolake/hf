@@ -63,8 +63,8 @@ pub struct Hide {
     pub dry_run: bool,
 
     /// Files and directories to hide.
-    #[arg(value_name("FILE"), value_hint(ValueHint::FilePath))]
-    pub input: Vec<PathBuf>,
+    #[arg(value_hint(ValueHint::FilePath))]
+    pub file: Vec<PathBuf>,
 }
 
 #[derive(Args, Debug)]
@@ -79,8 +79,8 @@ pub struct Show {
     pub dry_run: bool,
 
     /// Hidden files and directories to show.
-    #[arg(value_name("FILE"), value_hint(ValueHint::FilePath))]
-    pub input: Vec<PathBuf>,
+    #[arg(value_hint(ValueHint::FilePath))]
+    pub file: Vec<PathBuf>,
 }
 
 #[derive(Args, Debug)]
