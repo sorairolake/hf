@@ -13,7 +13,6 @@ use simplelog::{ColorChoice, Config, SimpleLogger, TermLogger, TerminalMode};
 use crate::cli::{Command, Opt};
 
 /// Runs the program and returns the result.
-#[allow(clippy::too_many_lines)]
 pub fn run() -> anyhow::Result<()> {
     let opt = Opt::parse();
 
