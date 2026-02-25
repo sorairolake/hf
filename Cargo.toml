@@ -21,7 +21,7 @@ name = "hf"
 required-features = ["application"]
 
 [dependencies]
-anyhow = { version = "1.0.101", optional = true }
+anyhow = { version = "1.0.102", optional = true }
 clap = { version = "4.5.60", features = ["derive", "wrap_help"], optional = true }
 clap_complete = { version = "4.5.66", optional = true }
 clap_complete_nushell = { version = "4.5.10", optional = true }
@@ -30,7 +30,7 @@ simplelog = { version = "0.12.2", optional = true }
 sysexits = { version = "0.11.0", optional = true }
 
 [dev-dependencies]
-anyhow = "1.0.101"
+anyhow = "1.0.102"
 assert_cmd = "2.1.2"
 clap = { version = "4.5.60", features = ["derive"] }
 predicates = "3.1.4"
