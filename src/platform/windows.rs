@@ -15,14 +15,12 @@ use windows::{Win32::Storage::FileSystem, core::HSTRING};
 
 fn get_file_attributes(path: &Path) -> io::Result<FileSystem::FILE_FLAGS_AND_ATTRIBUTES> {
     let attributes = fs::metadata(path)?.file_attributes();
-    let attributes = FileSystem::FILE_FLAGS_AND_ATTRIBUTES(attributes);
-    Ok(attributes)
+    Ok(FileSystem::FILE_FLAGS_AND_ATTRIBUTES(attributes))
 }
 
 pub fn is_hidden(path: &Path) -> io::Result<bool> {
     let attributes = get_file_attributes(path)?;
-    let is_hidden = attributes.contains(FileSystem::FILE_ATTRIBUTE_HIDDEN);
-    Ok(is_hidden)
+    Ok(attributes.contains(FileSystem::FILE_ATTRIBUTE_HIDDEN))
 }
 
 pub fn hide(path: &Path) -> io::Result<()> {

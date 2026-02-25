@@ -16,8 +16,7 @@ pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
         .file_name()
         .and_then(OsStr::to_str)
         .ok_or_else(|| Error::from(ErrorKind::InvalidInput))?;
-    let is_hidden = file_name.starts_with('.');
-    Ok(is_hidden)
+    Ok(file_name.starts_with('.'))
 }
 
 pub(crate) fn hide(path: &Path) -> io::Result<()> {
@@ -63,8 +62,7 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
             .and_then(OsStr::to_str)
             .filter(|n| !n.starts_with('.'))?;
         let file_name = String::from('.') + file_name;
-        let dest_path = path.with_file_name(file_name);
-        Some(dest_path)
+        Some(path.with_file_name(file_name))
     };
     inner(path.as_ref())
 }
@@ -102,8 +100,7 @@ pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
             .and_then(OsStr::to_str)
             .filter(|n| n.starts_with('.'))?;
         let file_name = file_name.trim_start_matches('.');
-        let dest_path = path.with_file_name(file_name);
-        Some(dest_path)
+        Some(path.with_file_name(file_name))
     };
     inner(path.as_ref())
 }
