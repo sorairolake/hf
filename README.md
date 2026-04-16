@@ -106,6 +106,10 @@ By default, the dependencies required to build the application are also built.
 If you disable the `default` feature, only the dependencies required to build
 the library will be built.
 
+### Examples
+
+Please see the [examples] directory for examples of using this library.
+
 ### Documentation
 
 See the [documentation][docs-url] for more details.
@@ -167,6 +171,7 @@ licensing information.
 [repology-versions]: https://repology.org/project/hf/versions
 [release page]: https://github.com/sorairolake/hf/releases
 [BUILD.adoc]: BUILD.adoc
+[examples]: examples
 [`hf(1)`]: docs/man/man1/hf.1.adoc
 [`hf-hide(1)`]: docs/man/man1/hf-hide.1.adoc
 [`hf-show(1)`]: docs/man/man1/hf-show.1.adoc
