@@ -45,11 +45,11 @@ use crate::platform::imp;
 /// ```
 /// # #[cfg(windows)]
 /// # {
-/// # use std::{
-/// #     fs::{self, File},
-/// #     process::Command,
-/// # };
-/// #
+/// use std::{
+///     fs::{self, File},
+///     process::Command,
+/// };
+///
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
 /// assert!(!file_path.exists());
@@ -114,8 +114,8 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// ```
 /// # #[cfg(unix)]
 /// # {
-/// # use std::fs::File;
-/// #
+/// use std::fs::File;
+///
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let temp_dir = temp_dir.path();
 /// let file_path = temp_dir.join("foo.txt");
@@ -143,8 +143,8 @@ pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
 /// ```
 /// # #[cfg(windows)]
 /// # {
-/// # use std::fs::File;
-/// #
+/// use std::fs::File;
+///
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
 /// assert!(!file_path.exists());
@@ -200,8 +200,8 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// ```
 /// # #[cfg(unix)]
 /// # {
-/// # use std::fs::File;
-/// #
+/// use std::fs::File;
+///
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let temp_dir = temp_dir.path();
 /// let hidden_file_path = temp_dir.join(".foo.txt");
@@ -229,8 +229,8 @@ pub fn hide(path: impl AsRef<Path>) -> io::Result<()> {
 /// ```
 /// # #[cfg(windows)]
 /// # {
-/// # use std::{fs::File, process::Command};
-/// #
+/// use std::{fs::File, process::Command};
+///
 /// let temp_dir = tempfile::tempdir().unwrap();
 /// let file_path = temp_dir.path().join("foo.txt");
 /// assert!(!file_path.exists());
