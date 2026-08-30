@@ -40,8 +40,8 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 /// # Examples
 ///
 /// ```
-/// # use std::path::Path;
-/// #
+/// use std::path::Path;
+///
 /// assert_eq!(
 ///     hf::unix::hidden_file_name("foo.txt").as_deref(),
 ///     Some(Path::new(".foo.txt"))
@@ -78,8 +78,8 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// # Examples
 ///
 /// ```
-/// # use std::path::Path;
-/// #
+/// use std::path::Path;
+///
 /// assert_eq!(
 ///     hf::unix::normal_file_name(".foo.txt").as_deref(),
 ///     Some(Path::new("foo.txt"))
