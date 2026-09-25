@@ -26,14 +26,16 @@ pub fn is_hidden(path: &Path) -> io::Result<bool> {
 pub fn hide(path: &Path) -> io::Result<()> {
     let attributes = get_file_attributes(path)? | FileSystem::FILE_ATTRIBUTE_HIDDEN;
     let path = HSTRING::from(path);
-    // SAFETY: `path` is a valid `HSTRING`, and `attributes` is valid file attributes.
+    // SAFETY: `path` is a valid `HSTRING`, and `attributes` is valid file
+    // attributes.
     unsafe { FileSystem::SetFileAttributesW(&path, attributes) }.map_err(Error::from)
 }
 
 pub fn show(path: &Path) -> io::Result<()> {
     let attributes = get_file_attributes(path)? & !FileSystem::FILE_ATTRIBUTE_HIDDEN;
     let path = HSTRING::from(path);
-    // SAFETY: `path` is a valid `HSTRING`, and `attributes` is valid file attributes.
+    // SAFETY: `path` is a valid `HSTRING`, and `attributes` is valid file
+    // attributes.
     unsafe { FileSystem::SetFileAttributesW(&path, attributes) }.map_err(Error::from)
 }
 
