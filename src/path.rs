@@ -4,9 +4,11 @@
 
 //! Extensions to [`Path`].
 
-use crate::ops;
-use sealed::sealed;
 use std::{io, path::Path};
+
+use sealed::sealed;
+
+use crate::ops;
 
 /// Extensions to [`Path`].
 #[sealed]
@@ -16,7 +18,8 @@ pub trait PathExt {
     /// # Platform-specific behavior
     ///
     /// - On Unix, returns [`true`] if the file name starts with `.`.
-    /// - On Windows, returns [`true`] if the file has the hidden file attribute.
+    /// - On Windows, returns [`true`] if the file has the hidden file
+    ///   attribute.
     ///
     /// This is an alias to [`hf::is_hidden`](crate::is_hidden).
     ///
@@ -40,8 +43,9 @@ pub trait PathExt {
     /// ```
     /// # #[cfg(unix)]
     /// # {
-    /// use hf::PathExt;
     /// use std::path::Path;
+    ///
+    /// use hf::PathExt;
     ///
     /// assert_eq!(Path::new(".foo.txt").is_hidden().unwrap(), true);
     /// assert_eq!(Path::new("foo.txt").is_hidden().unwrap(), false);
@@ -55,11 +59,13 @@ pub trait PathExt {
     /// ```
     /// # #[cfg(windows)]
     /// # {
-    /// use hf::PathExt;
     /// use std::{
     ///     fs::{self, File},
-    ///     process::Command,path::Path
+    ///     path::Path,
+    ///     process::Command,
     /// };
+    ///
+    /// use hf::PathExt;
     ///
     /// let temp_dir = tempfile::tempdir().unwrap();
     /// let file_path = temp_dir.path().join("foo.txt");
