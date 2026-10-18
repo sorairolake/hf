@@ -12,6 +12,7 @@ use std::{
     io::{self, Error, ErrorKind},
     path::{Path, PathBuf},
 };
+
 pub use self::path::PathExt;
 
 pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
@@ -43,8 +44,9 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 /// # Examples
 ///
 /// ```
-/// use hf::unix;
 /// use std::path::Path;
+///
+/// use hf::unix;
 ///
 /// assert_eq!(
 ///     unix::hidden_file_name("foo.txt").as_deref(),
@@ -82,8 +84,9 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// # Examples
 ///
 /// ```
-/// use hf::unix;
 /// use std::path::Path;
+///
+/// use hf::unix;
 ///
 /// assert_eq!(
 ///     unix::normal_file_name(".foo.txt").as_deref(),
