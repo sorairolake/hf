@@ -12,6 +12,7 @@ use std::{
     io::{self, Error, ErrorKind},
     path::{Path, PathBuf},
 };
+pub use self::path::PathExt;
 
 pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
     let file_name = path
