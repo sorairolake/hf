@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+//! Extensions to [`Path`].
+
 use std::{io, path::Path};
 
 use crate::platform::imp;
