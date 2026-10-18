@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Provides functionality for Unix platforms.
+//! Extensions to [`Path`].
 
 use std::{
     ffi::OsStr,
