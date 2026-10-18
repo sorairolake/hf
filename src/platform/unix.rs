@@ -4,6 +4,8 @@
 
 //! Provides functionality for Unix platforms.
 
+mod path;
+
 use std::{
     ffi::OsStr,
     fs,
