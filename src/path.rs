@@ -84,7 +84,7 @@ pub trait PathExt {
     ///     .unwrap();
     /// assert_eq!(file_path.is_hidden().unwrap(), false);
     ///
-    /// fs::remove_file(file_path).unwrap();
+    /// fs::remove_file(&file_path).unwrap();
     /// assert!(file_path.is_hidden().is_err());
     /// # }
     /// ```
