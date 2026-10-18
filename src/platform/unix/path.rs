@@ -4,10 +4,12 @@
 
 //! Extensions to [`Path`].
 
+use sealed::sealed;
 use std::{
     path::{Path, PathBuf},
 };
 
+#[sealed]
 pub trait PathExt {
 /// Returns the path after making `self` invisible.
 ///
@@ -72,6 +74,7 @@ fn hidden_file_name(&self) -> Option<PathBuf>;
 fn normal_file_name(&self) -> Option<PathBuf>;
 }
 
+#[sealed]
 impl PathExt for Path {
 fn hidden_file_name(&self) -> Option<PathBuf> {
     super::hidden_file_name(self)
