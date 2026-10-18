@@ -8,6 +8,7 @@ use std::{io, path::Path};
 use sealed::sealed;
 use crate::ops;
 
+/// Extensions to [`Path`].
 #[sealed]
 pub trait PathExt {
 /// Returns [`true`] if the path is a hidden file or directory.
