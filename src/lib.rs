@@ -77,9 +77,9 @@ mod ops;
 mod path;
 mod platform;
 
+#[cfg(unix)]
+pub use crate::platform::unix;
 pub use crate::{
     ops::{hide, is_hidden, show},
     path::PathExt,
 };
-#[cfg(unix)]
-pub use crate::platform::unix;
