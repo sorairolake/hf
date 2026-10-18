@@ -18,7 +18,7 @@ pub trait PathExt {
     /// - On Unix, returns [`true`] if the file name starts with `.`.
     /// - On Windows, returns [`true`] if the file has the hidden file attribute.
     ///
-    /// This is an alias to [`hf::is_hidden`](ops::is_hidden).
+    /// This is an alias to [`hf::is_hidden`](crate::is_hidden).
     ///
     /// # Errors
     ///
