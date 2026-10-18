@@ -6,7 +6,7 @@
 
 use std::{io, path::Path};
 
-use crate::platform::imp;
+use crate::ops;
 
 pub trait PathExt {
 /// Returns [`true`] if the path is a hidden file or directory.
@@ -15,6 +15,8 @@ pub trait PathExt {
 ///
 /// - On Unix, returns [`true`] if the file name starts with `.`.
 /// - On Windows, returns [`true`] if the file has the hidden file attribute.
+///
+/// This is an alias to [`hf::is_hidden`].
 ///
 /// # Errors
 ///
