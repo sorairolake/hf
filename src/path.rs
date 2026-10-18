@@ -22,8 +22,8 @@ pub trait PathExt {
 ///
 /// Returns [`Err`] if any of the following are true:
 ///
-/// - `path` terminates in `..`.
-/// - `path` is not valid UTF-8.
+/// - `self` terminates in `..`.
+/// - `self` is not valid UTF-8.
 ///
 /// ## On Windows
 ///
