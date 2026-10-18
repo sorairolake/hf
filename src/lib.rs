@@ -74,6 +74,7 @@
 #![deny(missing_docs)]
 
 mod ops;
+mod path;
 mod platform;
 
 pub use crate::ops::{hide, is_hidden, show};
