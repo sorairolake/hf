@@ -74,8 +74,12 @@
 #![deny(missing_docs)]
 
 mod ops;
+mod path;
 mod platform;
 
-pub use crate::ops::{hide, is_hidden, show};
 #[cfg(unix)]
 pub use crate::platform::unix;
+pub use crate::{
+    ops::{hide, is_hidden, show},
+    path::PathExt,
+};

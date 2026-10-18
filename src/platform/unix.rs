@@ -4,12 +4,16 @@
 
 //! Provides functionality for Unix platforms.
 
+mod path;
+
 use std::{
     ffi::OsStr,
     fs,
     io::{self, Error, ErrorKind},
     path::{Path, PathBuf},
 };
+
+pub use self::path::PathExt;
 
 pub(crate) fn is_hidden(path: &Path) -> io::Result<bool> {
     let file_name = path
@@ -42,18 +46,20 @@ pub(crate) fn show(path: &Path) -> io::Result<()> {
 /// ```
 /// use std::path::Path;
 ///
+/// use hf::unix;
+///
 /// assert_eq!(
-///     hf::unix::hidden_file_name("foo.txt").as_deref(),
+///     unix::hidden_file_name("foo.txt").as_deref(),
 ///     Some(Path::new(".foo.txt"))
 /// );
 /// assert_eq!(
-///     hf::unix::hidden_file_name("foo/bar.txt").as_deref(),
+///     unix::hidden_file_name("foo/bar.txt").as_deref(),
 ///     Some(Path::new("foo/.bar.txt"))
 /// );
 ///
-/// assert_eq!(hf::unix::hidden_file_name(".foo.txt"), None);
-/// assert_eq!(hf::unix::hidden_file_name("foo/.bar.txt"), None);
-/// assert_eq!(hf::unix::hidden_file_name("foo.txt/.."), None);
+/// assert_eq!(unix::hidden_file_name(".foo.txt"), None);
+/// assert_eq!(unix::hidden_file_name("foo/.bar.txt"), None);
+/// assert_eq!(unix::hidden_file_name("foo.txt/.."), None);
 /// ```
 pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let inner = |path: &Path| -> Option<PathBuf> {
@@ -80,18 +86,20 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// ```
 /// use std::path::Path;
 ///
+/// use hf::unix;
+///
 /// assert_eq!(
-///     hf::unix::normal_file_name(".foo.txt").as_deref(),
+///     unix::normal_file_name(".foo.txt").as_deref(),
 ///     Some(Path::new("foo.txt"))
 /// );
 /// assert_eq!(
-///     hf::unix::normal_file_name("foo/.bar.txt").as_deref(),
+///     unix::normal_file_name("foo/.bar.txt").as_deref(),
 ///     Some(Path::new("foo/bar.txt"))
 /// );
 ///
-/// assert_eq!(hf::unix::normal_file_name("foo.txt"), None);
-/// assert_eq!(hf::unix::normal_file_name("foo/bar.txt"), None);
-/// assert_eq!(hf::unix::normal_file_name(".foo.txt/.."), None);
+/// assert_eq!(unix::normal_file_name("foo.txt"), None);
+/// assert_eq!(unix::normal_file_name("foo/bar.txt"), None);
+/// assert_eq!(unix::normal_file_name(".foo.txt/.."), None);
 /// ```
 pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
     let inner = |path: &Path| -> Option<PathBuf> {
