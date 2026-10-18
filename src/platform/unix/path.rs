@@ -20,7 +20,7 @@ pub trait PathExt {
 /// - `self` is not valid UTF-8.
 /// - The file name starts with `.`.
 ///
-/// This is an alias to [`hf::unix::hidden_file_name`].
+/// This is an alias to [`unix::hidden_file_name`](super::hidden_file_name).
 ///
 /// # Examples
 ///
@@ -50,7 +50,7 @@ fn hidden_file_name(&self) -> Option<PathBuf>;
 /// - `self` is not valid UTF-8.
 /// - The file name does not start with `.`.
 ///
-/// This is an alias to [`hf::unix::normal_file_name`].
+/// This is an alias to [`unix::normal_file_name`](super::normal_file_name).
 ///
 /// # Examples
 ///
