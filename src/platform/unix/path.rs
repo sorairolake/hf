@@ -11,12 +11,13 @@ use std::{
     path::{Path, PathBuf},
 };
 
-/// Returns the path after making `path` invisible.
+pub trait PathExt {
+/// Returns the path after making `self` invisible.
 ///
 /// Returns [`None`] if any of the following are true:
 ///
-/// - `path` terminates in `..`.
-/// - `path` is not valid UTF-8.
+/// - `self` terminates in `..`.
+/// - `self` is not valid UTF-8.
 /// - The file name starts with `.`.
 ///
 /// # Examples
@@ -37,24 +38,14 @@ use std::{
 /// assert_eq!(hf::unix::hidden_file_name("foo/.bar.txt"), None);
 /// assert_eq!(hf::unix::hidden_file_name("foo.txt/.."), None);
 /// ```
-pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
-    let inner = |path: &Path| -> Option<PathBuf> {
-        let file_name = path
-            .file_name()
-            .and_then(OsStr::to_str)
-            .filter(|n| !n.starts_with('.'))?;
-        let file_name = String::from('.') + file_name;
-        Some(path.with_file_name(file_name))
-    };
-    inner(path.as_ref())
-}
+fn hidden_file_name(&self) -> Option<PathBuf>;
 
-/// Returns the path after making `path` visible.
+/// Returns the path after making `self` visible.
 ///
 /// Returns [`None`] if any of the following are true:
 ///
-/// - `path` terminates in `..`.
-/// - `path` is not valid UTF-8.
+/// - `self` terminates in `..`.
+/// - `self` is not valid UTF-8.
 /// - The file name does not start with `.`.
 ///
 /// # Examples
@@ -75,16 +66,17 @@ pub fn hidden_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
 /// assert_eq!(hf::unix::normal_file_name("foo/bar.txt"), None);
 /// assert_eq!(hf::unix::normal_file_name(".foo.txt/.."), None);
 /// ```
-pub fn normal_file_name(path: impl AsRef<Path>) -> Option<PathBuf> {
-    let inner = |path: &Path| -> Option<PathBuf> {
-        let file_name = path
-            .file_name()
-            .and_then(OsStr::to_str)
-            .filter(|n| n.starts_with('.'))?;
-        let file_name = file_name.trim_start_matches('.');
-        Some(path.with_file_name(file_name))
-    };
-    inner(path.as_ref())
+fn normal_file_name(&self) -> Option<PathBuf>;
+}
+
+impl PathExt for Path {
+fn hidden_file_name(&self) -> Option<PathBuf> {
+    super::hidden_file_name(self)
+}
+
+fn normal_file_name(&self) -> Option<PathBuf> {
+    super::normal_file_name(self)
+}
 }
 
 #[cfg(test)]
