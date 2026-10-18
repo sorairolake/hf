@@ -9,6 +9,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+/// Extensions to [`Path`].
 #[sealed]
 pub trait PathExt {
 /// Returns the path after making `self` invisible.
