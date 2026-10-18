@@ -4,8 +4,9 @@
 
 //! Extensions to [`Path`].
 
-use sealed::sealed;
 use std::path::{Path, PathBuf};
+
+use sealed::sealed;
 
 /// Extensions to [`Path`].
 #[sealed]
@@ -23,8 +24,9 @@ pub trait PathExt {
     /// # Examples
     ///
     /// ```
-    /// use hf::unix::PathExt;
     /// use std::path::Path;
+    ///
+    /// use hf::unix::PathExt;
     ///
     /// assert_eq!(
     ///     Path::new("foo.txt").hidden_file_name().as_deref(),
@@ -54,8 +56,9 @@ pub trait PathExt {
     /// # Examples
     ///
     /// ```
-    /// use hf::unix::PathExt;
     /// use std::path::Path;
+    ///
+    /// use hf::unix::PathExt;
     ///
     /// assert_eq!(
     ///     Path::new(".foo.txt").normal_file_name().as_deref(),
