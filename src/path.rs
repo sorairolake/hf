@@ -38,6 +38,9 @@ pub trait PathExt {
 /// ```
 /// # #[cfg(unix)]
 /// # {
+/// use hf::PathExt;
+/// use std::path::Path;
+///
 /// assert_eq!(Path::new(".foo.txt").is_hidden().unwrap(), true);
 /// assert_eq!(Path::new("foo.txt").is_hidden().unwrap(), false);
 ///
@@ -50,9 +53,10 @@ pub trait PathExt {
 /// ```
 /// # #[cfg(windows)]
 /// # {
+/// use hf::PathExt;
 /// use std::{
 ///     fs::{self, File},
-///     process::Command,
+///     process::Command,path::Path
 /// };
 ///
 /// let temp_dir = tempfile::tempdir().unwrap();
