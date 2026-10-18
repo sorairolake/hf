@@ -36,10 +36,10 @@ pub trait PathExt {
 /// ```
 /// # #[cfg(unix)]
 /// # {
-/// assert_eq!(hf::is_hidden(".foo.txt").unwrap(), true);
-/// assert_eq!(hf::is_hidden("foo.txt").unwrap(), false);
+/// assert_eq!(Path::new(".foo.txt").is_hidden().unwrap(), true);
+/// assert_eq!(Path::new("foo.txt").is_hidden().unwrap(), false);
 ///
-/// assert!(hf::is_hidden(".foo.txt/..").is_err());
+/// assert!(Path::new(".foo.txt/..").is_hidden().is_err());
 /// # }
 /// ```
 ///
@@ -66,7 +66,7 @@ pub trait PathExt {
 ///     .arg(&file_path)
 ///     .status()
 ///     .unwrap();
-/// assert_eq!(hf::is_hidden(&file_path).unwrap(), true);
+/// assert_eq!(file_path.is_hidden().unwrap(), true);
 ///
 /// // Clear the hidden file attribute.
 /// Command::new("attrib")
@@ -74,10 +74,10 @@ pub trait PathExt {
 ///     .arg(&file_path)
 ///     .status()
 ///     .unwrap();
-/// assert_eq!(hf::is_hidden(&file_path).unwrap(), false);
+/// assert_eq!(file_path.is_hidden().unwrap(), false);
 ///
-/// fs::remove_file(&file_path).unwrap();
-/// assert!(hf::is_hidden(file_path).is_err());
+/// fs::remove_file(file_path).unwrap();
+/// assert!(file_path.is_hidden().is_err());
 /// # }
 /// ```
 fn is_hidden(&self) -> io::Result<bool>;
