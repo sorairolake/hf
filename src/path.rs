@@ -8,6 +8,7 @@ use std::{io, path::Path};
 
 use crate::platform::imp;
 
+pub trait PathExt {
 /// Returns [`true`] if the path is a hidden file or directory.
 ///
 /// # Platform-specific behavior
@@ -79,7 +80,11 @@ use crate::platform::imp;
 /// assert!(hf::is_hidden(file_path).is_err());
 /// # }
 /// ```
-pub fn is_hidden(path: impl AsRef<Path>) -> io::Result<bool> {
-    let inner = |path: &Path| -> io::Result<bool> { imp::is_hidden(path) };
-    inner(path.as_ref())
+fn is_hidden(&self) -> io::Result<bool>;
+}
+
+impl PathExt for Path {
+fn is_hidden(&self) -> io::Result<bool> {
+    ops::is_hidden(self)
+}
 }
