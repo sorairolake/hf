@@ -5,9 +5,10 @@
 //! Extensions to [`Path`].
 
 use std::{io, path::Path};
-
+use sealed::sealed;
 use crate::ops;
 
+#[sealed]
 pub trait PathExt {
 /// Returns [`true`] if the path is a hidden file or directory.
 ///
@@ -89,6 +90,7 @@ pub trait PathExt {
 fn is_hidden(&self) -> io::Result<bool>;
 }
 
+#[sealed]
 impl PathExt for Path {
 fn is_hidden(&self) -> io::Result<bool> {
     ops::is_hidden(self)
