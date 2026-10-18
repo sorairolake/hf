@@ -5,9 +5,6 @@
 //! Extensions to [`Path`].
 
 use std::{
-    ffi::OsStr,
-    fs,
-    io::{self, Error, ErrorKind},
     path::{Path, PathBuf},
 };
 
@@ -25,6 +22,7 @@ pub trait PathExt {
 /// # Examples
 ///
 /// ```
+/// use hf::unix::PathExt;
 /// use std::path::Path;
 ///
 /// assert_eq!(
@@ -55,6 +53,7 @@ fn hidden_file_name(&self) -> Option<PathBuf>;
 /// # Examples
 ///
 /// ```
+/// use hf::unix::PathExt;
 /// use std::path::Path;
 ///
 /// assert_eq!(
@@ -85,7 +84,7 @@ fn normal_file_name(&self) -> Option<PathBuf> {
 
 #[cfg(test)]
 mod tests {
-    use std::{fs::File, os::unix::ffi::OsStrExt};
+    use std::{fs::File, os::unix::ffi::OsStrExt,ffi::OsStr};
 
     use super::*;
 
