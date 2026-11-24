@@ -16,6 +16,18 @@ keywords = ["hidden"]
 categories = ["command-line-utilities", "filesystem"]
 include = ["/LICENSES", "/README.md", "/src"]
 
+[features]
+default = ["application"]
+application = [
+  "dep:anyhow",
+  "dep:clap",
+  "dep:clap_complete",
+  "dep:clap_complete_nushell",
+  "dep:log",
+  "dep:simplelog",
+  "dep:sysexits",
+]
+
 [[bin]]
 name = "hf"
 required-features = ["application"]
@@ -44,18 +56,6 @@ tempfile = "3.27.0"
 [target."cfg(windows)".dependencies.windows]
 version = "0.62.2"
 features = ["Win32_Foundation", "Win32_Storage_FileSystem"]
-
-[features]
-default = ["application"]
-application = [
-  "dep:anyhow",
-  "dep:clap",
-  "dep:clap_complete",
-  "dep:clap_complete_nushell",
-  "dep:log",
-  "dep:simplelog",
-  "dep:sysexits",
-]
 
 [lints.clippy]
 cargo = { level = "warn", priority = -1 }
