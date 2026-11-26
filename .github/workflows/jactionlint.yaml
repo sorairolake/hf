@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
-name: actionlint
+name: jactionlint
 
 on:
   pull_request:
@@ -20,13 +20,13 @@ permissions:
 jobs:
   validation:
     name: Validate
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Run linter
-        uses: docker://rhysd/actionlint:latest
+        uses: docker://ghcr.io/jdx/jactionlint:latest
         with:
-          args: -color -verbose
+          args: --verbose --format github --profile correctness
